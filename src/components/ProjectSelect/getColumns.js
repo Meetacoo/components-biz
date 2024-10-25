@@ -1,6 +1,12 @@
 const getColumns = () => {
   return [
     {
+      title: '业务子类',
+      name: 'ProjectSelect',
+      type: 'serialNumberShort',
+      fixed: 'left'
+    },
+    {
       title: '服务类型',
       name: 'rsfwlx',
       type: 'serialNumberShort',
