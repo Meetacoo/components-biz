@@ -25,15 +25,25 @@ const CandidateSelect = createWithRemoteLoader({
         columns={[
           {
             title: '候选人姓名',
-            name: 'candidateName',
+            name: 'cvName',
             type: 'user'
           },
           {
             title: '职位',
-            name: 'deliveryPosition',
+            name: 'jdName',
             type: 'mainInfo',
             hover: false,
             primary: false
+          },
+          {
+            title: '项目细分服务',
+            name: 'projectPrice',
+            type: 'mainInfo'
+          },
+          {
+            title: '标准账单金额',
+            name: 'standardAmount',
+            type: 'otherSmall'
           }
         ]}
         onAdd={(value, callback) => {
@@ -92,12 +102,22 @@ const CandidateSelect = createWithRemoteLoader({
             {
               title: '候选人姓名',
               name: 'candidateName',
-              span: 12
+              span: 6
             },
             {
               title: '职位',
               name: 'deliveryPosition',
-              span: 12
+              span: 6
+            },
+            {
+              title: '项目细分服务',
+              name: 'projectPrice',
+              span: 6
+            },
+            {
+              title: '标准账单金额',
+              name: 'standardAmount',
+              span: 6
             }
           ]}
           onChange={value => {

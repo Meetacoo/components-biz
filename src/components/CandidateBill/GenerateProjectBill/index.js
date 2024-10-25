@@ -3,7 +3,7 @@ import ProjectBillInfoFormInner from '../ProjectBillInfoFormInner';
 
 const GenerateProjectBill = createWithRemoteLoader({
   modules: ['components-core:FormInfo']
-})(({ remoteModules, children }) => {
+})(({ remoteModules, record, children }) => {
   const [FormInfo] = remoteModules;
   const { useFormStepModal } = FormInfo;
   const formStepModal = useFormStepModal();
@@ -17,7 +17,7 @@ const GenerateProjectBill = createWithRemoteLoader({
             formProps: {
               onSubmit: async () => {}
             },
-            children: <ProjectBillInfoFormInner />
+            children: <ProjectBillInfoFormInner record={record} />
           },
           {
             title: '生成账单',

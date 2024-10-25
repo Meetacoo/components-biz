@@ -7,10 +7,10 @@ import get from 'lodash/get';
 // 候选人账单
 const ProjectBillInfoFormInner = createWithRemoteLoader({
   modules: ['components-core:FormInfo']
-})(({ remoteModules }) => {
+})(({ remoteModules, record }) => {
   const [FormInfo] = remoteModules;
   const { TableList, List } = FormInfo;
-  const { Input, RadioGroup, Upload, MoneyInput, DatePicker, InputNumber } = FormInfo.fields;
+  const { Input, RadioGroup, Upload, MoneyInput, DatePicker, InputNumber, AdvancedSelect } = FormInfo.fields;
 
   const onsiteFields = [
       <MoneyInput name="amount" label="账单金额" rule="REQ" />,
@@ -33,7 +33,7 @@ const ProjectBillInfoFormInner = createWithRemoteLoader({
           return `${label}:${(value && value.length) || 0}人`;
         }}
         label="本次账单候选人"
-        name="trackingIdList"
+        name="trackingList"
         rule="REQ"
         minLength={1}
         block
@@ -46,7 +46,7 @@ const ProjectBillInfoFormInner = createWithRemoteLoader({
           return `${label}:${(value && value.length) || 0}人`;
         }}
         label="本次账单候选人"
-        name="trackingIdList"
+        name="trackingList"
         rule="REQ"
         minLength={1}
         block
@@ -69,7 +69,7 @@ const ProjectBillInfoFormInner = createWithRemoteLoader({
     <>
       <FormInfo
         list={[
-          <Input name="client" label="客户" rule="REQ" />,
+          <Input name="clientName" label="客户" rule="REQ" />,
           /**
            TODO
            * 所选候选人所在职位无项目，显示合同

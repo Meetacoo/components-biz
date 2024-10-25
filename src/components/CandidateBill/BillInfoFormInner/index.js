@@ -3,20 +3,37 @@ import ProjectSelect from '@components/ProjectSelect';
 import ContractSelect from '@components/ContractSelect';
 import CandidateSelect from '@components/CandidateSelect';
 import { get } from 'lodash';
+import { useMemo } from 'react';
+import { billTransform } from '../index';
 
 const BillInfoFormInner = createWithRemoteLoader({
-  modules: ['components-core:FormInfo', 'components-core:FormInfo@formModule']
-})(({ remoteModules }) => {
-  const [FormInfo, formModule] = remoteModules;
+  modules: ['components-core:FormInfo', 'components-core:FormInfo@formModule', 'components-core:Global@usePreset', 'components-core:StateTag']
+})(({ remoteModules, record }) => {
+  const [FormInfo, formModule, usePreset, StateTag] = remoteModules;
   const { TableList } = FormInfo;
   const { FormItem } = formModule;
-  const { Input, RadioGroup, MoneyInput, TextArea, Upload } = FormInfo.fields;
+  const { Input, RadioGroup, MoneyInput, TextArea, Upload, AdvancedSelect, SuperSelectUser } = FormInfo.fields;
+  const { apis } = usePreset();
+
+  const userMap = useMemo(() => new Map((get(record, 'userInfos') || []).map(item => [item.uid, item])), [record]);
   return (
     <>
       <FormInfo
         list={[
-          <Input name="client" label="客户" rule="REQ" disabled />,
-          <ContractSelect name="contractId" label="合同" rule="REQ" />,
+          <AdvancedSelect
+            name="clientId"
+            label="客户"
+            single
+            allowClear={false}
+            showSelectedTag={false}
+            disabled
+            api={{
+              loader: () => ({
+                pageData: [{ label: get(record, 'bill.clientName'), value: get(record, 'bill.clientId') }]
+              })
+            }}
+          />,
+          <ContractSelect name="contractId" label="合同" rule="REQ" api={{ data: { clientId: get(record, 'bill.clientId'), states: [5, 7] } }} />,
           // TODO 项目账单。合同有项目，显示项目字段
           <FormItem display={({ formData }) => get(formData, 'contract')}>
             {() => <ProjectSelect name="projectId" label="项目" rule="REQ" />}
@@ -26,8 +43,8 @@ const BillInfoFormInner = createWithRemoteLoader({
             label="费用类别"
             rule="REQ"
             options={[
-              { value: '1', label: '招聘费' },
-              { value: '2', label: '服务费' }
+              { value: 1, label: '招聘费' },
+              { value: 2, label: '服务费' }
             ]}
           />
         ]}
@@ -40,7 +57,7 @@ const BillInfoFormInner = createWithRemoteLoader({
               return `${label}:${(value && value.length) || 0}人`;
             }}
             label="本次账单候选人"
-            name="trackingIdList"
+            name="trackingList"
             rule="REQ"
             minLength={1}
             block
@@ -55,11 +72,8 @@ const BillInfoFormInner = createWithRemoteLoader({
             label="账单类目"
             rule="REQ"
             options={[
-              { value: '1', label: '面试到岗' },
-              {
-                value: '2',
-                label: '入职到岗'
-              }
+              { value: 6, label: '面试到岗' },
+              { value: 7, label: '入职到岗' }
             ]}
             block
           />,
@@ -74,11 +88,37 @@ const BillInfoFormInner = createWithRemoteLoader({
       <TableList
         title="业绩分配"
         name="allocations"
-        list={[
-          <Input name="uid" label="分配用户" rule="REQ" />,
-          <MoneyInput name="amount" label="分配金额" rule="REQ" />,
-          <Input name="amountPercent" label="分配比例" rule="REQ" />
-        ]}
+        list={(groupArgs, { index: allocationIndex }, { formData }) => {
+          return [
+            <SuperSelectUser
+              name="uid"
+              label="分配用户"
+              isPopup={false}
+              rule="REQ"
+              single
+              labelWrap={false}
+              api={apis.user.getUserList}
+              getSearchProps={({ searchText }) => ({ userName: searchText })}
+              dataFormat={({ pageData = [], totalCount }) => {
+                const currentUid = get(formData, `allocations[${allocationIndex}].uid`);
+                const selectedUids = (formData.allocations || []).filter(x => x.uid && x.uid.value !== currentUid).map(item => item.uid.value);
+                return {
+                  list: pageData.map(item => ({
+                    ...item,
+                    // label: `${get(item, 'englishName', '')} ${get(item, 'name', '')} ${get(item, 'orgName') ? ' - ' + get(item, 'orgName') : ''}`,
+                    label: billTransform.getUserName({ userMap, user: item }),
+                    value: get(item, 'uid'),
+                    disabled: selectedUids.some(x => x === get(item, 'uid')),
+                    description: item?.state === 1 ? <StateTag text="账号已关闭" /> : null
+                  })),
+                  total: totalCount
+                };
+              }}
+            />,
+            <MoneyInput name="amount" label="分配金额" rule="REQ" />,
+            <Input name="amountPercent" label="分配比例" rule="REQ" />
+          ];
+        }}
       />
     </>
   );

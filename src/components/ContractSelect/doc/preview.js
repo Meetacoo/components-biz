@@ -15,9 +15,14 @@ const BaseExample = createWithRemoteLoader({
             }
           },
           contract: {
-            getDetail: {
+            getContractList: {
               loader: () => {
                 return contractData;
+              }
+            },
+            getContractById: {
+              loader: () => {
+                return contractData.data.pageData[0];
               }
             }
           }

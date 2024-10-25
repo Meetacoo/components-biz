@@ -69,9 +69,14 @@ const BaseExample = createWithRemoteLoader({
             }
           },
           contract: {
-            getList: {
+            getContractList: {
               loader: () => {
                 return contractData;
+              }
+            },
+            getContractById: {
+              loader: () => {
+                return contractData.data.pageData[0];
               }
             }
           },
@@ -174,9 +179,14 @@ const BaseExample = createWithRemoteLoader({
             }
           },
           contract: {
-            getList: {
+            getContractList: {
               loader: () => {
                 return contractData;
+              }
+            },
+            getContractById: {
+              loader: () => {
+                return contractData.data.pageData[0];
               }
             }
           },
@@ -210,13 +220,14 @@ render(<BaseExample />);
 
 - 生成项目账单表单
 - 生成项目账单表单
-- remoteLoader(@kne/remote-loader),_CandidateBill(@components/CandidateBill),_projectListData(@components/ProjectSelect/doc/projectList.json),_ContractSelect(@components/ContractSelect),_data(@components/ContractSelect/doc/contractListData.json),_userListData(@components/CandidateSelect/doc/userListData.json),_positionListData(@components/CandidateSelect/doc/positionListData.json)
+- remoteLoader(@kne/remote-loader),_CandidateBill(@components/CandidateBill),_projectListData(@components/ProjectSelect/doc/projectList.json),_ContractSelect(@components/ContractSelect),_data(@components/ContractSelect/doc/contractListData.json),_detailData(@components/ContractSelect/doc/contractDetailData.json),_userListData(@components/CandidateSelect/doc/userListData.json),_positionListData(@components/CandidateSelect/doc/positionListData.json)
 
 ```jsx
 const { ProjectBillInfoFormInner } = _CandidateBill;
 const { createWithRemoteLoader } = remoteLoader;
 const { default: projectListData } = _projectListData;
 const { data: contractData } = _data;
+const { data: contractDetailData } = _detailData;
 const { CONTRACT_STATE_ENUM } = _ContractSelect;
 
 const { default: userListData } = _userListData;
@@ -249,9 +260,14 @@ const BaseExample = createWithRemoteLoader({
             }
           },
           contract: {
-            getList: {
+            getContractList: {
               loader: () => {
                 return contractData;
+              }
+            },
+            getContractById: {
+              loader: () => {
+                return contractDetailData;
               }
             }
           },
@@ -341,9 +357,14 @@ const BaseExample = createWithRemoteLoader({
             }
           },
           contract: {
-            getList: {
+            getContractList: {
               loader: () => {
                 return contractData;
+              }
+            },
+            getContractById: {
+              loader: () => {
+                return contractData.data.pageData[0];
               }
             }
           },

@@ -4,6 +4,7 @@ import { useRef, useState } from 'react';
 import { Space } from 'antd';
 import get from 'lodash/get';
 import { EditBillButton } from '../GenerateBill';
+import { GenerateProjectBill } from '../index';
 
 const BillCenter = createWithRemoteLoader({
   modules: [
@@ -113,12 +114,14 @@ const BillCenter = createWithRemoteLoader({
                 title: '操作',
                 type: 'options',
                 fixed: 'right',
-                valueOf: ({}) => {
+                valueOf: ({ id, type }) => {
                   return [
                     {
+                      // buttonComponent: type === 1 ? EditBillButton : GenerateProjectBill,
                       buttonComponent: EditBillButton,
                       children: '编辑账单',
-                      modalProps: {}
+                      id,
+                      onReload: ref.current.reload
                     },
                     {
                       children: '前往结算中心'

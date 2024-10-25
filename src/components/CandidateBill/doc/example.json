@@ -116,6 +116,10 @@
           "packageName": "@components/ContractSelect/doc/contractListData.json"
         },
         {
+          "name": "_detailData",
+          "packageName": "@components/ContractSelect/doc/contractDetailData.json"
+        },
+        {
           "name": "_userListData",
           "packageName": "@components/CandidateSelect/doc/userListData.json"
         },

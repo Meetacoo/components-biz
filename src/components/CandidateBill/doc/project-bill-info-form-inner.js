@@ -2,6 +2,7 @@ const { ProjectBillInfoFormInner } = _CandidateBill;
 const { createWithRemoteLoader } = remoteLoader;
 const { default: projectListData } = _projectListData;
 const { data: contractData } = _data;
+const { data: contractDetailData } = _detailData;
 const { CONTRACT_STATE_ENUM } = _ContractSelect;
 
 const { default: userListData } = _userListData;
@@ -34,9 +35,14 @@ const BaseExample = createWithRemoteLoader({
             }
           },
           contract: {
-            getList: {
+            getContractList: {
               loader: () => {
                 return contractData;
+              }
+            },
+            getContractById: {
+              loader: () => {
+                return contractDetailData;
               }
             }
           },
