@@ -30,7 +30,7 @@ const BaseExample = createWithRemoteLoader({
       }}
     >
       <Form>
-        <CandidateSelect name="candidate" label="候选人" />
+        <CandidateSelect name="candidate" label="候选人" minLength={1} />
       </Form>
     </PureGlobal>
   );
