@@ -1,28 +1,32 @@
 import { createWithRemoteLoader } from '@kne/remote-loader';
 import ProjectSelect from '@components/ProjectSelect';
+import ContractSelect from '@components/ContractSelect';
+import CandidateSelect from '@components/CandidateSelect';
+import { get } from 'lodash';
 
 const BillInfoFormInner = createWithRemoteLoader({
-  modules: ['components-core:FormInfo', 'components-field:BatchSelect']
+  modules: ['components-core:FormInfo', 'components-core:FormInfo@formModule']
 })(({ remoteModules }) => {
-  const [FormInfo, BatchSelect] = remoteModules;
+  const [FormInfo, formModule] = remoteModules;
   const { TableList } = FormInfo;
-  const { Input, RadioGroup, TextArea, Upload } = FormInfo.fields;
+  const { FormItem } = formModule;
+  const { Input, RadioGroup, MoneyInput, TextArea, Upload } = FormInfo.fields;
   return (
     <>
       <FormInfo
         list={[
-          <Input name="client" label="客户" rule="REQ" />,
-          <Input name="contract" label="合同" rule="REQ" />,
-          <ProjectSelect name="project" label="项目" rule="REQ" />,
+          <Input name="client" label="客户" rule="REQ" disabled />,
+          <ContractSelect name="contractId" label="合同" rule="REQ" />,
+          // TODO 项目账单。合同有项目，显示项目字段
+          <FormItem display={({ formData }) => get(formData, 'contract')}>
+            {() => <ProjectSelect name="projectId" label="项目" rule="REQ" />}
+          </FormItem>,
           <RadioGroup
             name="feeType"
             label="费用类别"
             rule="REQ"
             options={[
-              {
-                value: '1',
-                label: '招聘费'
-              },
+              { value: '1', label: '招聘费' },
               { value: '2', label: '服务费' }
             ]}
           />
@@ -31,29 +35,14 @@ const BillInfoFormInner = createWithRemoteLoader({
       <FormInfo
         title="账单候选人"
         list={[
-          <BatchSelect
+          <CandidateSelect
             labelRender={({ label, value }) => {
               return `${label}:${(value && value.length) || 0}人`;
             }}
             label="本次账单候选人"
-            name="candidate"
+            name="trackingIdList"
             rule="REQ"
             minLength={1}
-            columns={[
-              {
-                title: '候选人姓名',
-                name: 'name',
-                type: 'user'
-              },
-              {
-                title: '职位',
-                name: 'position',
-                type: 'mainInfo',
-                hover: false,
-                primary: false
-              }
-            ]}
-            onAdd={(value, callback) => {}}
             block
           />
         ]}
@@ -62,7 +51,7 @@ const BillInfoFormInner = createWithRemoteLoader({
         title="账单费用信息"
         list={[
           <RadioGroup
-            name="billType"
+            name="typeId"
             label="账单类目"
             rule="REQ"
             options={[
@@ -74,21 +63,21 @@ const BillInfoFormInner = createWithRemoteLoader({
             ]}
             block
           />,
-          <Input name="normalTotalFee" label="标准账单总金额" rule="REQ" />,
-          <Input name="totalFee" label="账单总金额" rule="REQ" />,
-          <TextArea name="reason" label="标准账单总金额与自填账单总金额不一致的原因" rule="REQ" block />,
-          <TextArea name="description" label="备注" rule="REQ" block />,
-          <Upload name="files" label="附件" block />
+          <MoneyInput name="standardAmount" label="标准账单总金额" rule="REQ" />,
+          <MoneyInput name="amount" label="账单总金额" rule="REQ" />,
+          <TextArea name="amountDiffReason" label="标准账单总金额与自填账单总金额不一致的原因" rule="REQ" block />,
+          <TextArea name="remark" label="备注" rule="REQ" block />,
+          <Upload name="attachments" label="附件" block />
         ]}
       />
-      <FormInfo title="付款信息" list={[<Input name="feeInfo" label="付款信息" rule="REQ" />]} />
+      <FormInfo title="付款信息" list={[<Input name="paymentId" label="付款信息" rule="REQ" />]} />
       <TableList
         title="业绩分配"
-        name="fenpei"
+        name="allocations"
         list={[
-          <Input name="user" label="分配用户" rule="REQ" />,
-          <Input name="fee" label="分配金额" rule="REQ" />,
-          <Input name="bili" label="分配比例" rule="REQ" />
+          <Input name="uid" label="分配用户" rule="REQ" />,
+          <MoneyInput name="amount" label="分配金额" rule="REQ" />,
+          <Input name="amountPercent" label="分配比例" rule="REQ" />
         ]}
       />
     </>

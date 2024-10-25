@@ -1,9 +1,10 @@
 {
   "name": "@kne-components/components-biz",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "业务组件库",
   "scripts": {
     "init": "husky",
+    "init-package": "npm i --legacy-peer-deps",
     "start": "cross-env PORT=3010 COMPONENTS_NAME=components-biz MODULES_DEV_PUBLIC_URL=/ craco start",
     "build": "cross-env COMPONENTS_NAME=components-biz MODULES_DEV_PUBLIC_URL=components-biz craco build",
     "create": "modules-dev-create",
@@ -67,6 +68,7 @@
     "@craco/craco": "^7.1.0",
     "@kne/modules-dev": "^2.1.2",
     "@kne/react-fetch": "^1.4.3",
+    "@kne/react-form-antd": "^3.1.6",
     "@kne/remote-loader": "^1.2.3",
     "@testing-library/jest-dom": "^6.4.2",
     "antd": "^5.14.2",
@@ -83,6 +85,8 @@
     "sass": "^1.75.0"
   },
   "dependencies": {
-    "@kne/use-ref-callback": "^0.1.2"
+    "@kne/format-document-builder": "^0.1.2",
+    "@kne/use-ref-callback": "^0.1.2",
+    "dayjs": "^1.11.13"
   }
 }

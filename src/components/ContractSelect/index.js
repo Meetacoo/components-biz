@@ -1,7 +1,3 @@
-import style from './style.module.scss';
-
-const ContractSelect = () => {
-  return <div>unleash creativity</div>;
-};
-
-export default ContractSelect;
+export { default } from './ContractSelect';
+export { default as Preview, Detail } from './Preview';
+export { default as CONTRACT_STATE_ENUM } from './CONTRACT_STATE_ENUM';

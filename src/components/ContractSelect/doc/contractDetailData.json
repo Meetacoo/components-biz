@@ -1,0 +1,146 @@
+{
+  "msg": "",
+  "data": {
+    "id": 1781,
+    "coId": 1,
+    "appId": 1,
+    "termId": 192411202,
+    "name": "测试合同03",
+    "clientId": 1634,
+    "clientName": "测试退票公司",
+    "subjectCode": "fat_bj",
+    "subjectName": "FAT_BJ",
+    "invoiceTitle": null,
+    "startDate": "2023-12-01T00:00:00.000+08:00",
+    "endDate": "2023-12-31T00:00:00.000+08:00",
+    "guaranteePeriod": 20,
+    "guaranteePeriodUnit": "D",
+    "paymentPeriod": 20,
+    "autoRenew": 0,
+    "clientTaxRate": 20.0,
+    "attachmentIds": [
+      {
+        "id": "W4c0CpABigJRD2BDzUcx",
+        "originalName": "测试业务体验码.png"
+      }
+    ],
+    "charges": [
+      {
+        "chargeName": "1",
+        "chargeType": 2,
+        "chargeRate": null,
+        "chargeFixed": 1995,
+        "chargeLower": null,
+        "chargeRemark": null
+      }
+    ],
+    "state": 10,
+    "createdId": 107,
+    "createdOrgId": 538,
+    "createdName": "李白",
+    "createdAt": "2024-06-12T10:09:25.000+08:00",
+    "updatedId": 107,
+    "updatedName": "李白",
+    "updatedAt": "2024-09-12T16:09:14.000+08:00",
+    "auditorId": 107,
+    "auditorName": "李白",
+    "auditorAt": "2024-09-12T16:09:14.000+08:00",
+    "submitTime": "2024-09-12T16:09:03.000+08:00",
+    "lastRejectedReason": "",
+    "contractId": null,
+    "serialNum": "SW202406120360",
+    "processInstanceId": "202409121609032191",
+    "renewalStartDate": null,
+    "renewalEndDate": null,
+    "renewalDuration": null,
+    "unlimitedFlag": "N",
+    "renewalAutoRenew": null,
+    "renewalAttachments": null,
+    "renewalRemark": null,
+    "contractType": ["8"],
+    "contractNature": 1,
+    "handsOffTerm": {
+      "hasHandsOff": 0,
+      "handsOffDesc": null,
+      "handsOffRemark": null,
+      "handsOffStart": null,
+      "handsOffEnd": null,
+      "handsOffLiability": false,
+      "handsOffPreservedRange": null,
+      "handsOffCompanies": null,
+      "name": null,
+      "id": null
+    },
+    "taxPayer": 2,
+    "weatherRefund": 1,
+    "refundRate": 20.0,
+    "refundClause": "1111111111111111",
+    "annualEstimatedGp": 20000000,
+    "contractClauseId": 39,
+    "weatherHirePurchase": 1,
+    "installmentRate": [
+      {
+        "num": 1,
+        "rate": 20.0
+      }
+    ],
+    "candidateForbidden": false,
+    "protocolDesc": null,
+    "records": [
+      {
+        "id": 113,
+        "contractId": 1781,
+        "renewalDuration": null,
+        "renewalStartDate": "2024-09-01T00:00:00.000+08:00",
+        "renewalEndDate": "2025-09-30T00:00:00.000+08:00",
+        "unlimitedFlag": "N",
+        "renewalAutoRenew": 0,
+        "renewalAttachments": [
+          {
+            "id": "sY1H5ZEBGNUrEWeuS-6e",
+            "originalName": "测试业务体验码.png"
+          }
+        ],
+        "renewalRemark": null,
+        "createAt": "2024-09-12T16:09:14.000+08:00",
+        "hasHandsOff": 0,
+        "handsOffDesc": null,
+        "handsOffRemark": null,
+        "handsOffStart": null,
+        "handsOffEnd": null,
+        "handsOffLiability": false,
+        "handsOffPreservedRange": null,
+        "handsOffCompanies": null
+      }
+    ],
+    "contractRenewal": {
+      "id": 545,
+      "contractId": 1781,
+      "renewalStartDate": "2024-09-01T00:00:00.000+08:00",
+      "renewalEndDate": "2025-09-30T00:00:00.000+08:00",
+      "renewalDuration": null,
+      "unlimitedFlag": "N",
+      "renewalAutoRenew": 0,
+      "renewalAttachments": [
+        {
+          "id": "sY1H5ZEBGNUrEWeuS-6e",
+          "originalName": "测试业务体验码.png"
+        }
+      ],
+      "renewalRemark": null,
+      "hasHandsOff": 0,
+      "handsOffDesc": null,
+      "handsOffRemark": null,
+      "handsOffStart": null,
+      "handsOffEnd": null,
+      "handsOffLiability": 0,
+      "handsOffPreservedRange": null,
+      "handsOffCompanies": null
+    },
+    "contractClauseName": "测试合同03",
+    "ocSync": false
+  },
+  "code": 0,
+  "success": true,
+  "failure": false
+}

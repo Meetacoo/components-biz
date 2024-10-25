@@ -2,13 +2,40 @@
   "isFull": false,
   "list": [
     {
-      "title": "这里填写示例标题",
-      "description": "这里填写示例说明",
+      "title": "preview",
+      "description": "合同预览",
       "code": "./base.js",
       "scope": [
         {
           "name": "_ContractSelect",
           "packageName": "@components/ContractSelect"
+        },
+        {
+          "name": "remoteLoader",
+          "packageName": "@kne/remote-loader"
+        },
+        {
+          "name": "_data",
+          "packageName": "@components/ContractSelect/doc/contractListData.json"
+        }
+      ]
+    },
+    {
+      "title": "preview",
+      "description": "合同预览",
+      "code": "./preview.js",
+      "scope": [
+        {
+          "name": "_ContractSelect",
+          "packageName": "@components/ContractSelect"
+        },
+        {
+          "name": "remoteLoader",
+          "packageName": "@kne/remote-loader"
+        },
+        {
+          "name": "_data",
+          "packageName": "@components/ContractSelect/doc/contractDetailData.json"
         }
       ]
     }
