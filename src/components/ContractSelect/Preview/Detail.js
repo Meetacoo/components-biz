@@ -29,9 +29,7 @@ const DetailWithData = createWithRemoteLoader({
   return (
     <Fetch
       {...Object.assign({}, apis.contract.getDetail, {
-        data: {
-          params: { id }
-        }
+        params: { id }
       })}
       render={({ data }) => <Detail data={data} />}
     />

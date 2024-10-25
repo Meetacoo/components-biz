@@ -1,0 +1,13 @@
+.select-list-item-label {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin-right: 8px;
+}
+
+.fetch-list {
+  :global(.select-list-scroll-list) {
+    max-height: unset !important;
+    height: calc(var(--modal-height) - 48px - 88px);
+  }
+}
