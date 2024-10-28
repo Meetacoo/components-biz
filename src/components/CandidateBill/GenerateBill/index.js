@@ -54,7 +54,7 @@ export const GenerateBillButton = ({ modalProps, ...props }) => {
 };
 
 export const EditBillButton = createWithRemoteLoader({
-  modules: ['components-core:Global@usePreset', 'components-core:Common@FetchButton', 'components-core:InfoPage@formatView']
+  modules: ['components-core:Global@usePreset', 'components-core:FetchButton', 'components-core:InfoPage@formatView']
 })(({ remoteModules, id, modalProps, onReload, ...props }) => {
   const [usePreset, FetchButton, formatView] = remoteModules;
   const { apis, ajax } = usePreset();
@@ -67,9 +67,8 @@ export const EditBillButton = createWithRemoteLoader({
           api={Object.assign({}, apis.candidateBill.getBillDetail, {
             params: { id }
           })}
-          modalFunc={() => {}}
-          modalProps={({ data, close }) => {
-            return modal({
+          onClick={({ data }) =>
+            modal({
               title: '编辑账单',
               record: data,
               formProps: [
@@ -92,8 +91,8 @@ export const EditBillButton = createWithRemoteLoader({
                   onSubmit: async () => {}
                 }
               ]
-            });
-          }}
+            })
+          }
         />
       )}
     </GenerateBill>
