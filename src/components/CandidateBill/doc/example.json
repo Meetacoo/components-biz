@@ -52,6 +52,10 @@
         {
           "name": "_paymentData",
           "packageName": "@components/BillNotice/doc/paymentData.json"
+        },
+        {
+          "name": "_paymentList",
+          "packageName": "@components/PaymentSelect/doc/paymentList.json"
         }
       ]
     },
@@ -87,6 +91,10 @@
         {
           "name": "_positionListData",
           "packageName": "@components/CandidateSelect/doc/positionListData.json"
+        },
+        {
+          "name": "_paymentList",
+          "packageName": "@components/PaymentSelect/doc/paymentList.json"
         }
       ]
     },
@@ -116,12 +124,20 @@
           "packageName": "@components/ContractSelect/doc/contractListData.json"
         },
         {
+          "name": "_detailData",
+          "packageName": "@components/ContractSelect/doc/contractDetailData.json"
+        },
+        {
           "name": "_userListData",
           "packageName": "@components/CandidateSelect/doc/userListData.json"
         },
         {
           "name": "_positionListData",
           "packageName": "@components/CandidateSelect/doc/positionListData.json"
+        },
+        {
+          "name": "_paymentList",
+          "packageName": "@components/PaymentSelect/doc/paymentList.json"
         }
       ]
     },

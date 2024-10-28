@@ -2,7 +2,7 @@ import { createWithRemoteLoader } from '@kne/remote-loader';
 import merge from 'lodash/merge';
 import { Row, Col, Flex, Alert, Button } from 'antd';
 import classnames from 'classnames';
-import { Detail } from './Preview';
+import Preview from './Preview';
 import style from './style.module.scss';
 
 const ContractSelect = createWithRemoteLoader({
@@ -38,7 +38,7 @@ const ContractSelect = createWithRemoteLoader({
               onClick={() => {
                 modal({
                   title: '合同预览',
-                  children: <Detail data={value[0]} />
+                  children: <Preview id={value[0].value} />
                 });
               }}
             >
@@ -68,7 +68,7 @@ const ContractSelect = createWithRemoteLoader({
           name: text
         };
       }}
-      api={merge({}, apis.contract.getList, propsApi)}
+      api={merge({}, apis.contract.getContractList, propsApi)}
     >
       {({ components, value }) => {
         return (
@@ -88,7 +88,7 @@ const ContractSelect = createWithRemoteLoader({
                 >
                   <Flex vertical gap={24}>
                     <div>预览</div>
-                    {value[0] && <Detail data={value[0]} />}
+                    {value[0] && <Preview id={value[0].value} />}
                   </Flex>
                 </SimpleBar>
               </Col>

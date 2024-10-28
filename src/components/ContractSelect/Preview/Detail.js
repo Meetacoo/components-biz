@@ -26,14 +26,7 @@ const DetailWithData = createWithRemoteLoader({
 })(({ remoteModules, id }) => {
   const [usePreset] = remoteModules;
   const { apis } = usePreset();
-  return (
-    <Fetch
-      {...Object.assign({}, apis.contract.getDetail, {
-        params: { id }
-      })}
-      render={({ data }) => <Detail data={data} />}
-    />
-  );
+  return <Fetch {...Object.assign({}, apis.contract.getContractById, { params: { id } })} render={({ data }) => <Detail data={data} />} />;
 });
 
 export default DetailWithData;

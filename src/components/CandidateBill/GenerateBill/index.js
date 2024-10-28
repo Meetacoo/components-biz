@@ -1,8 +1,8 @@
 import { createWithRemoteLoader } from '@kne/remote-loader';
 import BillInfoFormInner from '../BillInfoFormInner';
-import { Button, App } from 'antd';
-import Fetch from '@kne/react-fetch';
+import { App, Button } from 'antd';
 import get from 'lodash/get';
+import { billTransform } from '../index';
 
 const GenerateBill = createWithRemoteLoader({
   modules: ['components-core:FormInfo']
@@ -12,7 +12,7 @@ const GenerateBill = createWithRemoteLoader({
   const formStepModal = useFormStepModal();
   return children({
     modal: props => {
-      const { formProps, ...others } = Object.assign(
+      const { formProps, record, ...others } = Object.assign(
         {},
         {
           title: '生成账单'
@@ -25,7 +25,7 @@ const GenerateBill = createWithRemoteLoader({
           {
             title: '填写账单信息',
             formProps: get(formProps, '[0]'),
-            children: <BillInfoFormInner />
+            children: <BillInfoFormInner record={record} />
           },
           {
             title: '生成账单',
@@ -54,9 +54,9 @@ export const GenerateBillButton = ({ modalProps, ...props }) => {
 };
 
 export const EditBillButton = createWithRemoteLoader({
-  modules: ['components-core:Global@usePreset', 'components-core:Common@FetchButton']
+  modules: ['components-core:Global@usePreset', 'components-core:Common@FetchButton', 'components-core:InfoPage@formatView']
 })(({ remoteModules, id, modalProps, onReload, ...props }) => {
-  const [usePreset, FetchButton] = remoteModules;
+  const [usePreset, FetchButton, formatView] = remoteModules;
   const { apis, ajax } = usePreset();
   const { message } = App.useApp();
   return (
@@ -64,15 +64,17 @@ export const EditBillButton = createWithRemoteLoader({
       {({ modal }) => (
         <FetchButton
           {...props}
-          api={Object.assign({}, apis.candidateBill.getDetail, {
-            data: { id }
+          api={Object.assign({}, apis.candidateBill.getBillDetail, {
+            params: { id }
           })}
-          modalFunc={({ data }) =>
-            modal({
+          modalFunc={() => {}}
+          modalProps={({ data, close }) => {
+            return modal({
               title: '编辑账单',
+              record: data,
               formProps: [
                 {
-                  data,
+                  data: billTransform.input(data, formatView),
                   onSubmit: async data => {
                     const { data: resData } = await ajax(
                       Object.assign({}, apis.candidateBill.saveBill, {
@@ -90,8 +92,8 @@ export const EditBillButton = createWithRemoteLoader({
                   onSubmit: async () => {}
                 }
               ]
-            })
-          }
+            });
+          }}
         />
       )}
     </GenerateBill>

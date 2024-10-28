@@ -25,19 +25,26 @@ const BaseExample = createWithRemoteLoader({
   modules: ['components-core:Global@PureGlobal', 'components-core:FormInfo@Form']
 })(({ remoteModules }) => {
   const [PureGlobal, Form] = remoteModules;
-  return <PureGlobal preset={{
-    apis: {
-      payment: {
-        getList: {
-          loader: () => {
-            return paymentList.data;
+  return (
+    <PureGlobal
+      preset={{
+        apis: {
+          payment: {
+            getPaymentList: {
+              loader: () => {
+                return paymentList.data;
+              }
+            }
           }
-        }
-      }
-    }, enums: { INVOICE_TYPE_ENUM }
-  }}>
-    <Form><PaymentSelect name="payment" label="付款信息" /></Form>
-  </PureGlobal>;
+        },
+        enums: { INVOICE_TYPE_ENUM }
+      }}
+    >
+      <Form>
+        <PaymentSelect name="payment" label="付款信息" />
+      </Form>
+    </PureGlobal>
+  );
 });
 
 render(<BaseExample />);
@@ -58,19 +65,24 @@ const BaseExample = createWithRemoteLoader({
   modules: ['components-core:Global@PureGlobal']
 })(({ remoteModules }) => {
   const [PureGlobal] = remoteModules;
-  return <PureGlobal preset={{
-    apis: {
-      payment: {
-        getDetail: {
-          loader: ({ params }) => {
-            return paymentList.data.pageData[params.id];
+  return (
+    <PureGlobal
+      preset={{
+        apis: {
+          payment: {
+            getDetail: {
+              loader: ({ params }) => {
+                return paymentList.data.pageData[params.id];
+              }
+            }
           }
-        }
-      }
-    }, enums: { INVOICE_TYPE_ENUM }
-  }}>
-    <Preview id={0} />
-  </PureGlobal>;
+        },
+        enums: { INVOICE_TYPE_ENUM }
+      }}
+    >
+      <Preview id={0} />
+    </PureGlobal>
+  );
 });
 
 render(<BaseExample />);
