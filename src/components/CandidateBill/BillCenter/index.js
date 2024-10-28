@@ -4,7 +4,7 @@ import { useRef, useState } from 'react';
 import { Space } from 'antd';
 import get from 'lodash/get';
 import { EditBillButton } from '../GenerateBill';
-import { GenerateProjectBill } from '../index';
+import { EditBillProjectButton } from '../GenerateProjectBill';
 
 const BillCenter = createWithRemoteLoader({
   modules: [
@@ -117,8 +117,7 @@ const BillCenter = createWithRemoteLoader({
                 valueOf: ({ id, type }) => {
                   return [
                     {
-                      // buttonComponent: type === 1 ? EditBillButton : GenerateProjectBill,
-                      buttonComponent: EditBillButton,
+                      buttonComponent: type === 1 ? EditBillProjectButton : EditBillButton,
                       children: '编辑账单',
                       id,
                       onReload: ref.current.reload

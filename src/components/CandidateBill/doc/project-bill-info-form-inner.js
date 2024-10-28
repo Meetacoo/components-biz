@@ -9,6 +9,7 @@ const { default: userListData } = _userListData;
 const { default: positionListData } = _positionListData;
 const { data: userList } = userListData;
 const { data: positionList } = positionListData;
+const { default: paymentList } = _paymentList;
 
 const BaseExample = createWithRemoteLoader({
   modules: ['components-core:FormInfo@Form', 'components-core:Global@PureGlobal']
@@ -21,6 +22,33 @@ const BaseExample = createWithRemoteLoader({
           CONTRACT_STATE_ENUM
         },
         apis: {
+          user: {
+            getUserList: {
+              loader: ({ data }) => {
+                const params = Object.assign(
+                  {
+                    perPage: 20,
+                    currentPage: 1
+                  },
+                  data
+                );
+                return new Promise(resolve => {
+                  const start = (params.currentPage - 1) * params.perPage;
+                  resolve({
+                    totalCount: 100,
+                    pageData: range(start, start + params.perPage).map(key => {
+                      return {
+                        name: `用户${key + 1}`,
+                        id: key + 1,
+                        uid: key + 1,
+                        englishName: `User${key + 1}`
+                      };
+                    })
+                  });
+                });
+              }
+            }
+          },
           client: {},
           project: {
             getList: {
@@ -57,6 +85,13 @@ const BaseExample = createWithRemoteLoader({
             getMyList: {
               loader: () => {
                 return positionList;
+              }
+            }
+          },
+          payment: {
+            getPaymentList: {
+              loader: () => {
+                return paymentList;
               }
             }
           }

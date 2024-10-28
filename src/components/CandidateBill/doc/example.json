@@ -52,6 +52,10 @@
         {
           "name": "_paymentData",
           "packageName": "@components/BillNotice/doc/paymentData.json"
+        },
+        {
+          "name": "_paymentList",
+          "packageName": "@components/PaymentSelect/doc/paymentList.json"
         }
       ]
     },
@@ -87,6 +91,10 @@
         {
           "name": "_positionListData",
           "packageName": "@components/CandidateSelect/doc/positionListData.json"
+        },
+        {
+          "name": "_paymentList",
+          "packageName": "@components/PaymentSelect/doc/paymentList.json"
         }
       ]
     },
@@ -126,6 +134,10 @@
         {
           "name": "_positionListData",
           "packageName": "@components/CandidateSelect/doc/positionListData.json"
+        },
+        {
+          "name": "_paymentList",
+          "packageName": "@components/PaymentSelect/doc/paymentList.json"
         }
       ]
     },

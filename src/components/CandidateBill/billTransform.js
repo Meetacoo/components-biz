@@ -33,13 +33,25 @@ const billTransform = {
     let inputData = Object.assign({}, bill, {
       contractId: { label: get(bill, 'contractName'), value: get(bill, 'contractId') },
       amount: getAmount(formatView, get(bill, 'amount')),
-      allocations: get(data, 'allocations').map(item => allocationFormat({ userMap, item, formatView, billAmount: get(bill, 'amount') }))
+      allocations: (get(data, 'allocations') || []).map(item => allocationFormat({ userMap, item, formatView, billAmount: get(bill, 'amount') })),
+      paymentId: { label: get(bill, 'invoiceTitle'), value: get(bill, 'paymentId') },
+      projectId: get(bill, 'projectId') ? { label: get(bill, 'projectName'), value: get(bill, 'projectId') } : null
     });
     // 为候选人账单时
-    if (get(bill, 'type') !== 1) {
+    if (get(bill, 'type') === 1) {
+      const billItems = (get(data, 'billItems') || []).map(({ billItem, trackingList }) =>
+        Object.assign({}, billItem, {
+          amount: get(billItem, 'amount') ? getAmount(formatView, billItem.amount) : 0,
+          typeId: get(billItem, 'typeId') || 1,
+          trackingList
+        })
+      );
+      inputData.billItems = billItems;
+    } else {
       inputData.typeId = get(data, 'billItems[0].billItem.typeId');
       inputData.trackingList = get(data, 'billItems[0].trackingList');
     }
+    console.log('inputData===', inputData, get(data, 'billItems') || []);
     return inputData;
   },
   getUserName

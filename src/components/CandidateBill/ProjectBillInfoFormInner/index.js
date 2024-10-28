@@ -3,13 +3,15 @@ import ProjectSelect from '@components/ProjectSelect';
 import ContractSelect from '@components/ContractSelect';
 import CandidateSelect from '@components/CandidateSelect';
 import get from 'lodash/get';
+import BillAllocationForm from '../BillAllocationForm';
+import PaymentSelect from '../../PaymentSelect';
 
 // 候选人账单
 const ProjectBillInfoFormInner = createWithRemoteLoader({
   modules: ['components-core:FormInfo']
 })(({ remoteModules, record }) => {
   const [FormInfo] = remoteModules;
-  const { TableList, List } = FormInfo;
+  const { List } = FormInfo;
   const { Input, RadioGroup, Upload, MoneyInput, DatePicker, InputNumber, AdvancedSelect } = FormInfo.fields;
 
   const onsiteFields = [
@@ -69,13 +71,25 @@ const ProjectBillInfoFormInner = createWithRemoteLoader({
     <>
       <FormInfo
         list={[
-          <Input name="clientName" label="客户" rule="REQ" />,
+          <AdvancedSelect
+            name="clientId"
+            label="客户"
+            single
+            allowClear={false}
+            showSelectedTag={false}
+            disabled
+            api={{
+              loader: () => ({
+                pageData: [{ label: get(record, 'bill.clientName'), value: get(record, 'bill.clientId') }]
+              })
+            }}
+          />,
           /**
            TODO
            * 所选候选人所在职位无项目，显示合同
            * 所选候选人所在职位都有项目，不显示合同
            */
-          <ContractSelect name="contractId" label="合同" rule="REQ" />,
+          <ContractSelect name="contractId" label="合同" rule="REQ" api={{ data: { clientId: get(record, 'bill.clientId'), states: [5, 7] } }} />,
           /**
            TODO
            * 所选候选人所在职位有项目，显示项目，不可修改
@@ -87,28 +101,26 @@ const ProjectBillInfoFormInner = createWithRemoteLoader({
             label="费用类别"
             rule="REQ"
             options={[
-              {
-                value: '1',
-                label: '招聘费'
-              },
-              { value: '2', label: '服务费' }
+              { value: 1, label: '招聘费' },
+              { value: 2, label: '服务费' }
             ]}
           />
         ]}
       />
       <List
         title="账单费用信息"
+        itemTitle={({ index }) => '账单类目' + (index + 1)}
         name="billItems"
-        list={(key, list, context) => {
+        list={(key, { index }, context) => {
           const { formData } = context;
-          const billType = get(formData, `billItems[${list.index}].billItem.typeId`);
+          const billType = get(formData, `billItems[${index}].typeId`);
+          console.log('billType===', formData, index, billType);
           const moreFields = (billType && fieldsMapping[billType]) || [];
           return [
             <RadioGroup
               name="typeId"
               label="账单类目"
               rule="REQ"
-              value="1"
               options={[
                 { value: 1, label: 'onsite' },
                 { value: 2, label: 'mapping' },
@@ -125,16 +137,11 @@ const ProjectBillInfoFormInner = createWithRemoteLoader({
           ];
         }}
       />
-      <FormInfo title="付款信息" list={[<Input name="paymentId" label="付款信息" rule="REQ" />]} />
-      <TableList
-        title="业绩分配"
-        name="allocations"
-        list={[
-          <Input name="uid" label="分配用户" rule="REQ" />,
-          <Input name="amount" label="分配金额" rule="REQ" />,
-          <Input name="amountPercent" label="分配比例" rule="REQ" />
-        ]}
+      <FormInfo
+        title="付款信息"
+        list={[<PaymentSelect name="paymentId" label="付款信息" rule="REQ" api={{ data: { clientId: get(record, 'bill.clientId'), state: 5 } }} />]}
       />
+      <BillAllocationForm record={record} />
     </>
   );
 });

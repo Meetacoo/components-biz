@@ -26,7 +26,7 @@ const PaymentSelect = createWithRemoteLoader({
       single
       dataFormat={data => {
         return {
-          list: data.pageData.map(item => Object.assign({}, item, { value: item.id, label: item.invoiceTitle })),
+          list: (data.pageData || []).map(item => Object.assign({}, item, { value: item.id, label: item.invoiceTitle })),
           total: data.totalCount
         };
       }}
@@ -59,7 +59,7 @@ const PaymentSelect = createWithRemoteLoader({
           name: text
         };
       }}
-      api={merge({}, apis.payment.getList, propsApi)}
+      api={merge({}, apis.payment.getPaymentList, propsApi)}
     >
       {({ components, value }) => {
         return (

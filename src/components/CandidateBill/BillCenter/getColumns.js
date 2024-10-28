@@ -33,7 +33,7 @@ const getColumns = ({ formatView }) => {
       title: '客户',
       type: 'mainInfo',
       onClick: ({ colItem }) => {
-        window.open(`/client/${get(colItem, 'clientId')}`, '_blank');
+        window.open(`/client/${get(colItem, 'clientId')}?tab=contract`, '_blank');
       }
     },
     {

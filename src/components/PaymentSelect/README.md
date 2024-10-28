@@ -30,7 +30,7 @@ const BaseExample = createWithRemoteLoader({
       preset={{
         apis: {
           payment: {
-            getList: {
+            getPaymentList: {
               loader: () => {
                 return paymentList.data;
               }
