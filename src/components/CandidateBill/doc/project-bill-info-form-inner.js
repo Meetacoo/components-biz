@@ -93,6 +93,11 @@ const BaseExample = createWithRemoteLoader({
               loader: () => {
                 return paymentList;
               }
+            },
+            getPaymentById: {
+              loader: ({ params }) => {
+                return paymentList.data.pageData[params.id];
+              }
             }
           }
         }

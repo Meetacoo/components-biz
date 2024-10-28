@@ -12,7 +12,7 @@ const BaseExample = createWithRemoteLoader({
       preset={{
         apis: {
           payment: {
-            getDetail: {
+            getPaymentById: {
               loader: ({ params }) => {
                 return paymentList.data.pageData[params.id];
               }
