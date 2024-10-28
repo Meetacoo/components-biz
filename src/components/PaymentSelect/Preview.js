@@ -98,7 +98,7 @@ const Preview = createWithRemoteLoader({
   const { apis } = usePreset();
   return (
     <Fetch
-      {...Object.assign({}, apis.payment.getDetail, {
+      {...Object.assign({}, apis.payment.getPaymentById, {
         params: { id }
       })}
       render={({ data }) => <Detail data={data} />}

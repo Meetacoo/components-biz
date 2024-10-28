@@ -1,6 +1,5 @@
 import { createWithRemoteLoader } from '@kne/remote-loader';
 import { get } from 'lodash';
-import { useMemo } from 'react';
 import { billTransform } from '../index';
 
 const BillAllocationForm = createWithRemoteLoader({
@@ -11,7 +10,6 @@ const BillAllocationForm = createWithRemoteLoader({
   const { Input, MoneyInput, SuperSelectUser } = FormInfo.fields;
   const { apis } = usePreset();
 
-  const userMap = useMemo(() => new Map((get(record, 'userInfos') || []).map(item => [item.uid, item])), [record]);
   return (
     <TableList
       title="业绩分配"
@@ -30,8 +28,9 @@ const BillAllocationForm = createWithRemoteLoader({
             dataFormat={({ pageData = [], totalCount }) => {
               const currentUid = get(formData, `allocations[${allocationIndex}].uid`);
               const selectedUids = (formData.allocations || []).filter(x => x.uid && x.uid.value !== currentUid).map(item => item.uid.value);
+              const userMap = new Map((pageData || []).map(item => [item.uid, item]));
               return {
-                list: pageData.map(item => ({
+                list: (pageData || []).map(item => ({
                   ...item,
                   label: billTransform.getUserName({ userMap, user: item }),
                   value: get(item, 'uid'),
