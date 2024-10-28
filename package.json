@@ -1,6 +1,6 @@
 {
   "name": "@kne-components/components-biz",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "业务组件库",
   "scripts": {
     "init": "husky",
