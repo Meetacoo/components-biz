@@ -25,7 +25,7 @@ const BaseExample = createWithRemoteLoader({
             },
             getContractById: {
               loader: () => {
-                return contractData.data.pageData[0];
+                return contractData.pageData[0];
               }
             }
           }

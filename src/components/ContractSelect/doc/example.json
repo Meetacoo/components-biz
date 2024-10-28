@@ -34,7 +34,7 @@
           "packageName": "@kne/remote-loader"
         },
         {
-          "name": "_data",
+          "name": "_dataDetail",
           "packageName": "@components/ContractSelect/doc/contractDetailData.json"
         }
       ]

@@ -7,7 +7,8 @@ const { default: userListData } = _userListData;
 const { default: positionListData } = _positionListData;
 const { data: userList } = userListData;
 const { data: positionList } = positionListData;
-const { default: paymentList } = _paymentList;
+const { data: paymentList } = _paymentList;
+const { range } = _lodash;
 
 const BaseExample = createWithRemoteLoader({
   modules: ['components-core:FormInfo@Form', 'components-core:Global@PureGlobal']
@@ -68,7 +69,7 @@ const BaseExample = createWithRemoteLoader({
             },
             getContractById: {
               loader: () => {
-                return contractData.data.pageData[0];
+                return contractData.pageData[0];
               }
             }
           },
@@ -94,7 +95,7 @@ const BaseExample = createWithRemoteLoader({
             },
             getPaymentById: {
               loader: ({ params }) => {
-                return paymentList.data.pageData[params.id];
+                return paymentList.pageData[params.id];
               }
             }
           }

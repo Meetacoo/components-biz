@@ -1,6 +1,7 @@
 const { Preview } = _ContractSelect;
 const { createWithRemoteLoader } = remoteLoader;
-const { data: contractData } = _data;
+const { data: contractDetail } = _dataDetail;
+
 const BaseExample = createWithRemoteLoader({
   modules: ['components-core:Global@PureGlobal']
 })(({ remoteModules }) => {
@@ -15,14 +16,9 @@ const BaseExample = createWithRemoteLoader({
             }
           },
           contract: {
-            getContractList: {
-              loader: () => {
-                return contractData;
-              }
-            },
             getContractById: {
               loader: () => {
-                return contractData.data.pageData[0];
+                return contractDetail;
               }
             }
           }
