@@ -2,6 +2,8 @@ const { BillCenter, BILL_STATE_ENUM } = _CandidateBill;
 const { createWithRemoteLoader } = remoteLoader;
 const { listData } = mockData;
 const { range } = _lodash;
+const { default: paymentList } = _paymentList;
+
 const BaseExample = createWithRemoteLoader({
   modules: ['components-core:Global@PureGlobal', 'components-core:Layout']
 })(({ remoteModules }) => {
@@ -85,6 +87,13 @@ const BaseExample = createWithRemoteLoader({
             },
             saveBill: {
               loader: () => {}
+            }
+          },
+          payment: {
+            getPaymentList: {
+              loader: () => {
+                return paymentList;
+              }
             }
           }
         },
