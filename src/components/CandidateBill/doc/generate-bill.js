@@ -1,6 +1,7 @@
 const { createWithRemoteLoader } = remoteLoader;
 const { GenerateBill, GenerateProjectBill } = _CandidateBill;
 const { Button, Space } = antd;
+const { range } = _lodash;
 const { default: projectListData } = _projectListData;
 const { data: contractData } = _data;
 const { CONTRACT_STATE_ENUM } = _ContractSelect;
@@ -72,7 +73,7 @@ const BaseExample = createWithRemoteLoader({
             },
             getContractById: {
               loader: () => {
-                return contractData.data.pageData[0];
+                return contractData.pageData[0];
               }
             }
           },
@@ -100,7 +101,7 @@ const BaseExample = createWithRemoteLoader({
           payment: {
             getPaymentList: {
               loader: () => {
-                return paymentList;
+                return paymentList.data;
               }
             },
             getPaymentById: {

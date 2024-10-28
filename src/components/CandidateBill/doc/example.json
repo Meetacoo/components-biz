@@ -56,6 +56,10 @@
         {
           "name": "_paymentList",
           "packageName": "@components/PaymentSelect/doc/paymentList.json"
+        },
+        {
+          "name": "_lodash",
+          "packageName": "lodash"
         }
       ]
     },
@@ -95,6 +99,10 @@
         {
           "name": "_paymentList",
           "packageName": "@components/PaymentSelect/doc/paymentList.json"
+        },
+        {
+          "name": "_lodash",
+          "packageName": "lodash"
         }
       ]
     },
@@ -124,10 +132,6 @@
           "packageName": "@components/ContractSelect/doc/contractListData.json"
         },
         {
-          "name": "_detailData",
-          "packageName": "@components/ContractSelect/doc/contractDetailData.json"
-        },
-        {
           "name": "_userListData",
           "packageName": "@components/CandidateSelect/doc/userListData.json"
         },
@@ -138,6 +142,10 @@
         {
           "name": "_paymentList",
           "packageName": "@components/PaymentSelect/doc/paymentList.json"
+        },
+        {
+          "name": "_lodash",
+          "packageName": "lodash"
         }
       ]
     },
@@ -165,6 +173,10 @@
         {
           "name": "_paymentList",
           "packageName": "@components/PaymentSelect/doc/paymentList.json"
+        },
+        {
+          "name": "_contractList",
+          "packageName": "@components/ContractSelect/doc/contractListData.json"
         }
       ]
     },

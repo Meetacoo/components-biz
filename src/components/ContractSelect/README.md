@@ -43,7 +43,7 @@ const BaseExample = createWithRemoteLoader({
             },
             getContractById: {
               loader: () => {
-                return contractData.data.pageData[0];
+                return contractData.pageData[0];
               }
             }
           }
@@ -71,12 +71,13 @@ render(<BaseExample />);
 
 - preview
 - 合同预览
-- _ContractSelect(@components/ContractSelect),remoteLoader(@kne/remote-loader),_data(@components/ContractSelect/doc/contractDetailData.json)
+- _ContractSelect(@components/ContractSelect),remoteLoader(@kne/remote-loader),_dataDetail(@components/ContractSelect/doc/contractDetailData.json)
 
 ```jsx
 const { Preview } = _ContractSelect;
 const { createWithRemoteLoader } = remoteLoader;
-const { data: contractData } = _data;
+const { data: contractDetail } = _dataDetail;
+
 const BaseExample = createWithRemoteLoader({
   modules: ['components-core:Global@PureGlobal']
 })(({ remoteModules }) => {
@@ -91,14 +92,9 @@ const BaseExample = createWithRemoteLoader({
             }
           },
           contract: {
-            getContractList: {
-              loader: () => {
-                return contractData;
-              }
-            },
             getContractById: {
               loader: () => {
-                return contractData.data.pageData[0];
+                return contractDetail;
               }
             }
           }

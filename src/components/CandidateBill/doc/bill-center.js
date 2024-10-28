@@ -2,7 +2,8 @@ const { BillCenter, BILL_STATE_ENUM } = _CandidateBill;
 const { createWithRemoteLoader } = remoteLoader;
 const { listData } = mockData;
 const { range } = _lodash;
-const { default: paymentList } = _paymentList;
+const { data: paymentList } = _paymentList;
+const { data: contractData } = _contractList;
 
 const BaseExample = createWithRemoteLoader({
   modules: ['components-core:Global@PureGlobal', 'components-core:Layout']
@@ -97,7 +98,7 @@ const BaseExample = createWithRemoteLoader({
             },
             getPaymentById: {
               loader: ({ params }) => {
-                return paymentList.data.pageData[params.id];
+                return paymentList.pageData[params.id];
               }
             }
           }

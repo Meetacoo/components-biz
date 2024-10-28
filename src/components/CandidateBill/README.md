@@ -27,12 +27,13 @@ render(<BaseExample />);
 
 - 生成账单
 - 生成账单
-- remoteLoader(@kne/remote-loader),antd(antd),_CandidateBill(@components/CandidateBill),_projectListData(@components/ProjectSelect/doc/projectList.json),_ContractSelect(@components/ContractSelect),_data(@components/ContractSelect/doc/contractListData.json),_userListData(@components/CandidateSelect/doc/userListData.json),_positionListData(@components/CandidateSelect/doc/positionListData.json),_paymentData(@components/BillNotice/doc/paymentData.json),_paymentList(@components/PaymentSelect/doc/paymentList.json)
+- remoteLoader(@kne/remote-loader),antd(antd),_CandidateBill(@components/CandidateBill),_projectListData(@components/ProjectSelect/doc/projectList.json),_ContractSelect(@components/ContractSelect),_data(@components/ContractSelect/doc/contractListData.json),_userListData(@components/CandidateSelect/doc/userListData.json),_positionListData(@components/CandidateSelect/doc/positionListData.json),_paymentData(@components/BillNotice/doc/paymentData.json),_paymentList(@components/PaymentSelect/doc/paymentList.json),_lodash(lodash)
 
 ```jsx
 const { createWithRemoteLoader } = remoteLoader;
 const { GenerateBill, GenerateProjectBill } = _CandidateBill;
 const { Button, Space } = antd;
+const { range } = _lodash;
 const { default: projectListData } = _projectListData;
 const { data: contractData } = _data;
 const { CONTRACT_STATE_ENUM } = _ContractSelect;
@@ -104,7 +105,7 @@ const BaseExample = createWithRemoteLoader({
             },
             getContractById: {
               loader: () => {
-                return contractData.data.pageData[0];
+                return contractData.pageData[0];
               }
             }
           },
@@ -132,7 +133,7 @@ const BaseExample = createWithRemoteLoader({
           payment: {
             getPaymentList: {
               loader: () => {
-                return paymentList;
+                return paymentList.data;
               }
             },
             getPaymentById: {
@@ -188,7 +189,7 @@ render(<BaseExample />);
 
 - 生成候选人账单表单
 - 生成候选人账单表单
-- remoteLoader(@kne/remote-loader),_CandidateBill(@components/CandidateBill),_projectListData(@components/ProjectSelect/doc/projectList.json),_ContractSelect(@components/ContractSelect),_data(@components/ContractSelect/doc/contractListData.json),_userListData(@components/CandidateSelect/doc/userListData.json),_positionListData(@components/CandidateSelect/doc/positionListData.json),_paymentList(@components/PaymentSelect/doc/paymentList.json)
+- remoteLoader(@kne/remote-loader),_CandidateBill(@components/CandidateBill),_projectListData(@components/ProjectSelect/doc/projectList.json),_ContractSelect(@components/ContractSelect),_data(@components/ContractSelect/doc/contractListData.json),_userListData(@components/CandidateSelect/doc/userListData.json),_positionListData(@components/CandidateSelect/doc/positionListData.json),_paymentList(@components/PaymentSelect/doc/paymentList.json),_lodash(lodash)
 
 ```jsx
 const { BillInfoFormInner } = _CandidateBill;
@@ -200,7 +201,8 @@ const { default: userListData } = _userListData;
 const { default: positionListData } = _positionListData;
 const { data: userList } = userListData;
 const { data: positionList } = positionListData;
-const { default: paymentList } = _paymentList;
+const { data: paymentList } = _paymentList;
+const { range } = _lodash;
 
 const BaseExample = createWithRemoteLoader({
   modules: ['components-core:FormInfo@Form', 'components-core:Global@PureGlobal']
@@ -261,7 +263,7 @@ const BaseExample = createWithRemoteLoader({
             },
             getContractById: {
               loader: () => {
-                return contractData.data.pageData[0];
+                return contractData.pageData[0];
               }
             }
           },
@@ -287,7 +289,7 @@ const BaseExample = createWithRemoteLoader({
             },
             getPaymentById: {
               loader: ({ params }) => {
-                return paymentList.data.pageData[params.id];
+                return paymentList.pageData[params.id];
               }
             }
           }
@@ -307,15 +309,15 @@ render(<BaseExample />);
 
 - 生成项目账单表单
 - 生成项目账单表单
-- remoteLoader(@kne/remote-loader),_CandidateBill(@components/CandidateBill),_projectListData(@components/ProjectSelect/doc/projectList.json),_ContractSelect(@components/ContractSelect),_data(@components/ContractSelect/doc/contractListData.json),_detailData(@components/ContractSelect/doc/contractDetailData.json),_userListData(@components/CandidateSelect/doc/userListData.json),_positionListData(@components/CandidateSelect/doc/positionListData.json),_paymentList(@components/PaymentSelect/doc/paymentList.json)
+- remoteLoader(@kne/remote-loader),_CandidateBill(@components/CandidateBill),_projectListData(@components/ProjectSelect/doc/projectList.json),_ContractSelect(@components/ContractSelect),_data(@components/ContractSelect/doc/contractListData.json),_userListData(@components/CandidateSelect/doc/userListData.json),_positionListData(@components/CandidateSelect/doc/positionListData.json),_paymentList(@components/PaymentSelect/doc/paymentList.json),_lodash(lodash)
 
 ```jsx
 const { ProjectBillInfoFormInner } = _CandidateBill;
 const { createWithRemoteLoader } = remoteLoader;
 const { default: projectListData } = _projectListData;
 const { data: contractData } = _data;
-const { data: contractDetailData } = _detailData;
 const { CONTRACT_STATE_ENUM } = _ContractSelect;
+const { range } = _lodash;
 
 const { default: userListData } = _userListData;
 const { default: positionListData } = _positionListData;
@@ -382,7 +384,7 @@ const BaseExample = createWithRemoteLoader({
             },
             getContractById: {
               loader: () => {
-                return contractDetailData;
+                return contractData.pageData[0];
               }
             }
           },
@@ -403,7 +405,7 @@ const BaseExample = createWithRemoteLoader({
           payment: {
             getPaymentList: {
               loader: () => {
-                return paymentList;
+                return paymentList.data;
               }
             },
             getPaymentById: {
@@ -428,14 +430,15 @@ render(<BaseExample />);
 
 - 账单中心
 - 账单中心
-- remoteLoader(@kne/remote-loader),_CandidateBill(@components/CandidateBill),mockData(@components/CandidateBill/doc/mock),_lodash(lodash),_paymentList(@components/PaymentSelect/doc/paymentList.json)
+- remoteLoader(@kne/remote-loader),_CandidateBill(@components/CandidateBill),mockData(@components/CandidateBill/doc/mock),_lodash(lodash),_paymentList(@components/PaymentSelect/doc/paymentList.json),_contractList(@components/ContractSelect/doc/contractListData.json)
 
 ```jsx
 const { BillCenter, BILL_STATE_ENUM } = _CandidateBill;
 const { createWithRemoteLoader } = remoteLoader;
 const { listData } = mockData;
 const { range } = _lodash;
-const { default: paymentList } = _paymentList;
+const { data: paymentList } = _paymentList;
+const { data: contractData } = _contractList;
 
 const BaseExample = createWithRemoteLoader({
   modules: ['components-core:Global@PureGlobal', 'components-core:Layout']
@@ -530,7 +533,7 @@ const BaseExample = createWithRemoteLoader({
             },
             getPaymentById: {
               loader: ({ params }) => {
-                return paymentList.data.pageData[params.id];
+                return paymentList.pageData[params.id];
               }
             }
           }
