@@ -1,8 +1,9 @@
 import { createWithRemoteLoader } from '@kne/remote-loader';
 import merge from 'lodash/merge';
+import get from 'lodash/get';
 import { Row, Col, Flex, Alert, Button } from 'antd';
 import classnames from 'classnames';
-import { Detail } from './Preview';
+import Preview from './Preview';
 import style from './style.module.scss';
 
 const PaymentSelect = createWithRemoteLoader({
@@ -10,12 +11,10 @@ const PaymentSelect = createWithRemoteLoader({
     'components-core:FormInfo@fields',
     'components-core:Global@usePreset',
     'components-core:Common@SimpleBar',
-    'components-core:StateTag',
-    'components-core:Enum',
     'components-core:Modal@useModal'
   ]
 })(({ remoteModules, api: propsApi, ...props }) => {
-  const [fields, usePreset, SimpleBar, StateTag, Enum, useModal] = remoteModules;
+  const [fields, usePreset, SimpleBar, useModal] = remoteModules;
   const { SuperSelect } = fields;
   const { apis } = usePreset();
   const modal = useModal();
@@ -26,7 +25,12 @@ const PaymentSelect = createWithRemoteLoader({
       single
       dataFormat={data => {
         return {
-          list: (data.pageData || []).map(item => Object.assign({}, item, { value: item.id, label: item.invoiceTitle })),
+          list: (data.pageData || []).map(item =>
+            Object.assign({}, item, {
+              value: item.id,
+              label: item.invoiceTitle
+            })
+          ),
           total: data.totalCount
         };
       }}
@@ -38,7 +42,7 @@ const PaymentSelect = createWithRemoteLoader({
               onClick={() => {
                 modal({
                   title: '付款信息预览',
-                  children: <Detail data={value[0]} />
+                  children: <Preview id={get(value[0], 'value')} />
                 });
               }}
             >
@@ -79,7 +83,7 @@ const PaymentSelect = createWithRemoteLoader({
                 >
                   <Flex vertical gap={24}>
                     <div>预览</div>
-                    {value[0] && <Detail data={value[0]} />}
+                    {value[0] && <Preview id={get(value[0], 'value')} />}
                   </Flex>
                 </SimpleBar>
               </Col>

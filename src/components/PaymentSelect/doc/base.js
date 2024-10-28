@@ -16,14 +16,30 @@ const BaseExample = createWithRemoteLoader({
               loader: () => {
                 return paymentList.data;
               }
+            },
+            getPaymentById: {
+              loader: () => {
+                return paymentList.data.pageData[0];
+              }
             }
           }
         },
         enums: { INVOICE_TYPE_ENUM }
       }}
     >
-      <Form>
+      <Form
+        data={{
+          payment2: (() => {
+            const value = paymentList.data.pageData[0];
+            return {
+              value: value.id,
+              label: value.invoiceTitle
+            };
+          })()
+        }}
+      >
         <PaymentSelect name="payment" label="付款信息" />
+        <PaymentSelect name="payment2" label="付款信息(有默认值)" />
       </Form>
     </PureGlobal>
   );
