@@ -2,7 +2,7 @@ const getColumns = () => {
   return [
     {
       title: '业务子类',
-      name: 'ProjectSelect',
+      name: 'rsywzl',
       type: 'serialNumberShort',
       fixed: 'left'
     },
