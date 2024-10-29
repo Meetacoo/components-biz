@@ -1,0 +1,122 @@
+{
+  "msg": "",
+  "data": {
+    "flowNodes": [
+      {
+        "id": 48,
+        "flowId": 11,
+        "flowNodeName": "opleader审批（无合同）",
+        "roleType": 6,
+        "remark": null,
+        "auditType": "AND",
+        "actionType": 1,
+        "createAt": "2023-02-16T09:45:15.000+08:00",
+        "level": 2,
+        "userList": [
+          {
+            "userId": 107,
+            "userName": "李白"
+          }
+        ],
+        "roleIds": null,
+        "selectRole": null,
+        "optionalRange": 1
+      },
+      {
+        "id": 77,
+        "flowId": 11,
+        "flowNodeName": "审批人",
+        "roleType": 3,
+        "remark": null,
+        "auditType": "AND",
+        "actionType": 1,
+        "createAt": "2023-02-17T07:37:08.000+08:00",
+        "level": 3,
+        "userList": [
+          {
+            "userId": 10496,
+            "userName": "莎莎"
+          },
+          {
+            "userId": 104,
+            "userName": "樊贝贝"
+          },
+          {
+            "userId": 52,
+            "userName": "黄远山"
+          },
+          {
+            "userId": 107,
+            "userName": "李白"
+          }
+        ],
+        "roleIds": null,
+        "selectRole": null,
+        "optionalRange": 1
+      },
+      {
+        "id": 73,
+        "flowId": 11,
+        "flowNodeName": "财务审批-或签",
+        "roleType": 3,
+        "remark": null,
+        "auditType": "OR",
+        "actionType": 1,
+        "createAt": "2023-02-17T06:21:11.000+08:00",
+        "level": 4,
+        "userList": [
+          {
+            "userId": 10496,
+            "userName": "莎莎"
+          },
+          {
+            "userId": 104,
+            "userName": "樊贝贝"
+          },
+          {
+            "userId": 52,
+            "userName": "黄远山"
+          },
+          {
+            "userId": 107,
+            "userName": "李白"
+          },
+          {
+            "userId": 10436,
+            "userName": "曹操"
+          }
+        ],
+        "roleIds": null,
+        "selectRole": null,
+        "optionalRange": 1
+      },
+      {
+        "id": 144,
+        "flowId": 11,
+        "flowNodeName": "抄送人",
+        "roleType": 3,
+        "remark": null,
+        "auditType": null,
+        "actionType": 2,
+        "createAt": "2023-02-21T05:16:38.000+08:00",
+        "level": 6,
+        "userList": [
+          {
+            "userId": 10438,
+            "userName": "关羽"
+          },
+          {
+            "userId": 86,
+            "userName": "刘志凯"
+          }
+        ],
+        "roleIds": null,
+        "selectRole": null,
+        "optionalRange": null
+      }
+    ]
+  },
+  "code": 0,
+  "success": true,
+  "failure": false
+}

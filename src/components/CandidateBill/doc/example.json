@@ -13,6 +13,25 @@
       ]
     },
     {
+      "title": "ApprovalProcess",
+      "description": "流程配置",
+      "code": "./approval-process.js",
+      "scope": [
+        {
+          "name": "_CandidateBill",
+          "packageName": "@components/CandidateBill"
+        },
+        {
+          "name": "remoteLoader",
+          "packageName": "@kne/remote-loader"
+        },
+        {
+          "name": "_flowData",
+          "packageName": "@components/CandidateBill/doc/mock/flow.json"
+        }
+      ]
+    },
+    {
       "title": "生成账单",
       "description": "生成账单",
       "code": "./generate-bill.js",
@@ -58,6 +77,10 @@
           "packageName": "@components/PaymentSelect/doc/paymentList.json"
         },
         {
+          "name": "_flowData",
+          "packageName": "@components/CandidateBill/doc/mock/flow.json"
+        },
+        {
           "name": "_lodash",
           "packageName": "lodash"
         }
@@ -99,6 +122,10 @@
         {
           "name": "_paymentList",
           "packageName": "@components/PaymentSelect/doc/paymentList.json"
+        },
+        {
+          "name": "_flowData",
+          "packageName": "@components/CandidateBill/doc/mock/flow.json"
         },
         {
           "name": "_lodash",
@@ -144,6 +171,10 @@
           "packageName": "@components/PaymentSelect/doc/paymentList.json"
         },
         {
+          "name": "_flowData",
+          "packageName": "@components/CandidateBill/doc/mock/flow.json"
+        },
+        {
           "name": "_lodash",
           "packageName": "lodash"
         }
@@ -173,6 +204,10 @@
         {
           "name": "_paymentList",
           "packageName": "@components/PaymentSelect/doc/paymentList.json"
+        },
+        {
+          "name": "_flowData",
+          "packageName": "@components/CandidateBill/doc/mock/flow.json"
         },
         {
           "name": "_contractList",

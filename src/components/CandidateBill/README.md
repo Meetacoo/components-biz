@@ -25,9 +25,50 @@ render(<BaseExample />);
 
 ```
 
+- ApprovalProcess
+- 流程配置
+- _CandidateBill(@components/CandidateBill),remoteLoader(@kne/remote-loader),_flowData(@components/CandidateBill/doc/mock/flow.json)
+
+```jsx
+const { ApprovalProcess, FLOW_USER } = _CandidateBill;
+const { createWithRemoteLoader } = remoteLoader;
+const { default: flowData } = _flowData;
+const BaseExample = createWithRemoteLoader({
+  modules: ['components-core:Global@PureGlobal', 'components-core:FormInfo@Form']
+})(({ remoteModules }) => {
+  const [PureGlobal, Form] = remoteModules;
+  return <PureGlobal preset={{
+    apis: {
+      flow: {
+        getFlowCondition: {
+          loader: () => {
+            return {
+              'conditions': [{
+                'columnName': 'withoutContractType'
+              }], 'flowNo': '1004'
+            };
+          }
+        }, getNodesList: {
+          loader: () => {
+            return flowData.data;
+          }
+        }
+      }
+    }
+  }}>
+    <Form rules={{ FLOW_USER }}>
+      <ApprovalProcess label="账单审批流程" name="flowRequest" rule="REQ FLOW_USER" />
+    </Form>
+  </PureGlobal>;
+});
+
+render(<BaseExample />);
+
+```
+
 - 生成账单
 - 生成账单
-- remoteLoader(@kne/remote-loader),antd(antd),_CandidateBill(@components/CandidateBill),_projectListData(@components/ProjectSelect/doc/projectList.json),_ContractSelect(@components/ContractSelect),_data(@components/ContractSelect/doc/contractListData.json),_userListData(@components/CandidateSelect/doc/userListData.json),_positionListData(@components/CandidateSelect/doc/positionListData.json),_paymentData(@components/BillNotice/doc/paymentData.json),_paymentList(@components/PaymentSelect/doc/paymentList.json),_lodash(lodash)
+- remoteLoader(@kne/remote-loader),antd(antd),_CandidateBill(@components/CandidateBill),_projectListData(@components/ProjectSelect/doc/projectList.json),_ContractSelect(@components/ContractSelect),_data(@components/ContractSelect/doc/contractListData.json),_userListData(@components/CandidateSelect/doc/userListData.json),_positionListData(@components/CandidateSelect/doc/positionListData.json),_paymentData(@components/BillNotice/doc/paymentData.json),_paymentList(@components/PaymentSelect/doc/paymentList.json),_flowData(@components/CandidateBill/doc/mock/flow.json),_lodash(lodash)
 
 ```jsx
 const { createWithRemoteLoader } = remoteLoader;
@@ -46,6 +87,8 @@ const { data: positionList } = positionListData;
 const { default: paymentData } = _paymentData;
 const { default: paymentList } = _paymentList;
 
+const { default: flowData } = _flowData;
+
 const BaseExample = createWithRemoteLoader({
   modules: ['components-core:Global@PureGlobal']
 })(({ remoteModules }) => {
@@ -57,6 +100,21 @@ const BaseExample = createWithRemoteLoader({
           CONTRACT_STATE_ENUM
         },
         apis: {
+          flow: {
+            getFlowCondition: {
+              loader: () => {
+                return {
+                  'conditions': [{
+                    'columnName': 'withoutContractType'
+                  }], 'flowNo': '1004'
+                };
+              }
+            }, getNodesList: {
+              loader: () => {
+                return flowData.data;
+              }
+            }
+          },
           user: {
             getUserList: {
               loader: ({ data }) => {
@@ -189,7 +247,7 @@ render(<BaseExample />);
 
 - 生成候选人账单表单
 - 生成候选人账单表单
-- remoteLoader(@kne/remote-loader),_CandidateBill(@components/CandidateBill),_projectListData(@components/ProjectSelect/doc/projectList.json),_ContractSelect(@components/ContractSelect),_data(@components/ContractSelect/doc/contractListData.json),_userListData(@components/CandidateSelect/doc/userListData.json),_positionListData(@components/CandidateSelect/doc/positionListData.json),_paymentList(@components/PaymentSelect/doc/paymentList.json),_lodash(lodash)
+- remoteLoader(@kne/remote-loader),_CandidateBill(@components/CandidateBill),_projectListData(@components/ProjectSelect/doc/projectList.json),_ContractSelect(@components/ContractSelect),_data(@components/ContractSelect/doc/contractListData.json),_userListData(@components/CandidateSelect/doc/userListData.json),_positionListData(@components/CandidateSelect/doc/positionListData.json),_paymentList(@components/PaymentSelect/doc/paymentList.json),_flowData(@components/CandidateBill/doc/mock/flow.json),_lodash(lodash)
 
 ```jsx
 const { BillInfoFormInner } = _CandidateBill;
@@ -203,6 +261,7 @@ const { data: userList } = userListData;
 const { data: positionList } = positionListData;
 const { data: paymentList } = _paymentList;
 const { range } = _lodash;
+const { default: flowData } = _flowData;
 
 const BaseExample = createWithRemoteLoader({
   modules: ['components-core:FormInfo@Form', 'components-core:Global@PureGlobal']
@@ -215,6 +274,21 @@ const BaseExample = createWithRemoteLoader({
           CONTRACT_STATE_ENUM
         },
         apis: {
+          flow: {
+            getFlowCondition: {
+              loader: () => {
+                return {
+                  'conditions': [{
+                    'columnName': 'withoutContractType'
+                  }], 'flowNo': '1004'
+                };
+              }
+            }, getNodesList: {
+              loader: () => {
+                return flowData.data;
+              }
+            }
+          },
           user: {
             getUserList: {
               loader: ({ data }) => {
@@ -309,7 +383,7 @@ render(<BaseExample />);
 
 - 生成项目账单表单
 - 生成项目账单表单
-- remoteLoader(@kne/remote-loader),_CandidateBill(@components/CandidateBill),_projectListData(@components/ProjectSelect/doc/projectList.json),_ContractSelect(@components/ContractSelect),_data(@components/ContractSelect/doc/contractListData.json),_userListData(@components/CandidateSelect/doc/userListData.json),_positionListData(@components/CandidateSelect/doc/positionListData.json),_paymentList(@components/PaymentSelect/doc/paymentList.json),_lodash(lodash)
+- remoteLoader(@kne/remote-loader),_CandidateBill(@components/CandidateBill),_projectListData(@components/ProjectSelect/doc/projectList.json),_ContractSelect(@components/ContractSelect),_data(@components/ContractSelect/doc/contractListData.json),_userListData(@components/CandidateSelect/doc/userListData.json),_positionListData(@components/CandidateSelect/doc/positionListData.json),_paymentList(@components/PaymentSelect/doc/paymentList.json),_flowData(@components/CandidateBill/doc/mock/flow.json),_lodash(lodash)
 
 ```jsx
 const { ProjectBillInfoFormInner } = _CandidateBill;
@@ -325,103 +399,99 @@ const { data: userList } = userListData;
 const { data: positionList } = positionListData;
 const { default: paymentList } = _paymentList;
 
+const { default: flowData } = _flowData;
+
 const BaseExample = createWithRemoteLoader({
   modules: ['components-core:FormInfo@Form', 'components-core:Global@PureGlobal']
 })(({ remoteModules }) => {
   const [Form, PureGlobal] = remoteModules;
-  return (
-    <PureGlobal
-      preset={{
-        enums: {
-          CONTRACT_STATE_ENUM
-        },
-        apis: {
-          user: {
-            getUserList: {
-              loader: ({ data }) => {
-                const params = Object.assign(
-                  {
-                    perPage: 20,
-                    currentPage: 1
-                  },
-                  data
-                );
-                return new Promise(resolve => {
-                  const start = (params.currentPage - 1) * params.perPage;
-                  resolve({
-                    totalCount: 100,
-                    pageData: range(start, start + params.perPage).map(key => {
-                      return {
-                        name: `用户${key + 1}`,
-                        id: key + 1,
-                        uid: key + 1,
-                        englishName: `User${key + 1}`
-                      };
-                    })
-                  });
+  return (<PureGlobal
+    preset={{
+      enums: {
+        CONTRACT_STATE_ENUM
+      }, apis: {
+        flow: {
+          getFlowCondition: {
+            loader: () => {
+              return {
+                'conditions': [{
+                  'columnName': 'withoutContractType'
+                }], 'flowNo': '1004'
+              };
+            }
+          }, getNodesList: {
+            loader: () => {
+              return flowData.data;
+            }
+          }
+        }, user: {
+          getUserList: {
+            loader: ({ data }) => {
+              const params = Object.assign({
+                perPage: 20, currentPage: 1
+              }, data);
+              return new Promise(resolve => {
+                const start = (params.currentPage - 1) * params.perPage;
+                resolve({
+                  totalCount: 100, pageData: range(start, start + params.perPage).map(key => {
+                    return {
+                      name: `用户${key + 1}`, id: key + 1, uid: key + 1, englishName: `User${key + 1}`
+                    };
+                  })
                 });
-              }
+              });
             }
-          },
-          client: {},
-          project: {
-            getList: {
-              loader: () => {
-                return projectListData.data;
-              }
-            },
-            getDetail: {
-              loader: () => {
-                return projectListData.data.projectList[0];
-              }
+          }
+        }, client: {}, project: {
+          getList: {
+            loader: () => {
+              return projectListData.data;
             }
-          },
-          contract: {
-            getContractList: {
-              loader: () => {
-                return contractData;
-              }
-            },
-            getContractById: {
-              loader: () => {
-                return contractData.pageData[0];
-              }
+          }, getDetail: {
+            loader: () => {
+              return projectListData.data.projectList[0];
             }
-          },
-          ats: {
-            getTrackingList: {
-              loader: () => {
-                return userList;
-              }
+          }
+        }, contract: {
+          getContractList: {
+            loader: () => {
+              return contractData;
             }
-          },
-          position: {
-            getMyList: {
-              loader: () => {
-                return positionList;
-              }
+          }, getContractById: {
+            loader: () => {
+              return contractData.pageData[0];
             }
-          },
-          payment: {
-            getPaymentList: {
-              loader: () => {
-                return paymentList.data;
-              }
-            },
-            getPaymentById: {
-              loader: ({ params }) => {
-                return paymentList.data.pageData[params.id];
-              }
+          }
+        }, ats: {
+          getTrackingList: {
+            loader: () => {
+              return userList;
+            }
+          }
+        }, position: {
+          getMyList: {
+            loader: () => {
+              return positionList;
+            }
+          }
+        }, payment: {
+          getPaymentList: {
+            loader: () => {
+              return paymentList.data;
+            }
+          }, getPaymentById: {
+            loader: ({ params }) => {
+              return paymentList.data.pageData[params.id];
             }
           }
         }
-      }}
-    >
-      <Form>
-        <ProjectBillInfoFormInner />
-      </Form>
-    </PureGlobal>
-  );
+      }
+    }}
+  >
+    <Form>
+      <ProjectBillInfoFormInner />
+    </Form>
+  </PureGlobal>);
 });
 
 render(<BaseExample />);
@@ -430,7 +500,7 @@ render(<BaseExample />);
 
 - 账单中心
 - 账单中心
-- remoteLoader(@kne/remote-loader),_CandidateBill(@components/CandidateBill),mockData(@components/CandidateBill/doc/mock),_lodash(lodash),_paymentList(@components/PaymentSelect/doc/paymentList.json),_contractList(@components/ContractSelect/doc/contractListData.json)
+- remoteLoader(@kne/remote-loader),_CandidateBill(@components/CandidateBill),mockData(@components/CandidateBill/doc/mock),_lodash(lodash),_paymentList(@components/PaymentSelect/doc/paymentList.json),_flowData(@components/CandidateBill/doc/mock/flow.json),_contractList(@components/ContractSelect/doc/contractListData.json)
 
 ```jsx
 const { BillCenter, BILL_STATE_ENUM } = _CandidateBill;
@@ -439,6 +509,7 @@ const { listData } = mockData;
 const { range } = _lodash;
 const { data: paymentList } = _paymentList;
 const { data: contractData } = _contractList;
+const { default: flowData } = _flowData;
 
 const BaseExample = createWithRemoteLoader({
   modules: ['components-core:Global@PureGlobal', 'components-core:Layout']
@@ -448,6 +519,21 @@ const BaseExample = createWithRemoteLoader({
     <PureGlobal
       preset={{
         apis: {
+          flow: {
+            getFlowCondition: {
+              loader: () => {
+                return {
+                  'conditions': [{
+                    'columnName': 'withoutContractType'
+                  }], 'flowNo': '1004'
+                };
+              }
+            }, getNodesList: {
+              loader: () => {
+                return flowData.data;
+              }
+            }
+          },
           client: {},
           user: {
             getUserList: {
@@ -572,6 +658,8 @@ render(<BaseExample />);
 const { BillCenterDetail } = _CandidateBill;
 const { createWithRemoteLoader } = remoteLoader;
 const { detailData } = mockData;
+const { default: flowData } = _flowData;
+
 const BaseExample = createWithRemoteLoader({
   modules: ['components-core:Global@PureGlobal', 'components-core:Layout']
 })(({ remoteModules }) => {
@@ -580,6 +668,21 @@ const BaseExample = createWithRemoteLoader({
     <PureGlobal
       preset={{
         apis: {
+          flow: {
+            getFlowCondition: {
+              loader: () => {
+                return {
+                  'conditions': [{
+                    'columnName': 'withoutContractType'
+                  }], 'flowNo': '1004'
+                };
+              }
+            }, getNodesList: {
+              loader: () => {
+                return flowData.data;
+              }
+            }
+          },
           candidateBill: {
             getBillDetail: {
               loader: () => detailData

@@ -14,6 +14,8 @@ const { data: positionList } = positionListData;
 const { default: paymentData } = _paymentData;
 const { default: paymentList } = _paymentList;
 
+const { default: flowData } = _flowData;
+
 const BaseExample = createWithRemoteLoader({
   modules: ['components-core:Global@PureGlobal']
 })(({ remoteModules }) => {
@@ -25,6 +27,25 @@ const BaseExample = createWithRemoteLoader({
           CONTRACT_STATE_ENUM
         },
         apis: {
+          flow: {
+            getFlowCondition: {
+              loader: () => {
+                return {
+                  conditions: [
+                    {
+                      columnName: 'withoutContractType'
+                    }
+                  ],
+                  flowNo: '1004'
+                };
+              }
+            },
+            getNodesList: {
+              loader: () => {
+                return flowData.data;
+              }
+            }
+          },
           user: {
             getUserList: {
               loader: ({ data }) => {

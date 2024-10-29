@@ -4,6 +4,7 @@ const { listData } = mockData;
 const { range } = _lodash;
 const { data: paymentList } = _paymentList;
 const { data: contractData } = _contractList;
+const { default: flowData } = _flowData;
 
 const BaseExample = createWithRemoteLoader({
   modules: ['components-core:Global@PureGlobal', 'components-core:Layout']
@@ -13,6 +14,25 @@ const BaseExample = createWithRemoteLoader({
     <PureGlobal
       preset={{
         apis: {
+          flow: {
+            getFlowCondition: {
+              loader: () => {
+                return {
+                  conditions: [
+                    {
+                      columnName: 'withoutContractType'
+                    }
+                  ],
+                  flowNo: '1004'
+                };
+              }
+            },
+            getNodesList: {
+              loader: () => {
+                return flowData.data;
+              }
+            }
+          },
           client: {},
           user: {
             getUserList: {
