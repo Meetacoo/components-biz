@@ -5,6 +5,7 @@ import CandidateSelect from '@components/CandidateSelect';
 import get from 'lodash/get';
 import BillAllocationForm from '../BillAllocationForm';
 import PaymentSelect from '../../PaymentSelect';
+import ApprovalProcess from '../ApprovalProcess';
 
 // 候选人账单
 const ProjectBillInfoFormInner = createWithRemoteLoader({
@@ -83,18 +84,16 @@ const ProjectBillInfoFormInner = createWithRemoteLoader({
                 pageData: [{ label: get(record, 'bill.clientName'), value: get(record, 'bill.clientId') }]
               })
             }}
-          />,
-          /**
-           TODO
-           * 所选候选人所在职位无项目，显示合同
-           * 所选候选人所在职位都有项目，不显示合同
-           */
-          <ContractSelect name="contractId" label="合同" rule="REQ" api={{ data: { clientId: get(record, 'bill.clientId'), states: [5, 7] } }} />,
-          /**
-           TODO
-           * 所选候选人所在职位有项目，显示项目，不可修改
-           * 职位无项目，不显示项目
-           */
+          /> /**
+       TODO
+       * 所选候选人所在职位无项目，显示合同
+       * 所选候选人所在职位都有项目，不显示合同
+       */,
+          <ContractSelect name="contractId" label="合同" rule="REQ" api={{ data: { clientId: get(record, 'bill.clientId'), states: [5, 7] } }} /> /**
+         TODO
+         * 所选候选人所在职位有项目，显示项目，不可修改
+         * 职位无项目，不显示项目
+         */,
           <ProjectSelect name="projectId" label="项目" rule="REQ" />,
           <RadioGroup
             name="feeType"
@@ -124,10 +123,16 @@ const ProjectBillInfoFormInner = createWithRemoteLoader({
               options={[
                 { value: 1, label: 'onsite' },
                 { value: 2, label: 'mapping' },
-                { value: 3, label: '项目管理' },
+                {
+                  value: 3,
+                  label: '项目管理'
+                },
                 { value: 4, label: '项目启动金' },
                 { value: 5, label: '内推' },
-                { value: 6, label: '面试到岗' },
+                {
+                  value: 6,
+                  label: '面试到岗'
+                },
                 { value: 7, label: '入职到岗' },
                 { value: 8, label: '其他' }
               ]}
@@ -142,6 +147,7 @@ const ProjectBillInfoFormInner = createWithRemoteLoader({
         list={[<PaymentSelect name="paymentId" label="付款信息" rule="REQ" api={{ data: { clientId: get(record, 'bill.clientId'), state: 5 } }} />]}
       />
       <BillAllocationForm record={record} />
+      <FormInfo title="账单审批流程" list={[<ApprovalProcess label="账单审批流程" name="flowRequest" rule="REQ FLOW_USER" />]} />
     </>
   );
 });

@@ -1,6 +1,8 @@
 const { BillCenterDetail } = _CandidateBill;
 const { createWithRemoteLoader } = remoteLoader;
 const { detailData } = mockData;
+const { default: flowData } = _flowData;
+
 const BaseExample = createWithRemoteLoader({
   modules: ['components-core:Global@PureGlobal', 'components-core:Layout']
 })(({ remoteModules }) => {
@@ -9,6 +11,25 @@ const BaseExample = createWithRemoteLoader({
     <PureGlobal
       preset={{
         apis: {
+          flow: {
+            getFlowCondition: {
+              loader: () => {
+                return {
+                  conditions: [
+                    {
+                      columnName: 'withoutContractType'
+                    }
+                  ],
+                  flowNo: '1004'
+                };
+              }
+            },
+            getNodesList: {
+              loader: () => {
+                return flowData.data;
+              }
+            }
+          },
           candidateBill: {
             getBillDetail: {
               loader: () => detailData
