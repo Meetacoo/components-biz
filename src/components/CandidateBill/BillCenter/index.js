@@ -13,16 +13,19 @@ const BillCenter = createWithRemoteLoader({
     'components-core:Global@usePreset',
     'components-core:StateBar',
     'components-core:Enum',
-    'components-core:InfoPage@formatView'
+    'components-core:InfoPage@formatView',
+    'components-core:Permissions@usePermissionsPass'
   ]
 })(({ remoteModules }) => {
-  const [TablePage, Filter, usePreset, StateBar, Enum, formatView] = remoteModules;
+  const [TablePage, Filter, usePreset, StateBar, Enum, formatView, usePermissionsPass] = remoteModules;
   const { apis } = usePreset();
   const { SearchInput, getFilterValue, fields: filterFields } = Filter;
   const { AdvancedSelectFilterItem, UserFilterItem } = filterFields;
   const ref = useRef(null);
   const [filter, setFilter] = useState([]);
   const filterValue = getFilterValue(filter);
+  const hasBillEditAuth = usePermissionsPass({ request: ['bill:apply:edit'] });
+  const hasBillExportAuth = usePermissionsPass({ request: ['bill:apply:export_notice'] });
 
   return (
     <Enum moduleName={['BILL_STATE_ENUM', 'invoiceProjectType']}>
@@ -120,14 +123,16 @@ const BillCenter = createWithRemoteLoader({
                       buttonComponent: type === 1 ? EditBillProjectButton : EditBillButton,
                       children: '编辑账单',
                       id,
-                      onReload: ref.current.reload
+                      onReload: ref.current.reload,
+                      hidden: !hasBillEditAuth
                     },
                     {
                       children: '前往结算中心'
                     },
                     {
                       children: '下载账单',
-                      disabled: true
+                      disabled: true,
+                      hidden: !hasBillExportAuth
                     }
                   ];
                 }
@@ -146,3 +151,6 @@ const BillCenter = createWithRemoteLoader({
 });
 
 export default BillCenter;
+
+export { default as BillCenterPage } from './BillCenterPage';
+export { default as BillCenterTable } from './BillCenterTable';

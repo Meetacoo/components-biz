@@ -37,29 +37,37 @@ const BaseExample = createWithRemoteLoader({
   modules: ['components-core:Global@PureGlobal', 'components-core:FormInfo@Form']
 })(({ remoteModules }) => {
   const [PureGlobal, Form] = remoteModules;
-  return <PureGlobal preset={{
-    apis: {
-      flow: {
-        getFlowCondition: {
-          loader: () => {
-            return {
-              'conditions': [{
-                'columnName': 'withoutContractType'
-              }], 'flowNo': '1004'
-            };
-          }
-        }, getNodesList: {
-          loader: () => {
-            return flowData.data;
+  return (
+    <PureGlobal
+      preset={{
+        apis: {
+          flow: {
+            getFlowCondition: {
+              loader: () => {
+                return {
+                  conditions: [
+                    {
+                      columnName: 'withoutContractType'
+                    }
+                  ],
+                  flowNo: '1004'
+                };
+              }
+            },
+            getNodesList: {
+              loader: () => {
+                return flowData.data;
+              }
+            }
           }
         }
-      }
-    }
-  }}>
-    <Form rules={{ FLOW_USER }}>
-      <ApprovalProcess label="账单审批流程" name="flowRequest" rule="REQ FLOW_USER" />
-    </Form>
-  </PureGlobal>;
+      }}
+    >
+      <Form rules={{ FLOW_USER }}>
+        <ApprovalProcess label="账单审批流程" name="flowRequest" rule="REQ FLOW_USER" />
+      </Form>
+    </PureGlobal>
+  );
 });
 
 render(<BaseExample />);
@@ -104,12 +112,16 @@ const BaseExample = createWithRemoteLoader({
             getFlowCondition: {
               loader: () => {
                 return {
-                  'conditions': [{
-                    'columnName': 'withoutContractType'
-                  }], 'flowNo': '1004'
+                  conditions: [
+                    {
+                      columnName: 'withoutContractType'
+                    }
+                  ],
+                  flowNo: '1004'
                 };
               }
-            }, getNodesList: {
+            },
+            getNodesList: {
               loader: () => {
                 return flowData.data;
               }
@@ -278,12 +290,16 @@ const BaseExample = createWithRemoteLoader({
             getFlowCondition: {
               loader: () => {
                 return {
-                  'conditions': [{
-                    'columnName': 'withoutContractType'
-                  }], 'flowNo': '1004'
+                  conditions: [
+                    {
+                      columnName: 'withoutContractType'
+                    }
+                  ],
+                  flowNo: '1004'
                 };
               }
-            }, getNodesList: {
+            },
+            getNodesList: {
               loader: () => {
                 return flowData.data;
               }
@@ -405,93 +421,118 @@ const BaseExample = createWithRemoteLoader({
   modules: ['components-core:FormInfo@Form', 'components-core:Global@PureGlobal']
 })(({ remoteModules }) => {
   const [Form, PureGlobal] = remoteModules;
-  return (<PureGlobal
-    preset={{
-      enums: {
-        CONTRACT_STATE_ENUM
-      }, apis: {
-        flow: {
-          getFlowCondition: {
-            loader: () => {
-              return {
-                'conditions': [{
-                  'columnName': 'withoutContractType'
-                }], 'flowNo': '1004'
-              };
+  return (
+    <PureGlobal
+      preset={{
+        enums: {
+          CONTRACT_STATE_ENUM
+        },
+        apis: {
+          flow: {
+            getFlowCondition: {
+              loader: () => {
+                return {
+                  conditions: [
+                    {
+                      columnName: 'withoutContractType'
+                    }
+                  ],
+                  flowNo: '1004'
+                };
+              }
+            },
+            getNodesList: {
+              loader: () => {
+                return flowData.data;
+              }
             }
-          }, getNodesList: {
-            loader: () => {
-              return flowData.data;
-            }
-          }
-        }, user: {
-          getUserList: {
-            loader: ({ data }) => {
-              const params = Object.assign({
-                perPage: 20, currentPage: 1
-              }, data);
-              return new Promise(resolve => {
-                const start = (params.currentPage - 1) * params.perPage;
-                resolve({
-                  totalCount: 100, pageData: range(start, start + params.perPage).map(key => {
-                    return {
-                      name: `用户${key + 1}`, id: key + 1, uid: key + 1, englishName: `User${key + 1}`
-                    };
-                  })
+          },
+          user: {
+            getUserList: {
+              loader: ({ data }) => {
+                const params = Object.assign(
+                  {
+                    perPage: 20,
+                    currentPage: 1
+                  },
+                  data
+                );
+                return new Promise(resolve => {
+                  const start = (params.currentPage - 1) * params.perPage;
+                  resolve({
+                    totalCount: 100,
+                    pageData: range(start, start + params.perPage).map(key => {
+                      return {
+                        name: `用户${key + 1}`,
+                        id: key + 1,
+                        uid: key + 1,
+                        englishName: `User${key + 1}`
+                      };
+                    })
+                  });
                 });
-              });
+              }
             }
-          }
-        }, client: {}, project: {
-          getList: {
-            loader: () => {
-              return projectListData.data;
+          },
+          client: {},
+          project: {
+            getList: {
+              loader: () => {
+                return projectListData.data;
+              }
+            },
+            getDetail: {
+              loader: () => {
+                return projectListData.data.projectList[0];
+              }
             }
-          }, getDetail: {
-            loader: () => {
-              return projectListData.data.projectList[0];
+          },
+          contract: {
+            getContractList: {
+              loader: () => {
+                return contractData;
+              }
+            },
+            getContractById: {
+              loader: () => {
+                return contractData.pageData[0];
+              }
             }
-          }
-        }, contract: {
-          getContractList: {
-            loader: () => {
-              return contractData;
+          },
+          ats: {
+            getTrackingList: {
+              loader: () => {
+                return userList;
+              }
             }
-          }, getContractById: {
-            loader: () => {
-              return contractData.pageData[0];
+          },
+          position: {
+            getMyList: {
+              loader: () => {
+                return positionList;
+              }
             }
-          }
-        }, ats: {
-          getTrackingList: {
-            loader: () => {
-              return userList;
-            }
-          }
-        }, position: {
-          getMyList: {
-            loader: () => {
-              return positionList;
-            }
-          }
-        }, payment: {
-          getPaymentList: {
-            loader: () => {
-              return paymentList.data;
-            }
-          }, getPaymentById: {
-            loader: ({ params }) => {
-              return paymentList.data.pageData[params.id];
+          },
+          payment: {
+            getPaymentList: {
+              loader: () => {
+                return paymentList.data;
+              }
+            },
+            getPaymentById: {
+              loader: ({ params }) => {
+                return paymentList.data.pageData[params.id];
+              }
             }
           }
         }
-      }
-    }}
-  >
-    <Form>
-      <ProjectBillInfoFormInner />
-    </Form>
-  </PureGlobal>);
+      }}
+    >
+      <Form>
+        <ProjectBillInfoFormInner />
+      </Form>
+    </PureGlobal>
+  );
 });
 
 render(<BaseExample />);
@@ -503,9 +544,9 @@ render(<BaseExample />);
 - remoteLoader(@kne/remote-loader),_CandidateBill(@components/CandidateBill),mockData(@components/CandidateBill/doc/mock),_lodash(lodash),_paymentList(@components/PaymentSelect/doc/paymentList.json),_flowData(@components/CandidateBill/doc/mock/flow.json),_contractList(@components/ContractSelect/doc/contractListData.json)
 
 ```jsx
-const { BillCenter, BILL_STATE_ENUM } = _CandidateBill;
+const { BillCenterPage, BILL_STATE_ENUM } = _CandidateBill;
 const { createWithRemoteLoader } = remoteLoader;
-const { listData } = mockData;
+const { listData, detailData } = mockData;
 const { range } = _lodash;
 const { data: paymentList } = _paymentList;
 const { data: contractData } = _contractList;
@@ -523,12 +564,16 @@ const BaseExample = createWithRemoteLoader({
             getFlowCondition: {
               loader: () => {
                 return {
-                  'conditions': [{
-                    'columnName': 'withoutContractType'
-                  }], 'flowNo': '1004'
+                  conditions: [
+                    {
+                      columnName: 'withoutContractType'
+                    }
+                  ],
+                  flowNo: '1004'
                 };
               }
-            }, getNodesList: {
+            },
+            getNodesList: {
               loader: () => {
                 return flowData.data;
               }
@@ -564,14 +609,10 @@ const BaseExample = createWithRemoteLoader({
           },
           project: {
             getList: {
-              loader: () => {
-                return projectListData.data;
-              }
+              loader: () => {}
             },
             getDetail: {
-              loader: () => {
-                return projectListData.data.projectList[0];
-              }
+              loader: () => {}
             }
           },
           contract: {
@@ -605,7 +646,10 @@ const BaseExample = createWithRemoteLoader({
               loader: async () => listData
             },
             getBillDetail: {
-              loader: async () => listData.data[0]
+              loader: async () => detailData
+            },
+            addBill: {
+              loader: () => {}
             },
             saveBill: {
               loader: () => {}
@@ -636,11 +680,12 @@ const BaseExample = createWithRemoteLoader({
             { value: 7, description: '入职到岗' },
             { value: 8, description: '其他' }
           ]
-        }
+        },
+        permissions: ['bill:apply:edit', 'bill:apply:export_notice']
       }}
     >
       <Layout navigation={{ isFixed: false }}>
-        <BillCenter />
+        <BillCenterPage />
       </Layout>
     </PureGlobal>
   );
@@ -672,12 +717,16 @@ const BaseExample = createWithRemoteLoader({
             getFlowCondition: {
               loader: () => {
                 return {
-                  'conditions': [{
-                    'columnName': 'withoutContractType'
-                  }], 'flowNo': '1004'
+                  conditions: [
+                    {
+                      columnName: 'withoutContractType'
+                    }
+                  ],
+                  flowNo: '1004'
                 };
               }
-            }, getNodesList: {
+            },
+            getNodesList: {
               loader: () => {
                 return flowData.data;
               }
