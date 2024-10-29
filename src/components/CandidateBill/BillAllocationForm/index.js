@@ -4,7 +4,7 @@ import { billTransform } from '../index';
 
 const BillAllocationForm = createWithRemoteLoader({
   modules: ['components-core:FormInfo', 'components-core:Global@usePreset', 'components-core:StateTag']
-})(({ remoteModules, record }) => {
+})(({ remoteModules }) => {
   const [FormInfo, usePreset, StateTag] = remoteModules;
   const { TableList } = FormInfo;
   const { Input, MoneyInput, SuperSelectUser } = FormInfo.fields;

@@ -81,7 +81,7 @@ const ProjectBillInfoFormInner = createWithRemoteLoader({
             disabled
             api={{
               loader: () => ({
-                pageData: [{ label: get(record, 'bill.clientName'), value: get(record, 'bill.clientId') }]
+                pageData: [{ label: get(record, 'clientName'), value: get(record, 'clientId') }]
               })
             }}
           /> /**
@@ -89,7 +89,7 @@ const ProjectBillInfoFormInner = createWithRemoteLoader({
        * 所选候选人所在职位无项目，显示合同
        * 所选候选人所在职位都有项目，不显示合同
        */,
-          <ContractSelect name="contractId" label="合同" rule="REQ" api={{ data: { clientId: get(record, 'bill.clientId'), states: [5, 7] } }} /> /**
+          <ContractSelect name="contractId" label="合同" rule="REQ" api={{ data: { clientId: get(record, 'clientId'), states: [5, 7] } }} /> /**
          TODO
          * 所选候选人所在职位有项目，显示项目，不可修改
          * 职位无项目，不显示项目
@@ -113,7 +113,6 @@ const ProjectBillInfoFormInner = createWithRemoteLoader({
         list={(key, { index }, context) => {
           const { formData } = context;
           const billType = get(formData, `billItems[${index}].typeId`);
-          console.log('billType===', formData, index, billType);
           const moreFields = (billType && fieldsMapping[billType]) || [];
           return [
             <RadioGroup
@@ -144,9 +143,9 @@ const ProjectBillInfoFormInner = createWithRemoteLoader({
       />
       <FormInfo
         title="付款信息"
-        list={[<PaymentSelect name="paymentId" label="付款信息" rule="REQ" api={{ data: { clientId: get(record, 'bill.clientId'), state: 5 } }} />]}
+        list={[<PaymentSelect name="paymentId" label="付款信息" rule="REQ" api={{ data: { clientId: get(record, 'clientId'), state: 5 } }} />]}
       />
-      <BillAllocationForm record={record} />
+      <BillAllocationForm />
       <FormInfo title="账单审批流程" list={[<ApprovalProcess label="账单审批流程" name="flowRequest" rule="REQ FLOW_USER" />]} />
     </>
   );

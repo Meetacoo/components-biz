@@ -55,7 +55,7 @@ export const GenerateBillButton = ({ modalProps, ...props }) => {
 
 export const EditBillButton = createWithRemoteLoader({
   modules: ['components-core:Global@usePreset', 'components-core:FetchButton', 'components-core:InfoPage@formatView']
-})(({ remoteModules, id, modalProps, onReload, ...props }) => {
+})(({ remoteModules, id, onReload, ...props }) => {
   const [usePreset, FetchButton, formatView] = remoteModules;
   const { apis, ajax } = usePreset();
   const { message } = App.useApp();
@@ -70,7 +70,7 @@ export const EditBillButton = createWithRemoteLoader({
           onClick={({ data }) =>
             modal({
               title: '编辑账单',
-              record: data,
+              record: get(data, 'bill') || {},
               formProps: [
                 {
                   data: billTransform.input(data, formatView),

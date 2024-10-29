@@ -38,24 +38,52 @@ const GenerateProjectBill = createWithRemoteLoader({
   });
 });
 
-export const GenerateProjectBillButton = ({ modalProps, ...props }) => {
+export const GenerateProjectBillButton = createWithRemoteLoader({
+  modules: ['components-core:Global@usePreset', 'components-core:InfoPage@formatView']
+})(({ remoteModules, onReload, inputData, ...props }) => {
+  const [usePreset, formatView] = remoteModules;
+  const { apis, ajax } = usePreset();
+  const { message } = App.useApp();
+
   return (
     <GenerateProjectBill>
       {({ modal }) => (
         <Button
           {...props}
           onClick={() => {
-            modal(modalProps);
+            modal({
+              record: get(inputData, 'bill'),
+              formProps: [
+                {
+                  data: inputData ? billTransform.input(inputData, formatView) : null,
+                  onSubmit: async data => {
+                    const { data: resData } = await ajax(
+                      Object.assign({}, apis.candidateBill.addBill, {
+                        data: Object.assign({}, data)
+                      })
+                    );
+                    if (resData.code !== 0) {
+                      return false;
+                    }
+                    message.success('生成账单成功');
+                    onReload && onReload();
+                  }
+                },
+                {
+                  onSubmit: async () => {}
+                }
+              ]
+            });
           }}
         />
       )}
     </GenerateProjectBill>
   );
-};
+});
 
 export const EditBillProjectButton = createWithRemoteLoader({
-  modules: ['components-core:Global@usePreset', 'components-core:Common@FetchButton', 'components-core:InfoPage@formatView']
-})(({ remoteModules, id, modalProps, onReload, ...props }) => {
+  modules: ['components-core:Global@usePreset', 'components-core:FetchButton', 'components-core:InfoPage@formatView']
+})(({ remoteModules, id, onReload, ...props }) => {
   const [usePreset, FetchButton, formatView] = remoteModules;
   const { apis, ajax } = usePreset();
   const { message } = App.useApp();
@@ -68,10 +96,10 @@ export const EditBillProjectButton = createWithRemoteLoader({
             params: { id }
           })}
           modalFunc={() => {}}
-          modalProps={({ data, close }) => {
+          onClick={({ data, close }) => {
             return modal({
               title: '编辑账单',
-              record: data,
+              record: get(data, 'bill') || {},
               formProps: [
                 {
                   data: billTransform.input(data, formatView),

@@ -8,6 +8,7 @@ const getColumns = ({ formatView }) => {
       type: 'serialNumber',
       primary: true,
       hover: true,
+      fixed: 'left',
       onClick: ({ colItem }) => {
         window.open(`/bill-center/${get(colItem, 'id')}`, '_blank');
       }
