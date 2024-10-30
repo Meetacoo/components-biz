@@ -25,6 +25,7 @@ const ListOptions = createWithRemoteLoader({
   const hasBillExportAuth = usePermissionsPass({ request: ['bill:apply:export_notice'] });
 
   const filterValue = useMemo(() => getFilterValue(filter), [filter]);
+
   return (
     <Enum moduleName={['BILL_STATE_ENUM', 'invoiceProjectType']}>
       {([billStateEnum, invoiceProjectType]) => {

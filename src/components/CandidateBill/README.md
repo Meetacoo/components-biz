@@ -541,7 +541,7 @@ render(<BaseExample />);
 
 - 账单中心
 - 账单中心
-- remoteLoader(@kne/remote-loader),_CandidateBill(@components/CandidateBill),mockData(@components/CandidateBill/doc/mock),_lodash(lodash),_paymentList(@components/PaymentSelect/doc/paymentList.json),_flowData(@components/CandidateBill/doc/mock/flow.json),_contractList(@components/ContractSelect/doc/contractListData.json)
+- remoteLoader(@kne/remote-loader),_CandidateBill(@components/CandidateBill),mockData(@components/CandidateBill/doc/mock),_lodash(lodash),_paymentList(@components/PaymentSelect/doc/paymentList.json),_flowData(@components/CandidateBill/doc/mock/flow.json),_contractList(@components/ContractSelect/doc/contractListData.json),_ContractSelect(@components/ContractSelect),_projectListData(@components/ProjectSelect/doc/projectList.json)
 
 ```jsx
 const { BillCenterPage, BILL_STATE_ENUM } = _CandidateBill;
@@ -551,6 +551,8 @@ const { range } = _lodash;
 const { data: paymentList } = _paymentList;
 const { data: contractData } = _contractList;
 const { default: flowData } = _flowData;
+const { CONTRACT_STATE_ENUM } = _ContractSelect;
+const { default: projectListData } = _projectListData;
 
 const BaseExample = createWithRemoteLoader({
   modules: ['components-core:Global@PureGlobal', 'components-core:Layout']
@@ -609,10 +611,14 @@ const BaseExample = createWithRemoteLoader({
           },
           project: {
             getList: {
-              loader: () => {}
+              loader: () => {
+                return projectListData.data;
+              }
             },
             getDetail: {
-              loader: () => {}
+              loader: () => {
+                return projectListData.data.projectList[0];
+              }
             }
           },
           contract: {
@@ -623,7 +629,7 @@ const BaseExample = createWithRemoteLoader({
             },
             getContractById: {
               loader: () => {
-                return contractData.data.pageData[0];
+                return contractData.pageData[0];
               }
             }
           },
@@ -670,6 +676,7 @@ const BaseExample = createWithRemoteLoader({
         },
         enums: {
           BILL_STATE_ENUM,
+          CONTRACT_STATE_ENUM,
           invoiceProjectType: [
             { value: 1, description: 'onsite' },
             { value: 2, description: 'mapping' },
@@ -681,7 +688,7 @@ const BaseExample = createWithRemoteLoader({
             { value: 8, description: '其他' }
           ]
         },
-        permissions: ['bill:apply:edit', 'bill:apply:export_notice']
+        permissions: ['bill:apply:edit', 'bill:apply:export_notice', 'jd:job:look', 'cv:cv:look']
       }}
     >
       <Layout navigation={{ isFixed: false }}>

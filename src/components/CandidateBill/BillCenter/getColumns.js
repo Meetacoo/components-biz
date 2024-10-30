@@ -1,7 +1,8 @@
 import get from 'lodash/get';
 import { billTransform } from '../index';
+import CandidatesTooltip from './CandidatesTooltip';
 
-const getColumns = ({ formatView }) => {
+const getColumns = ({ formatView, hasPositionAuth, hasTalentAuth }) => {
   return [
     {
       name: 'serialNumber',
@@ -36,12 +37,12 @@ const getColumns = ({ formatView }) => {
         moduleName: 'BILL_STATE_ENUM'
       })
     },
-    // TODO 暂时不做候选人状态
-    // {
-    //   name: 'candidates',
-    //   title: '候选人',
-    //   type: 'otherSmall'
-    // },
+    {
+      name: 'candidates',
+      title: '候选人',
+      type: 'mainInfo',
+      valueOf: ({ candidates }) => (candidates?.length ? <CandidatesTooltip dataSource={candidates} {...{ hasPositionAuth, hasTalentAuth }} /> : '')
+    },
     {
       name: 'clientName',
       title: '客户',
