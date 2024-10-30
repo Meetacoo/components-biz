@@ -1,10 +1,10 @@
 <div>
   <style>
-      table td {
+      table.bill-template-table td {
           padding: 4px;
       }
   </style>
-  <table border='1' style='border: 1px solid #999;border-collapse:collapse;width: 100%;'>
+  <table class="bill-template-table" border='1' style='border: 1px solid #999;border-collapse:collapse;width: 100%;'>
     <tr style='color: #222222;font-size: 14px;line-height: 20px;'>
       <th rowspan="5" style='text-align: center;font-size: 16px;line-height: 22px;font-weight: 500;'>发票信息</th>
       <td colspan='2' style='height: 32px;'>是否增值税一般纳税人</td>
@@ -41,7 +41,7 @@
       <td></td>
       <td>
       <span style='margin-left: 4px;margin-top: 4px;width: 120px;display: inline-block;'
-            class='selected-onboard-date' data-index="<%=index%>"></span>
+            class='selected-onboard-date' data-index="<%=index%>"><%=data.onboardDate && data.onboardDate[index]%></span>
       </td>
       <td></td>
       <% if(index === 0){ %>
