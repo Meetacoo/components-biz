@@ -1,7 +1,50 @@
 import dayjs from 'dayjs';
+import { Button } from 'antd';
+import RemoteLoader from '@kne/remote-loader';
+import { renderCompanyTemplate } from './companyTemplate';
 
-const getFormData = ({ paymentNoticePro, paymentPdf }) => {
+const getFormData = ({ paymentNoticePro, paymentPdf, api }) => {
   return {
+    company: {
+      className: 'selected-company',
+      type: 'SuperSelect',
+      default: paymentNoticePro,
+      canDelete: false,
+      editButton: props => {
+        return (
+          <Button {...props} type="link" style={{ transform: 'translateX(-100%)' }}>
+            切换
+            <RemoteLoader module="components-core:Icon" type="arrow-thin-down" />
+          </Button>
+        );
+      },
+      typeProps: ({ isActive, blur }) => {
+        return {
+          label: '公司名称',
+          labelHidden: true,
+          isPopup: false,
+          single: true,
+          api,
+          labelKey: 'companyName',
+          valueKey: 'code',
+          dataFormat: data => {
+            return {
+              list: data.filter(item => item.citable)
+            };
+          },
+          open: isActive,
+          inputRender: (inputProps, { value, ...props }) => {
+            return <div dangerouslySetInnerHTML={{ __html: renderCompanyTemplate((value && value[0]) || paymentNoticePro) }} />;
+          },
+          onOpenChange: () => {
+            blur();
+          },
+          renderItemContent: ({ item }) => {
+            return <div dangerouslySetInnerHTML={{ __html: renderCompanyTemplate(item) }} />;
+          }
+        };
+      }
+    },
     clientName: {
       className: 'selected-client-name',
       default: paymentPdf.clientName || '请输入客户名称',
@@ -69,9 +112,43 @@ const getFormData = ({ paymentNoticePro, paymentPdf }) => {
     },
     bankInfo: {
       className: 'selected-bank-info',
+      type: 'SuperSelect',
       default: paymentNoticePro.bankInfo[0],
-      type: 'Input',
-      canEdit: false
+      canDelete: false,
+      editButton: props => {
+        return (
+          <Button {...props} type="link" style={{ transform: 'translateX(-100%)' }}>
+            切换
+            <RemoteLoader module="components-core:Icon" type="arrow-thin-down" />
+          </Button>
+        );
+      },
+      typeProps: ({ isActive, blur }) => {
+        return {
+          label: '银行信息',
+          labelHidden: true,
+          isPopup: false,
+          single: true,
+          api,
+          labelKey: 'companyName',
+          valueKey: 'code',
+          dataFormat: data => {
+            return {
+              list: data.filter(item => item.citable)
+            };
+          },
+          open: isActive,
+          inputRender: (inputProps, { value, ...props }) => {
+            return <div dangerouslySetInnerHTML={{ __html: renderCompanyTemplate((value && value[0]) || paymentNoticePro.bankInfo[0]) }} />;
+          },
+          onOpenChange: () => {
+            blur();
+          },
+          renderItemContent: ({ item }) => {
+            return <div dangerouslySetInnerHTML={{ __html: renderCompanyTemplate(item) }} />;
+          }
+        };
+      }
     },
     attention: {
       className: 'selected-attention',

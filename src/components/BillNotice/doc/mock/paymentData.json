@@ -1,0 +1,563 @@
+{
+  "paymentNotice": {
+    "id": 122,
+    "type": 3,
+    "payType": 1,
+    "state": 0,
+    "clientId": 1893,
+    "clientName": "华威股份有限公司",
+    "contractId": null,
+    "contractName": null,
+    "clientTaxRate": 0,
+    "paymentId": 901,
+    "invoiceTitle": "华威股份有限公司",
+    "expressId": 545,
+    "contact": "彰显是",
+    "phone": "13308983333",
+    "email": "6878@333.com",
+    "address": "北京市四核雅鹿",
+    "totalFee": 1900000,
+    "currentFee": 1900000,
+    "clientTax": 0,
+    "totalAmount": 1900000,
+    "serviceFee": 1792453,
+    "addedValueTax": 107547,
+    "expectPaymentDate": "2023-07-18T00:00:00.000+08:00",
+    "remark": "批量payment",
+    "payedAmount": null,
+    "attachments": [],
+    "coId": 1,
+    "appId": 1,
+    "orgId": 431,
+    "uid": 52,
+    "name": "黄正祥",
+    "createdAt": "2023-07-18T14:00:58.000+08:00",
+    "updatedAt": "2023-07-18T14:00:58.000+08:00",
+    "invoiceId": null,
+    "allowSeeAllocation": null,
+    "processInstanceId": null,
+    "serialNumber": "PN00000120",
+    "invoiceSerialNumber": null,
+    "confirmEmailAttachments": null,
+    "offerLetterAttachments": null,
+    "otherAttachments": null,
+    "pdfAttachments": null,
+    "flowRequest": null,
+    "gp": 1779547,
+    "progressiveAmount": null,
+    "termId": 192410691,
+    "withoutContractType": 1
+  },
+  "projects": [
+    {
+      "project": {
+        "id": 223,
+        "noticeId": 122,
+        "projectTypeId": 7,
+        "projectType": "入职到岗",
+        "costType": 1,
+        "amount": 1900000,
+        "num": null,
+        "projectAttachments": null
+      },
+      "onsiteList": null,
+      "trackingList": [
+        {
+          "id": "93",
+          "noticeId": 122,
+          "noticeProjectId": 223,
+          "projectTypeId": 7,
+          "trackingId": 3107,
+          "jdId": 198739448706367500,
+          "jdName": "招聘岗-秋天",
+          "clientId": 1893,
+          "cvId": 198807076967809020,
+          "cvName": "张杰",
+          "gender": "M",
+          "age": 31,
+          "workExperience": 6,
+          "joinedTime": "2023-07-05T00:00:00.000+08:00",
+          "expectJoinedTime": "2023-07-05T00:00:00.000+08:00",
+          "coId": 1,
+          "appId": 1,
+          "orgId": 431,
+          "uid": 52
+        },
+        {
+          "id": "94",
+          "noticeId": 122,
+          "noticeProjectId": 223,
+          "projectTypeId": 7,
+          "trackingId": 3108,
+          "jdId": 198739448706367500,
+          "jdName": "招聘岗-秋天",
+          "clientId": 1893,
+          "cvId": 136898275205709820,
+          "cvName": "Mason Yang",
+          "gender": "M",
+          "age": 41,
+          "workExperience": 0,
+          "joinedTime": "2023-07-06T00:00:00.000+08:00",
+          "expectJoinedTime": "2023-07-05T00:00:00.000+08:00",
+          "coId": 1,
+          "appId": 1,
+          "orgId": 431,
+          "uid": 52
+        }
+      ]
+    }
+  ],
+  "paymentPdf": null,
+  "userInfos": null,
+  "totalFee": 1900000,
+  "invoiceType": null,
+  "subjectName": "FAT_BJ",
+  "paymentNoticeWithoutContract": {
+    "id": 12,
+    "noticeId": 122,
+    "contractExpectedFilingDate": "2023-07-18T00:00:00.000+08:00",
+    "invoiceNote": null,
+    "withoutContractReason": 20,
+    "subjectCode": "fat_bj",
+    "guaranteePeriod": 1,
+    "guaranteePeriodUnit": "D",
+    "paymentPeriod": 2,
+    "createdAt": "2023-07-18T14:00:59.000+08:00",
+    "updatedAt": "2023-07-18T14:00:59.000+08:00"
+  },
+  "progressiveAmount": null,
+  "payment": {
+    "invoiceType": 3,
+    "invoiceTitle": "华威股份有限公司",
+    "taxpayerIdNumber": "SHUIHAOHAUWEI001",
+    "taxRegistrationAddress": null,
+    "taxRegistrationPhone": null,
+    "openingBankName": null,
+    "openingBackAccount": null
+  },
+  "paymentPdfInit": {
+    "paymentNoticePro": {
+      "companyName": "北京仕邦达人力资源服务有限公司上海分公司",
+      "companyEnName": "FA Talent Human Resources Service Co., Ltd. Shanghai Branch",
+      "address": "上海市黄浦区中山南路589号外企德科大厦（邮编：200001）",
+      "enAddress": "589 South Zhongshan Road. Huangpu District, Shanghai 200001, PRC",
+      "contactPhone": "+86-21-2312 4788",
+      "website": "www.FATalent.com",
+      "logo": "https://fat-dev-static.oss-cn-shanghai.aliyuncs.com/%E6%96%B0logo.png",
+      "bankInfo": [
+        {
+          "openingAccountName": "北京仕邦达人力资源服务有限公司上海分公司",
+          "openingAccountEnName": "FA Talent Human Resources Service Co., Ltd. Shanghai Branch",
+          "bankName": "招商银行股份有限公司上海南西支行",
+          "bankEnName": "China Merchants Bank Shanghai Nan Xi Sub-Branch",
+          "swiftCode": "CMBCCNBS051",
+          "bankNo": "121923503510701"
+        }
+      ]
+    },
+    "payment": null,
+    "contactList": [
+      {
+        "avatar": null,
+        "name": "华女士",
+        "gender": "F",
+        "birth": null,
+        "phoneOfPerson": {
+          "regionCode": "CN",
+          "number": "13376760099"
+        },
+        "phoneOfWork": {
+          "regionCode": "CN",
+          "number": "1111111"
+        },
+        "phoneOfBack": null,
+        "emailOfPerson": null,
+        "emailOfWork": null,
+        "industry": [
+          {
+            "code": "001001",
+            "name": "互联网/移动互联网/电子商务"
+          },
+          {
+            "code": "001004",
+            "name": "IT服务/系统集成"
+          },
+          {
+            "code": "002007",
+            "name": "计算机硬件/网络设备"
+          }
+        ],
+        "function": [
+          {
+            "code": "008046338",
+            "name": "招聘经理/主管"
+          }
+        ],
+        "currentLocation": {
+          "code": "050090",
+          "name": "深圳"
+        },
+        "phoneOfLandline": null,
+        "id": 384,
+        "serialNumber": "CC00002381",
+        "adder": {
+          "coId": 1,
+          "appId": 1,
+          "orgId": 81,
+          "uid": 104,
+          "termId": 192410693,
+          "operationTime": "2023-07-06T00:29:36"
+        },
+        "contactClients": null,
+        "cvIds": [],
+        "contactWorks": null,
+        "contactEducations": [],
+        "stateOfContacts": "Off",
+        "age": null
+      },
+      {
+        "avatar": null,
+        "name": "彰显是",
+        "gender": "F",
+        "birth": null,
+        "phoneOfPerson": {
+          "regionCode": "CN",
+          "number": "15937280432"
+        },
+        "phoneOfWork": null,
+        "phoneOfBack": null,
+        "emailOfPerson": null,
+        "emailOfWork": "7878@999.com",
+        "industry": [
+          {
+            "code": "001001",
+            "name": "互联网/移动互联网/电子商务"
+          },
+          {
+            "code": "001004",
+            "name": "IT服务/系统集成"
+          },
+          {
+            "code": "002007",
+            "name": "计算机硬件/网络设备"
+          }
+        ],
+        "function": [
+          {
+            "code": "008046338",
+            "name": "招聘经理/主管"
+          }
+        ],
+        "currentLocation": {
+          "code": "050090",
+          "name": "深圳"
+        },
+        "phoneOfLandline": null,
+        "id": 385,
+        "serialNumber": "CC00002382",
+        "adder": {
+          "coId": 1,
+          "appId": 1,
+          "orgId": 81,
+          "uid": 104,
+          "termId": 192410693,
+          "operationTime": "2023-07-06T00:29:36"
+        },
+        "contactClients": null,
+        "cvIds": [],
+        "contactWorks": null,
+        "contactEducations": [],
+        "stateOfContacts": "Off",
+        "age": null
+      },
+      {
+        "avatar": null,
+        "name": "兴民",
+        "gender": "F",
+        "birth": null,
+        "phoneOfPerson": null,
+        "phoneOfWork": {
+          "regionCode": "CN",
+          "number": "13378789090"
+        },
+        "phoneOfBack": null,
+        "emailOfPerson": null,
+        "emailOfWork": null,
+        "industry": [
+          {
+            "code": "001001",
+            "name": "互联网/移动互联网/电子商务"
+          },
+          {
+            "code": "001004",
+            "name": "IT服务/系统集成"
+          },
+          {
+            "code": "002007",
+            "name": "计算机硬件/网络设备"
+          }
+        ],
+        "function": [
+          {
+            "code": "008046338",
+            "name": "招聘经理/主管"
+          }
+        ],
+        "currentLocation": {
+          "code": "050090",
+          "name": "深圳"
+        },
+        "phoneOfLandline": null,
+        "id": 386,
+        "serialNumber": "CC00002383",
+        "adder": {
+          "coId": 1,
+          "appId": 1,
+          "orgId": 81,
+          "uid": 104,
+          "termId": 192410693,
+          "operationTime": "2023-07-06T00:29:36"
+        },
+        "contactClients": null,
+        "cvIds": [],
+        "contactWorks": null,
+        "contactEducations": [],
+        "stateOfContacts": "Off",
+        "age": null
+      },
+      {
+        "avatar": null,
+        "name": "章文",
+        "gender": "F",
+        "birth": null,
+        "phoneOfPerson": {
+          "regionCode": "CN",
+          "number": "13389803333"
+        },
+        "phoneOfWork": null,
+        "phoneOfBack": null,
+        "emailOfPerson": null,
+        "emailOfWork": null,
+        "industry": [
+          {
+            "code": "001001",
+            "name": "互联网/移动互联网/电子商务"
+          },
+          {
+            "code": "001004",
+            "name": "IT服务/系统集成"
+          },
+          {
+            "code": "002007",
+            "name": "计算机硬件/网络设备"
+          }
+        ],
+        "function": [
+          {
+            "code": "008046338",
+            "name": "招聘经理/主管"
+          }
+        ],
+        "currentLocation": {
+          "code": "050090",
+          "name": "深圳"
+        },
+        "phoneOfLandline": null,
+        "id": 387,
+        "serialNumber": "CC00002384",
+        "adder": {
+          "coId": 1,
+          "appId": 1,
+          "orgId": 81,
+          "uid": 104,
+          "termId": 192410693,
+          "operationTime": "2023-07-06T00:29:36"
+        },
+        "contactClients": null,
+        "cvIds": [],
+        "contactWorks": null,
+        "contactEducations": [],
+        "stateOfContacts": "Off",
+        "age": null
+      },
+      {
+        "avatar": null,
+        "name": "wwwwwww",
+        "gender": "M",
+        "birth": null,
+        "phoneOfPerson": {
+          "regionCode": "CN",
+          "number": "13411111111"
+        },
+        "phoneOfWork": {
+          "regionCode": "CN",
+          "number": "14560909554"
+        },
+        "phoneOfBack": null,
+        "emailOfPerson": null,
+        "emailOfWork": null,
+        "industry": [
+          {
+            "code": "001001",
+            "name": "互联网/移动互联网/电子商务"
+          },
+          {
+            "code": "001004",
+            "name": "IT服务/系统集成"
+          }
+        ],
+        "function": [
+          {
+            "code": "001001001",
+            "name": "首席执行官CEO/总裁/总经理"
+          }
+        ],
+        "currentLocation": {
+          "code": "020",
+          "name": "上海"
+        },
+        "phoneOfLandline": "0512-889904939-089",
+        "id": 401,
+        "serialNumber": "CC00002398",
+        "adder": {
+          "coId": 1,
+          "appId": 1,
+          "orgId": 431,
+          "uid": 52,
+          "termId": 192410691,
+          "operationTime": "2023-07-19T11:28:28"
+        },
+        "contactClients": null,
+        "cvIds": ["204560015816654848"],
+        "contactWorks": null,
+        "contactEducations": [],
+        "stateOfContacts": "Off",
+        "age": null
+      },
+      {
+        "avatar": null,
+        "name": "22222",
+        "gender": "M",
+        "birth": null,
+        "phoneOfPerson": {
+          "regionCode": "CN",
+          "number": "13111111111"
+        },
+        "phoneOfWork": null,
+        "phoneOfBack": null,
+        "emailOfPerson": null,
+        "emailOfWork": null,
+        "industry": [
+          {
+            "code": "001001",
+            "name": "互联网/移动互联网/电子商务"
+          },
+          {
+            "code": "001004",
+            "name": "IT服务/系统集成"
+          }
+        ],
+        "function": [
+          {
+            "code": "001001004",
+            "name": "助理总经理/总助(高管级)"
+          }
+        ],
+        "currentLocation": {
+          "code": "020",
+          "name": "上海"
+        },
+        "phoneOfLandline": null,
+        "id": 419,
+        "serialNumber": "CC00002416",
+        "adder": {
+          "coId": 1,
+          "appId": 1,
+          "orgId": 103,
+          "uid": 107,
+          "termId": 192410836,
+          "operationTime": "2023-08-01T12:53:15"
+        },
+        "contactClients": null,
+        "cvIds": ["209292391985709056"],
+        "contactWorks": null,
+        "contactEducations": [],
+        "stateOfContacts": "Off",
+        "age": null
+      },
+      {
+        "avatar": null,
+        "name": "西柚",
+        "gender": "F",
+        "birth": null,
+        "phoneOfPerson": {
+          "regionCode": "CN",
+          "number": "13809098787"
+        },
+        "phoneOfWork": null,
+        "phoneOfBack": null,
+        "emailOfPerson": null,
+        "emailOfWork": null,
+        "industry": [
+          {
+            "code": "008035",
+            "name": "广告/公关/市场推广/会展"
+          }
+        ],
+        "function": [
+          {
+            "code": "006024190",
+            "name": "公关总监"
+          },
+          {
+            "code": "006024193",
+            "name": "媒介经理/主管"
+          },
+          {
+            "code": "006024196",
+            "name": "舆情分析师"
+          }
+        ],
+        "currentLocation": {
+          "code": "030",
+          "name": "天津"
+        },
+        "phoneOfLandline": "(+1)0512-66267878",
+        "id": 434,
+        "serialNumber": "CC00002426",
+        "adder": {
+          "coId": 1,
+          "appId": 1,
+          "orgId": 78,
+          "uid": 104,
+          "termId": 192410695,
+          "operationTime": "2023-08-30T13:56:25"
+        },
+        "contactClients": null,
+        "cvIds": ["219817538924576768"],
+        "contactWorks": null,
+        "contactEducations": [],
+        "stateOfContacts": "Off",
+        "age": null
+      }
+    ],
+    "consultant": null,
+    "email": "fan.beibei@fatalent.com",
+    "mobile": null,
+    "team": null,
+    "clientName": "华威股份有限公司",
+    "clientEnName": "rrrrrrffffr",
+    "clientNum": "66666666",
+    "address": ["1211", "嗡嗡嗡", "北京市四核雅鹿"]
+  },
+  "makeOutFee": null,
+  "userInfo": {
+    "email": "fuling@165.com",
+    "phone": "13988882221",
+    "name": "福玲",
+    "englishName": "福玲",
+    "gender": "M",
+    "createdAt": "2022-11-18T08:22:56.000+00:00",
+    "updatedAt": "2023-02-28T02:22:43.000+00:00"
+  }
+}

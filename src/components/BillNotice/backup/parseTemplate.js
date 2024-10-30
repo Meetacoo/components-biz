@@ -1,6 +1,7 @@
+import companyTemplate from './companyTemplate';
+
 const parseTemplate = ({ paymentPdf, paymentNoticeData, userInfo }) => {
-  const { projects = [], totalAmount = '', serviceFee = '', addedValueTax = '', paymentPdfInit = {} } = paymentNoticeData;
-  const { paymentNoticePro = {} } = paymentPdfInit;
+  const { projects = [], totalAmount = '', serviceFee = '', addedValueTax = '' } = paymentNoticeData;
 
   let projectsTemp = [];
   (projects || []).forEach(item => {
@@ -38,27 +39,12 @@ const parseTemplate = ({ paymentPdf, paymentNoticeData, userInfo }) => {
                     ${index === 0 ? `<td rowspan='` + (projectsTemp.length || 1) + `' style='width: 150px;max-width: 150px;line-height: 20px;vertical-align: top'><div style='margin-left: 4px;margin-top: 4px;width: 120px;' class='selected-remark'><%=data.remark%></div></td>` : ''}
         </tr>`;
   });
-
   return `
 <html lang='zh-cn'>
             <body>
               <div style="padding: 48px">
-                <div style='display: flex;margin-bottom: 40px;'>
-                  <img style='margin-right: 46px;width: 160px;height: 23px;' src="${paymentNoticePro.logo}" />
-                  <div>
-                    <div style='font-size: 16px;font-weight: 500;color: #222222;line-height: 22px;'>
-                      <div>${paymentNoticePro.companyName}</div>
-                      <div>${paymentNoticePro.companyEnName}</div>
-                    </div>
-                    <div style='font-size: 12px;color: #222222;line-height: 18px;margin-top: 8px;'>
-                      <div>${paymentNoticePro.address}</div>
-                      <div>${paymentNoticePro.enAddress}</div>
-                      <div>
-                          <span style='margin-right: 8px;'>${paymentNoticePro.contactPhone}</span>
-                          <span>${paymentNoticePro.website}</span>
-                      </div>
-                    </div>
-                  </div>
+                <div class="selected-company">
+                  ${companyTemplate}
                 </div>
                 <div style='text-align: center;font-weight: 500;color: #222222;line-height: 33px;font-size: 24px;padding-bottom: 24px;margin-bottom: 8px;border-bottom: 1px solid #999999;'>
                 付款通知书 / Payment Notice</div>
@@ -107,8 +93,6 @@ const parseTemplate = ({ paymentPdf, paymentNoticeData, userInfo }) => {
                     <td>候选人姓名<br/>Candidate</td>
                     <td>岗位<br/>Position</td>
                     <td>报到日期<br/>Onboard Date</td>
-                    <td>服务费<br/>Service Fee<br/>(CNY)</td>
-                    <td>增值税<br/>VAT<br/>(CNY)</td>
                     <td>总金额<br/>Total Amount<br/>(CNY)</td>
                     <td>备注<br/>Remark</td>
                   </tr>
