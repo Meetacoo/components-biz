@@ -1,42 +1,14 @@
 const { GenerateBillDetail, FLOW_USER } = _CandidateBill;
 const { createWithRemoteLoader } = remoteLoader;
-const { default: billNoticeMock } = _billNoticeMock;
-const { default: flowData } = _flowData;
+
+const { default: presetMock } = _presetMock;
 
 const BaseExample = createWithRemoteLoader({
   modules: ['components-core:Global@PureGlobal', 'components-core:FormInfo@Form']
 })(({ remoteModules }) => {
   const [PureGlobal, Form] = remoteModules;
   return (
-    <PureGlobal
-      preset={{
-        ajax: async api => {
-          return { data: { code: 0, data: api.loader() } };
-        },
-        apis: {
-          flow: {
-            getFlowCondition: {
-              loader: () => {
-                return {
-                  conditions: [
-                    {
-                      columnName: 'withoutContractType'
-                    }
-                  ],
-                  flowNo: '1004'
-                };
-              }
-            },
-            getNodesList: {
-              loader: () => {
-                return flowData.data;
-              }
-            }
-          },
-          ...billNoticeMock
-        }
-      }}
-    >
+    <PureGlobal preset={presetMock}>
       <Form rules={{ FLOW_USER }}>
         <GenerateBillDetail
           billDetail={{

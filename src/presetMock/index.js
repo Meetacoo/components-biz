@@ -1,4 +1,5 @@
 import { CONTRACT_STATE_ENUM } from '@components/ContractSelect';
+import { BILL_STATE_ENUM } from '@components/CandidateBill';
 import flow from './flow.json';
 import range from 'lodash/range';
 import projectList from './projectList.json';
@@ -7,10 +8,35 @@ import contractList from './contractList.json';
 import astUserList from './astUserList.json';
 import positionList from './positionList.json';
 import paymentList from './paymentList.json';
+import billList from './billList.json';
+import billDetail from './billDetail.json';
+import companyData from '../components/BillNotice/doc/mock/companyData.json';
+import bankData from '../components/BillNotice/doc/mock/bankData.json';
 
 const preset = {
+  ajax: async api => {
+    return { data: { code: 0, data: api.loader() } };
+  },
+  permissions: ['bill:apply:edit', 'bill:apply:export_notice', 'jd:job:look', 'cv:cv:look'],
   enums: {
-    CONTRACT_STATE_ENUM
+    BILL_STATE_ENUM,
+    CONTRACT_STATE_ENUM,
+    invoiceProjectType: [
+      { value: 1, description: 'onsite' },
+      { value: 2, description: 'mapping' },
+      {
+        value: 3,
+        description: '项目管理'
+      },
+      { value: 4, description: '项目启动金' },
+      { value: 5, description: '内推' },
+      {
+        value: 6,
+        description: '面试到岗'
+      },
+      { value: 7, description: '入职到岗' },
+      { value: 8, description: '其他' }
+    ]
   },
   apis: {
     flow: {
@@ -30,6 +56,20 @@ const preset = {
         loader: () => {
           return flow.data;
         }
+      }
+    },
+    candidateBill: {
+      getBillList: {
+        loader: async () => billList
+      },
+      getBillDetail: {
+        loader: async () => billDetail
+      },
+      addBill: {
+        loader: () => {}
+      },
+      saveBill: {
+        loader: () => {}
       }
     },
     user: {
@@ -73,6 +113,16 @@ const preset = {
       }
     },
     contract: {
+      getSubjectList: {
+        loader: () => {
+          return companyData.data;
+        }
+      },
+      getBankData: {
+        loader: () => {
+          return bankData.data;
+        }
+      },
       getContractList: {
         loader: () => {
           return contractList.data;
