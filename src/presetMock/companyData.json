@@ -1,0 +1,116 @@
+{
+  "msg": "",
+  "data": [
+    {
+      "name": "FAT_SH",
+      "code": "fat_sh",
+      "citable": true,
+      "companyName": "北京仕邦达人力资源服务有限公司上海分公司",
+      "companyEnName": "FA Talent Human Resources Service Co., Ltd. Shanghai Branch",
+      "address": "中国上海市黄浦区中山南路589号外企德科大厦5F",
+      "enAddress": "5th Floor, Block F, Xin Jing Jin Rong, No.589 South Zhongshan Road, Huangpu District, Shanghai",
+      "contactPhone": "+86 021-23124788",
+      "website": "http://www.lhhfesco.com",
+      "logo": "https://fat-static.oss-cn-shanghai.aliyuncs.com/LHH-RS-logo.png"
+    },
+    {
+      "name": "FAT_BJ",
+      "code": "fat_bj",
+      "citable": true,
+      "companyName": "北京仕邦达人力资源服务有限公司",
+      "companyEnName": "FA Talent Human Resources Service Co., Ltd.",
+      "address": "北京市朝阳区东三环北路嘉铭中心B座15层",
+      "enAddress": "F15, Building B, No 27, East 3rd Ring Road (N) Chaoyang District, Beijing",
+      "contactPhone": "+86 010-57759861",
+      "website": "http://www.lhhfesco.com",
+      "logo": "https://fat-static.oss-cn-shanghai.aliyuncs.com/LHH-RS-logo.png"
+    },
+    {
+      "name": "Spring_SH",
+      "code": "spring_sh",
+      "citable": true,
+      "companyName": "上海跃科人才服务有限公司",
+      "companyEnName": "Spring Professional Shanghai Limited",
+      "address": "中国上海市黄浦区中山南路589号外企德科大厦6F",
+      "enAddress": "6th Floor, Block F, Xin Jing Jin Rong, No.589 South Zhongshan Road, Huangpu District, Shanghai",
+      "contactPhone": "+86 021-23124788",
+      "website": "http://www.lhhfesco.com",
+      "logo": "https://fat-static.oss-cn-shanghai.aliyuncs.com/LHH-RS-logo.png"
+    },
+    {
+      "name": "Spring_BJ",
+      "code": "spring_bj",
+      "citable": true,
+      "companyName": "北京跃科人才服务有限公司",
+      "companyEnName": "Spring Professional Beijing Limited",
+      "address": "北京市朝阳区东三环北路嘉铭中心B座15层",
+      "enAddress": "15/F, Tower B, Jiaming Center, No.27 North Dongsanhuan Road, Chaoyang District, Beijing, PRC",
+      "contactPhone": "+86 010-57759861",
+      "website": "http://www.lhhfesco.com",
+      "logo": "https://fat-static.oss-cn-shanghai.aliyuncs.com/LHH-RS-logo.png"
+    },
+    {
+      "name": "LHH_SH",
+      "code": "lhh_sh",
+      "citable": true,
+      "companyName": "领德管理咨询（上海）有限公司",
+      "companyEnName": "LHH DBM Management Consulting (Shanghai) Co., Ltd.",
+      "address": "上海市黄浦区中山南路589号鑫景金融F栋6层",
+      "enAddress": "6th Floor, Block F, Xin Jing Jin Rong, No.589 South Zhongshan Road, Huangpu District, Shanghai",
+      "contactPhone": "+86 021-23124788",
+      "website": "http://www.lhhfesco.com",
+      "logo": "https://fat-static.oss-cn-shanghai.aliyuncs.com/LHH-RS-logo.png"
+    },
+    {
+      "name": "LHH_BJ",
+      "code": "lhh_bj",
+      "citable": false,
+      "companyName": "领禾管理咨询（北京）有限公司",
+      "companyEnName": "LHH DBM Management Consulting (Beijing) Co. Ltd.",
+      "address": "北京市朝阳区东三环北路嘉铭中心B座15层",
+      "enAddress": "15/F, Tower B, Jiaming Center, No.27 North Dongsanhuan Road, Chaoyang District, Beijing, PRC",
+      "contactPhone": "+86 010-57759861",
+      "website": "http://www.lhhfesco.com",
+      "logo": "https://fat-static.oss-cn-shanghai.aliyuncs.com/LHH-RS-logo.png"
+    },
+    {
+      "name": "FAT_CD",
+      "code": "fat_cd",
+      "citable": false,
+      "companyName": null,
+      "companyEnName": null,
+      "address": null,
+      "enAddress": null,
+      "contactPhone": null,
+      "website": null,
+      "logo": null
+    },
+    {
+      "name": "FA_SH",
+      "code": "fa_sh",
+      "citable": false,
+      "companyName": null,
+      "companyEnName": null,
+      "address": null,
+      "enAddress": null,
+      "contactPhone": null,
+      "website": null,
+      "logo": null
+    },
+    {
+      "name": "FA",
+      "code": "fa",
+      "citable": false,
+      "companyName": null,
+      "companyEnName": null,
+      "address": null,
+      "enAddress": null,
+      "contactPhone": null,
+      "website": null,
+      "logo": null
+    }
+  ],
+  "code": 0,
+  "success": true,
+  "failure": false
+}

@@ -103,138 +103,173 @@ const BaseExample = createWithRemoteLoader({
   modules: ['components-core:Global@PureGlobal']
 })(({ remoteModules }) => {
   const [PureGlobal] = remoteModules;
-  return (<PureGlobal
-    preset={{
-      ajax: async api => {
-        return { data: { code: 0, data: api.loader() } };
-      }, enums: {
-        CONTRACT_STATE_ENUM
-      }, apis: merge({}, billNoticeMock, {
-        flow: {
-          getFlowCondition: {
-            loader: () => {
-              return {
-                conditions: [{
-                  columnName: 'withoutContractType'
-                }], flowNo: '1004'
-              };
+  return (
+    <PureGlobal
+      preset={{
+        ajax: async api => {
+          return { data: { code: 0, data: api.loader() } };
+        },
+        enums: {
+          CONTRACT_STATE_ENUM
+        },
+        apis: merge({}, billNoticeMock, {
+          flow: {
+            getFlowCondition: {
+              loader: () => {
+                return {
+                  conditions: [
+                    {
+                      columnName: 'withoutContractType'
+                    }
+                  ],
+                  flowNo: '1004'
+                };
+              }
+            },
+            getNodesList: {
+              loader: () => {
+                return flowData.data;
+              }
             }
-          }, getNodesList: {
-            loader: () => {
-              return flowData.data;
-            }
-          }
-        }, user: {
-          getUserList: {
-            loader: ({ data }) => {
-              const params = Object.assign({
-                perPage: 20, currentPage: 1
-              }, data);
-              return new Promise(resolve => {
-                const start = (params.currentPage - 1) * params.perPage;
-                resolve({
-                  totalCount: 100, pageData: range(start, start + params.perPage).map(key => {
-                    return {
-                      name: `用户${key + 1}`, id: key + 1, uid: key + 1, englishName: `User${key + 1}`
-                    };
-                  })
+          },
+          user: {
+            getUserList: {
+              loader: ({ data }) => {
+                const params = Object.assign(
+                  {
+                    perPage: 20,
+                    currentPage: 1
+                  },
+                  data
+                );
+                return new Promise(resolve => {
+                  const start = (params.currentPage - 1) * params.perPage;
+                  resolve({
+                    totalCount: 100,
+                    pageData: range(start, start + params.perPage).map(key => {
+                      return {
+                        name: `用户${key + 1}`,
+                        id: key + 1,
+                        uid: key + 1,
+                        englishName: `User${key + 1}`
+                      };
+                    })
+                  });
                 });
-              });
+              }
+            }
+          },
+          client: {},
+          project: {
+            getList: {
+              loader: () => {
+                return projectListData.data;
+              }
+            },
+            getDetail: {
+              loader: () => {
+                return projectListData.data.projectList[0];
+              }
+            }
+          },
+          contract: {
+            getContractList: {
+              loader: () => {
+                return contractData;
+              }
+            },
+            getContractById: {
+              loader: () => {
+                return contractData.pageData[0];
+              }
+            }
+          },
+          ats: {
+            getTrackingList: {
+              loader: () => {
+                return userList;
+              }
+            }
+          },
+          position: {
+            getMyList: {
+              loader: () => {
+                return positionList;
+              }
+            }
+          },
+          bill: {
+            save: {
+              loader: () => {
+                return paymentData;
+              }
+            }
+          },
+          payment: {
+            getPaymentList: {
+              loader: () => {
+                return paymentList.data;
+              }
+            },
+            getPaymentById: {
+              loader: ({ params }) => {
+                return paymentList.data.pageData[params.id];
+              }
             }
           }
-        }, client: {}, project: {
-          getList: {
-            loader: () => {
-              return projectListData.data;
-            }
-          }, getDetail: {
-            loader: () => {
-              return projectListData.data.projectList[0];
-            }
-          }
-        }, contract: {
-          getContractList: {
-            loader: () => {
-              return contractData;
-            }
-          }, getContractById: {
-            loader: () => {
-              return contractData.pageData[0];
-            }
-          }
-        }, ats: {
-          getTrackingList: {
-            loader: () => {
-              return userList;
-            }
-          }
-        }, position: {
-          getMyList: {
-            loader: () => {
-              return positionList;
-            }
-          }
-        }, bill: {
-          save: {
-            loader: () => {
-              return paymentData;
-            }
-          }
-        }, payment: {
-          getPaymentList: {
-            loader: () => {
-              return paymentList.data;
-            }
-          }, getPaymentById: {
-            loader: ({ params }) => {
-              return paymentList.data.pageData[params.id];
-            }
-          }
-        }
-      })
-    }}
-  >
-    <Space>
-      <GenerateBill>
-        {({ modal }) => {
-          return (<Button
-            onClick={() => {
-              modal({
-                title: '生成候选人账单', formProps: [{
-                  onSubmit: async () => {
-                  }
-                }, {
-                  onSubmit: async () => {
-                  }
-                }]
-              });
-            }}
-          >
-            生成候选人账单
-          </Button>);
-        }}
-      </GenerateBill>
-      <GenerateProjectBill>
-        {({ modal }) => {
-          return (<Button
-            onClick={() => {
-              modal({
-                title: '生成候选人账单', formProps: [{
-                  onSubmit: async () => {
-                  }
-                }, {
-                  onSubmit: async () => {
-                  }
-                }]
-              });
-            }}
-          >
-            生成项目账单
-          </Button>);
-        }}
-      </GenerateProjectBill>
-    </Space>
-  </PureGlobal>);
+        })
+      }}
+    >
+      <Space>
+        <GenerateBill>
+          {({ modal }) => {
+            return (
+              <Button
+                onClick={() => {
+                  modal({
+                    title: '生成候选人账单',
+                    formProps: [
+                      {
+                        onSubmit: async () => {}
+                      },
+                      {
+                        onSubmit: async () => {}
+                      }
+                    ]
+                  });
+                }}
+              >
+                生成候选人账单
+              </Button>
+            );
+          }}
+        </GenerateBill>
+        <GenerateProjectBill>
+          {({ modal }) => {
+            return (
+              <Button
+                onClick={() => {
+                  modal({
+                    title: '生成候选人账单',
+                    formProps: [
+                      {
+                        onSubmit: async () => {}
+                      },
+                      {
+                        onSubmit: async () => {}
+                      }
+                    ]
+                  });
+                }}
+              >
+                生成项目账单
+              </Button>
+            );
+          }}
+        </GenerateProjectBill>
+      </Space>
+    </PureGlobal>
+  );
 });
 
 render(<BaseExample />);
@@ -255,108 +290,11 @@ const BaseExample = createWithRemoteLoader({
   modules: ['components-core:Global@PureGlobal', 'components-core:FormInfo@Form']
 })(({ remoteModules }) => {
   const [PureGlobal, Form] = remoteModules;
-  return (<PureGlobal
-    preset={{
-      ajax: async api => {
-        return { data: { code: 0, data: api.loader() } };
-      },
-      apis: {
-        flow: {
-          getFlowCondition: {
-            loader: () => {
-              return {
-                conditions: [{
-                  columnName: 'withoutContractType'
-                }], flowNo: '1004'
-              };
-            }
-          }, getNodesList: {
-            loader: () => {
-              return flowData.data;
-            }
-          }
-        }, ...billNoticeMock
-      }
-    }}
-  >
-    <Form rules={{ FLOW_USER }}>
-      <GenerateBillDetail billDetail={{
-        bankInfoOperation: 'xxxx',
-        totalAmount: '1000',
-        projects: [{
-          id: 223,
-          noticeId: 122,
-          projectTypeId: 7,
-          projectType: '入职到岗',
-          costType: 1,
-          amount: 1900000,
-          num: null,
-          projectAttachments: null
-        }, {
-          id: 223,
-          noticeId: 122,
-          projectTypeId: 7,
-          projectType: '入职到岗',
-          costType: 1,
-          amount: 1900000,
-          num: null,
-          projectAttachments: null
-        }],
-        clientName: '华威股份有限公司',
-        clientNum: '666666',
-        clientNameChinese: '华威股份有限公司',
-        clientNameEnglish: 'FA Talent Human Resources Service Co.',
-        clientAddress: '北京市朝阳区东三环北路嘉铭中心B座15层',
-        contact: '19829288292',
-        consultant: '张三',
-        attention: '张三',
-        date: '2023-07-21',
-        team: 'FAT',
-        userInfo: {
-          email: 'fuling@165.com',
-          phone: '13988882221',
-          name: '福玲',
-          englishName: '福玲',
-          gender: 'M',
-          createdAt: '2022-11-18T08:22:56.000+00:00',
-          updatedAt: '2023-02-28T02:22:43.000+00:00'
-        }
-      }} />
-    </Form>
-  </PureGlobal>);
-});
-
-render(<BaseExample />);
-
-```
-
-- 生成候选人账单表单
-- 生成候选人账单表单
-- remoteLoader(@kne/remote-loader),_CandidateBill(@components/CandidateBill),_projectListData(@components/ProjectSelect/doc/projectList.json),_ContractSelect(@components/ContractSelect),_data(@components/ContractSelect/doc/contractListData.json),_userListData(@components/CandidateSelect/doc/userListData.json),_positionListData(@components/CandidateSelect/doc/positionListData.json),_paymentList(@components/PaymentSelect/doc/paymentList.json),_flowData(@components/CandidateBill/doc/mock/flow.json),_lodash(lodash)
-
-```jsx
-const { BillInfoFormInner } = _CandidateBill;
-const { createWithRemoteLoader } = remoteLoader;
-const { default: projectListData } = _projectListData;
-const { data: contractData } = _data;
-const { CONTRACT_STATE_ENUM } = _ContractSelect;
-const { default: userListData } = _userListData;
-const { default: positionListData } = _positionListData;
-const { data: userList } = userListData;
-const { data: positionList } = positionListData;
-const { data: paymentList } = _paymentList;
-const { range } = _lodash;
-const { default: flowData } = _flowData;
-
-const BaseExample = createWithRemoteLoader({
-  modules: ['components-core:FormInfo@Form', 'components-core:Global@PureGlobal']
-})(({ remoteModules }) => {
-  const [Form, PureGlobal] = remoteModules;
   return (
     <PureGlobal
       preset={{
-        enums: {
-          CONTRACT_STATE_ENUM
+        ajax: async api => {
+          return { data: { code: 0, data: api.loader() } };
         },
         apis: {
           flow: {
@@ -378,89 +316,58 @@ const BaseExample = createWithRemoteLoader({
               }
             }
           },
-          user: {
-            getUserList: {
-              loader: ({ data }) => {
-                const params = Object.assign(
-                  {
-                    perPage: 20,
-                    currentPage: 1
-                  },
-                  data
-                );
-                return new Promise(resolve => {
-                  const start = (params.currentPage - 1) * params.perPage;
-                  resolve({
-                    totalCount: 100,
-                    pageData: range(start, start + params.perPage).map(key => {
-                      return {
-                        name: `用户${key + 1}`,
-                        id: key + 1,
-                        uid: key + 1,
-                        englishName: `User${key + 1}`
-                      };
-                    })
-                  });
-                });
-              }
-            }
-          },
-          client: {},
-          project: {
-            getList: {
-              loader: () => {
-                return projectListData.data;
-              }
-            },
-            getDetail: {
-              loader: () => {
-                return projectListData.data.projectList[0];
-              }
-            }
-          },
-          contract: {
-            getContractList: {
-              loader: () => {
-                return contractData;
-              }
-            },
-            getContractById: {
-              loader: () => {
-                return contractData.pageData[0];
-              }
-            }
-          },
-          ats: {
-            getTrackingList: {
-              loader: () => {
-                return userList;
-              }
-            }
-          },
-          position: {
-            getMyList: {
-              loader: () => {
-                return positionList;
-              }
-            }
-          },
-          payment: {
-            getPaymentList: {
-              loader: () => {
-                return paymentList;
-              }
-            },
-            getPaymentById: {
-              loader: ({ params }) => {
-                return paymentList.pageData[params.id];
-              }
-            }
-          }
+          ...billNoticeMock
         }
       }}
     >
-      <Form>
-        <BillInfoFormInner />
+      <Form rules={{ FLOW_USER }}>
+        <GenerateBillDetail
+          billDetail={{
+            bankInfoOperation: 'xxxx',
+            totalAmount: '1000',
+            projects: [
+              {
+                id: 223,
+                noticeId: 122,
+                projectTypeId: 7,
+                projectType: '入职到岗',
+                costType: 1,
+                amount: 1900000,
+                num: null,
+                projectAttachments: null
+              },
+              {
+                id: 223,
+                noticeId: 122,
+                projectTypeId: 7,
+                projectType: '入职到岗',
+                costType: 1,
+                amount: 1900000,
+                num: null,
+                projectAttachments: null
+              }
+            ],
+            clientName: '华威股份有限公司',
+            clientNum: '666666',
+            clientNameChinese: '华威股份有限公司',
+            clientNameEnglish: 'FA Talent Human Resources Service Co.',
+            clientAddress: '北京市朝阳区东三环北路嘉铭中心B座15层',
+            contact: '19829288292',
+            consultant: '张三',
+            attention: '张三',
+            date: '2023-07-21',
+            team: 'FAT',
+            userInfo: {
+              email: 'fuling@165.com',
+              phone: '13988882221',
+              name: '福玲',
+              englishName: '福玲',
+              gender: 'M',
+              createdAt: '2022-11-18T08:22:56.000+00:00',
+              updatedAt: '2023-02-28T02:22:43.000+00:00'
+            }
+          }}
+        />
       </Form>
     </PureGlobal>
   );
@@ -470,25 +377,41 @@ render(<BaseExample />);
 
 ```
 
+- 生成候选人账单表单
+- 生成候选人账单表单
+- remoteLoader(@kne/remote-loader),_CandidateBill(@components/CandidateBill),_presetMock(@root/presetMock)
+
+```jsx
+const { BillInfoFormInner } = _CandidateBill;
+const { createWithRemoteLoader } = remoteLoader;
+
+const { default: presetMock } = _presetMock;
+
+const BaseExample = createWithRemoteLoader({
+  modules: ['components-core:FormInfo@Form', 'components-core:Global@PureGlobal']
+})(({ remoteModules }) => {
+  const [Form, PureGlobal] = remoteModules;
+  return (<PureGlobal
+    preset={presetMock}
+  >
+    <Form>
+      <BillInfoFormInner />
+    </Form>
+  </PureGlobal>);
+});
+
+render(<BaseExample />);
+
+```
+
 - 生成项目账单表单
 - 生成项目账单表单
-- remoteLoader(@kne/remote-loader),_CandidateBill(@components/CandidateBill),_projectListData(@components/ProjectSelect/doc/projectList.json),_ContractSelect(@components/ContractSelect),_data(@components/ContractSelect/doc/contractListData.json),_userListData(@components/CandidateSelect/doc/userListData.json),_positionListData(@components/CandidateSelect/doc/positionListData.json),_paymentList(@components/PaymentSelect/doc/paymentList.json),_flowData(@components/CandidateBill/doc/mock/flow.json),_lodash(lodash)
+- remoteLoader(@kne/remote-loader),_CandidateBill(@components/CandidateBill),_presetMock(@root/presetMock)
 
 ```jsx
 const { ProjectBillInfoFormInner } = _CandidateBill;
 const { createWithRemoteLoader } = remoteLoader;
-const { default: projectListData } = _projectListData;
-const { data: contractData } = _data;
-const { CONTRACT_STATE_ENUM } = _ContractSelect;
-const { range } = _lodash;
-
-const { default: userListData } = _userListData;
-const { default: positionListData } = _positionListData;
-const { data: userList } = userListData;
-const { data: positionList } = positionListData;
-const { default: paymentList } = _paymentList;
-
-const { default: flowData } = _flowData;
+const { default: presetMock } = _presetMock;
 
 const BaseExample = createWithRemoteLoader({
   modules: ['components-core:FormInfo@Form', 'components-core:Global@PureGlobal']
@@ -496,110 +419,7 @@ const BaseExample = createWithRemoteLoader({
   const [Form, PureGlobal] = remoteModules;
   return (
     <PureGlobal
-      preset={{
-        enums: {
-          CONTRACT_STATE_ENUM
-        },
-        apis: {
-          flow: {
-            getFlowCondition: {
-              loader: () => {
-                return {
-                  conditions: [
-                    {
-                      columnName: 'withoutContractType'
-                    }
-                  ],
-                  flowNo: '1004'
-                };
-              }
-            },
-            getNodesList: {
-              loader: () => {
-                return flowData.data;
-              }
-            }
-          },
-          user: {
-            getUserList: {
-              loader: ({ data }) => {
-                const params = Object.assign(
-                  {
-                    perPage: 20,
-                    currentPage: 1
-                  },
-                  data
-                );
-                return new Promise(resolve => {
-                  const start = (params.currentPage - 1) * params.perPage;
-                  resolve({
-                    totalCount: 100,
-                    pageData: range(start, start + params.perPage).map(key => {
-                      return {
-                        name: `用户${key + 1}`,
-                        id: key + 1,
-                        uid: key + 1,
-                        englishName: `User${key + 1}`
-                      };
-                    })
-                  });
-                });
-              }
-            }
-          },
-          client: {},
-          project: {
-            getList: {
-              loader: () => {
-                return projectListData.data;
-              }
-            },
-            getDetail: {
-              loader: () => {
-                return projectListData.data.projectList[0];
-              }
-            }
-          },
-          contract: {
-            getContractList: {
-              loader: () => {
-                return contractData;
-              }
-            },
-            getContractById: {
-              loader: () => {
-                return contractData.pageData[0];
-              }
-            }
-          },
-          ats: {
-            getTrackingList: {
-              loader: () => {
-                return userList;
-              }
-            }
-          },
-          position: {
-            getMyList: {
-              loader: () => {
-                return positionList;
-              }
-            }
-          },
-          payment: {
-            getPaymentList: {
-              loader: () => {
-                return paymentList.data;
-              }
-            },
-            getPaymentById: {
-              loader: ({ params }) => {
-                return paymentList.data.pageData[params.id];
-              }
-            }
-          }
-        }
-      }}
+      preset={presetMock}
     >
       <Form>
         <ProjectBillInfoFormInner />
