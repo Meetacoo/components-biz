@@ -1,7 +1,7 @@
 const { createWithRemoteLoader } = remoteLoader;
 const { GenerateBill, GenerateProjectBill } = _CandidateBill;
 const { Button, Space } = antd;
-const { range } = _lodash;
+const { range, merge } = _lodash;
 const { default: projectListData } = _projectListData;
 const { data: contractData } = _data;
 const { CONTRACT_STATE_ENUM } = _ContractSelect;
@@ -16,6 +16,8 @@ const { default: paymentList } = _paymentList;
 
 const { default: flowData } = _flowData;
 
+const { default: billNoticeMock } = _billNoticeMock;
+
 const BaseExample = createWithRemoteLoader({
   modules: ['components-core:Global@PureGlobal']
 })(({ remoteModules }) => {
@@ -23,10 +25,13 @@ const BaseExample = createWithRemoteLoader({
   return (
     <PureGlobal
       preset={{
+        ajax: async api => {
+          return { data: { code: 0, data: api.loader() } };
+        },
         enums: {
           CONTRACT_STATE_ENUM
         },
-        apis: {
+        apis: merge({}, billNoticeMock, {
           flow: {
             getFlowCondition: {
               loader: () => {
@@ -131,7 +136,7 @@ const BaseExample = createWithRemoteLoader({
               }
             }
           }
-        }
+        })
       }}
     >
       <Space>
@@ -142,7 +147,14 @@ const BaseExample = createWithRemoteLoader({
                 onClick={() => {
                   modal({
                     title: '生成候选人账单',
-                    formProps: [{ onSubmit: async () => {} }, { onSubmit: async () => {} }]
+                    formProps: [
+                      {
+                        onSubmit: async () => {}
+                      },
+                      {
+                        onSubmit: async () => {}
+                      }
+                    ]
                   });
                 }}
               >
@@ -158,7 +170,14 @@ const BaseExample = createWithRemoteLoader({
                 onClick={() => {
                   modal({
                     title: '生成候选人账单',
-                    formProps: [{ onSubmit: async () => {} }, { onSubmit: async () => {} }]
+                    formProps: [
+                      {
+                        onSubmit: async () => {}
+                      },
+                      {
+                        onSubmit: async () => {}
+                      }
+                    ]
                   });
                 }}
               >

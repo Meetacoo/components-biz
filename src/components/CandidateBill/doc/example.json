@@ -81,8 +81,35 @@
           "packageName": "@components/CandidateBill/doc/mock/flow.json"
         },
         {
+          "name": "_billNoticeMock",
+          "packageName": "@components/BillNotice/doc/mock"
+        },
+        {
           "name": "_lodash",
           "packageName": "lodash"
+        }
+      ]
+    },
+    {
+      "title": "GenerateBillDetail",
+      "description": "生成账单详情",
+      "code": "./generate-bill-detail.js",
+      "scope": [
+        {
+          "name": "_CandidateBill",
+          "packageName": "@components/CandidateBill"
+        },
+        {
+          "name": "remoteLoader",
+          "packageName": "@kne/remote-loader"
+        },
+        {
+          "name": "_flowData",
+          "packageName": "@components/CandidateBill/doc/mock/flow.json"
+        },
+        {
+          "name": "_billNoticeMock",
+          "packageName": "@components/BillNotice/doc/mock"
         }
       ]
     },

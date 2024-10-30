@@ -5,7 +5,6 @@ import CandidateSelect from '@components/CandidateSelect';
 import { get } from 'lodash';
 import BillAllocationForm from '../BillAllocationForm';
 import PaymentSelect from '../../PaymentSelect';
-import ApprovalProcess from '../ApprovalProcess';
 
 const BillInfoFormInner = createWithRemoteLoader({
   modules: ['components-core:FormInfo', 'components-core:FormInfo@formModule']
@@ -34,7 +33,6 @@ const BillInfoFormInner = createWithRemoteLoader({
           <ContractSelect name="contractId" label="合同" rule="REQ" api={{ data: { clientId: get(record, 'clientId'), states: [5, 7] } }} />,
           <RadioGroup
             name="withoutProject"
-            rule="REQ"
             hidden
             options={[
               { value: 1, label: '合同有项目' },
@@ -95,7 +93,6 @@ const BillInfoFormInner = createWithRemoteLoader({
         list={[<PaymentSelect name="paymentId" label="付款信息" rule="REQ" api={{ data: { clientId: get(record, 'clientId'), state: 5 } }} />]}
       />
       <BillAllocationForm />
-      <FormInfo title="账单审批流程" list={[<ApprovalProcess label="账单审批流程" name="flowRequest" rule="REQ FLOW_USER" />]} />
     </>
   );
 });
