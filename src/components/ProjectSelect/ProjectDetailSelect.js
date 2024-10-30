@@ -14,7 +14,7 @@ const ProjectDetailSelectField = createWithRemoteLoader({
       api: apis.project.getDetail,
       dataFormat: data => {
         return Object.assign({}, data, {
-          list: data.projectPriceList.map(item => {
+          list: (data.projectPriceList || []).map(item => {
             return Object.assign({}, item, {
               value: item.id,
               label: `${item.rsfwlx} ${item.rsxffw} ${item.rstj}`
@@ -34,11 +34,11 @@ const ProjectDetailSelectField = createWithRemoteLoader({
           showSelectedTag: false
         },
         renderList: ({ props, data, list, value, onSelect }) => {
-          const { single } = props;
+          const { single, fieldNames = { serialNum: 'serialNum', name: 'name' } } = props;
           return (
             <Flex vertical gap={12}>
               <div>
-                {data.serialNum} {data.name}
+                {data[fieldNames.serialNum]} {data[fieldNames?.name]}
               </div>
               <Table
                 controllerOpen={false}
