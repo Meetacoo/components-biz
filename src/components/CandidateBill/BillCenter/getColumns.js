@@ -1,4 +1,5 @@
 import get from 'lodash/get';
+import { billTransform } from '../index';
 
 const getColumns = ({ formatView }) => {
   return [
@@ -14,6 +15,18 @@ const getColumns = ({ formatView }) => {
       }
     },
     {
+      name: 'typeNames',
+      title: '账单类目',
+      type: 'otherSmall',
+      valueOf: ({ typeNames }) => typeNames.join('，')
+    },
+    {
+      name: 'amount',
+      title: '账单总金额',
+      type: 'other',
+      valueOf: ({ amount }) => formatView(amount, 'number--100')
+    },
+    {
       name: 'state',
       title: '账单状态',
       type: 'tag',
@@ -23,32 +36,20 @@ const getColumns = ({ formatView }) => {
         moduleName: 'BILL_STATE_ENUM'
       })
     },
-    {
-      name: 'amount',
-      title: '账单总金额',
-      type: 'other',
-      valueOf: ({ amount }) => formatView(amount, 'number--100')
-    },
-    {
-      name: 'clientName',
-      title: '客户',
-      type: 'mainInfo',
-      onClick: ({ colItem }) => {
-        window.open(`/client/${get(colItem, 'clientId')}?tab=contract`, '_blank');
-      }
-    },
-    {
-      name: 'typeNames',
-      title: '账单类目',
-      type: 'otherSmall',
-      valueOf: ({ typeNames }) => typeNames.join('，')
-    },
     // TODO 暂时不做候选人状态
     // {
     //   name: 'candidates',
     //   title: '候选人',
     //   type: 'otherSmall'
     // },
+    {
+      name: 'clientName',
+      title: '客户',
+      type: 'mainInfo',
+      onClick: ({ colItem }) => {
+        window.open(`/client/${get(colItem, 'clientId')}`, '_blank');
+      }
+    },
     {
       name: 'preInvoiceAmount',
       title: '已预提金额',
@@ -73,7 +74,7 @@ const getColumns = ({ formatView }) => {
       type: 'user',
       render: ({ data }) => ({
         valueOf: ({ uid }) => {
-          return `${get(data?.userMap?.get(uid), 'englishName', '')} ${get(data?.userMap?.get(uid), 'name', '')}`;
+          return billTransform.getUserName({ userMap: get(data, 'userMap'), user: { uid }, withOrg: false });
         }
       })
     },

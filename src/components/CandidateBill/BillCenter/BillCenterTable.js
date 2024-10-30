@@ -24,7 +24,7 @@ const BillCenterTable = createWithRemoteLoader({
       topOptionsChildren={
         hasBillEditAuth
           ? ({ ref }) => (
-              <GenerateProjectBillButton type="primary" inputData={inputData}>
+              <GenerateProjectBillButton type="primary" inputData={inputData} onReload={ref?.current?.reload}>
                 新建账单
               </GenerateProjectBillButton>
             )
@@ -46,6 +46,11 @@ const BillCenterTable = createWithRemoteLoader({
               pagination={{ paramsType: 'params' }}
               columns={[...getColumns({ formatView }).filter(item => (hiddenColumns || []).indexOf(item.name) === -1), optionsColumn]}
               name="setting-user"
+              transformData={data => {
+                return Object.assign({}, data, {
+                  userMap: new Map((data?.userInfos || []).map(item => [item.uid, item]))
+                });
+              }}
             />
           </Flex>
         );

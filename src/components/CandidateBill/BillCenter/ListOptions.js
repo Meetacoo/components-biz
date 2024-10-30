@@ -111,22 +111,23 @@ const ListOptions = createWithRemoteLoader({
             title: '操作',
             type: 'options',
             fixed: 'right',
-            valueOf: ({ id, type }) => {
+            valueOf: ({ id, type, state }) => {
               return [
                 {
                   buttonComponent: type === 1 ? EditBillProjectButton : EditBillButton,
                   children: '编辑账单',
                   id,
-                  onReload: ref.current.reload,
-                  hidden: !hasBillEditAuth
+                  // 无账单编辑权限、账单状态为审核中、已通过时，不能编辑账单
+                  disabled: !hasBillEditAuth || [2, 5].indexOf(state) > -1,
+                  onReload: ref.current.reload
                 },
                 {
                   children: '前往结算中心'
                 },
                 {
                   children: '下载账单',
-                  disabled: true,
-                  hidden: !hasBillExportAuth
+                  // 无账单下载权限、账单状态为除审核通过外的其他状态时，不能下载账单
+                  disabled: !hasBillExportAuth || state !== 5
                 }
               ];
             }

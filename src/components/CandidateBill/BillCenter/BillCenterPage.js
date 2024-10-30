@@ -31,6 +31,11 @@ const BillCenter = createWithRemoteLoader({
               filter,
               titleExtra: topOptions
             }}
+            transformData={data => {
+              return Object.assign({}, data, {
+                userMap: new Map((data?.userInfos || []).map(item => [item.uid, item]))
+              });
+            }}
           />
         );
       }}
