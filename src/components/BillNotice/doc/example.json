@@ -1,8 +1,8 @@
 {
-  "isFull": false,
+  "isFull": true,
   "list": [
     {
-      "title": "这里填写示例标题",
+      "title": "base",
       "description": "这里填写示例说明",
       "code": "./base.js",
       "scope": [
@@ -11,8 +11,47 @@
           "packageName": "@components/BillNotice"
         },
         {
-          "name": "_paymentData",
-          "packageName": "@components/BillNotice/doc/paymentData.json"
+          "name": "remoteLoader",
+          "packageName": "@kne/remote-loader"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        },
+        {
+          "name": "_mock",
+          "packageName": "@components/BillNotice/doc/mock"
+        },
+        {
+          "name": "_ReactFetch",
+          "packageName": "@kne/react-fetch"
+        }
+      ]
+    },
+    {
+      "title": "template",
+      "description": "这里填写示例说明",
+      "code": "./template.js",
+      "scope": [
+        {
+          "name": "_BillNotice",
+          "packageName": "@components/BillNotice"
+        },
+        {
+          "name": "remoteLoader",
+          "packageName": "@kne/remote-loader"
+        },
+        {
+          "name": "antd",
+          "packageName": "antd"
+        },
+        {
+          "name": "_mock",
+          "packageName": "@components/BillNotice/doc/mock"
+        },
+        {
+          "name": "_ReactFetch",
+          "packageName": "@kne/react-fetch"
         }
       ]
     }
