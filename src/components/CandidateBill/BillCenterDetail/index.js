@@ -196,7 +196,7 @@ const BillCenterDetail = createWithRemoteLoader({
                           display: get(bill, 'type') !== 1
                         },
                         {
-                          name: 'amount',
+                          name: 'standardAmount',
                           title: '标准账单总金额',
                           render: value => `${value ? formatView(value, 'number--100') : 0}元`,
                           display: get(bill, 'type') !== 1

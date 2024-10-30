@@ -212,6 +212,14 @@
         {
           "name": "_contractList",
           "packageName": "@components/ContractSelect/doc/contractListData.json"
+        },
+        {
+          "name": "_ContractSelect",
+          "packageName": "@components/ContractSelect"
+        },
+        {
+          "name": "_projectListData",
+          "packageName": "@components/ProjectSelect/doc/projectList.json"
         }
       ]
     },

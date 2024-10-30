@@ -18,13 +18,15 @@ const BillCenterTable = createWithRemoteLoader({
   const { apis } = usePreset();
   const { getFilterValue } = Filter;
   const hasBillEditAuth = usePermissionsPass({ request: ['bill:apply:edit'] });
+  const hasPositionAuth = usePermissionsPass({ request: ['jd:job:look'] });
+  const hasTalentAuth = usePermissionsPass({ request: ['cv:cv:look'] });
 
   return (
     <ListOptions
       topOptionsChildren={
         hasBillEditAuth
           ? ({ ref }) => (
-              <GenerateProjectBillButton type="primary" inputData={inputData}>
+              <GenerateProjectBillButton type="primary" inputData={inputData} onReload={ref?.current?.reload}>
                 新建账单
               </GenerateProjectBillButton>
             )
@@ -43,9 +45,16 @@ const BillCenterTable = createWithRemoteLoader({
               {...apis.candidateBill.getBillList}
               data={Object.assign({}, filterValue, otherFilterProps)}
               ref={ref}
-              pagination={{ paramsType: 'params' }}
-              columns={[...getColumns({ formatView }).filter(item => (hiddenColumns || []).indexOf(item.name) === -1), optionsColumn]}
+              columns={[
+                ...getColumns({ formatView, hasPositionAuth, hasTalentAuth }).filter(item => (hiddenColumns || []).indexOf(item.name) === -1),
+                optionsColumn
+              ]}
               name="setting-user"
+              transformData={data => {
+                return Object.assign({}, data, {
+                  userMap: new Map((data?.userInfos || []).map(item => [item.uid, item]))
+                });
+              }}
             />
           </Flex>
         );

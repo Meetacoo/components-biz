@@ -5,6 +5,7 @@ import { Space } from 'antd';
 import get from 'lodash/get';
 import { EditBillButton } from '../GenerateBill';
 import { EditBillProjectButton } from '../GenerateProjectBill';
+import merge from 'lodash/merge';
 
 const BillCenter = createWithRemoteLoader({
   modules: [
@@ -26,6 +27,8 @@ const BillCenter = createWithRemoteLoader({
   const filterValue = getFilterValue(filter);
   const hasBillEditAuth = usePermissionsPass({ request: ['bill:apply:edit'] });
   const hasBillExportAuth = usePermissionsPass({ request: ['bill:apply:export_notice'] });
+  const hasPositionAuth = usePermissionsPass({ request: ['jd:job:look'] });
+  const hasTalentAuth = usePermissionsPass({ request: ['cv:cv:look'] });
 
   return (
     <Enum moduleName={['BILL_STATE_ENUM', 'invoiceProjectType']}>
@@ -34,7 +37,7 @@ const BillCenter = createWithRemoteLoader({
         return (
           <TablePage
             ref={ref}
-            {...apis.candidateBill.getBillList}
+            {...merge({}, apis.candidateBill.getBillList, { data: filterValue })}
             data={filterValue}
             name="candidateBillCenter"
             topArea={
@@ -111,7 +114,7 @@ const BillCenter = createWithRemoteLoader({
               )
             }}
             columns={[
-              ...getColumns({ formatView }),
+              ...getColumns({ formatView, hasPositionAuth, hasTalentAuth }),
               {
                 name: 'options',
                 title: '操作',
