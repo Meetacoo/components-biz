@@ -13,7 +13,7 @@ const GenerateProjectBill = createWithRemoteLoader({
   const formStepModal = useFormStepModal();
   return children({
     modal: props => {
-      const { formProps, record, ...others } = Object.assign(
+      const { formProps, client, ...others } = Object.assign(
         {},
         {
           title: '生成账单'
@@ -26,7 +26,7 @@ const GenerateProjectBill = createWithRemoteLoader({
           {
             title: '填写账单信息',
             formProps: get(formProps, '[0]'),
-            children: <ProjectBillInfoFormInner record={record} />
+            children: <ProjectBillInfoFormInner client={client} />
           },
           {
             title: '生成账单',
@@ -98,11 +98,10 @@ export const EditBillProjectButton = createWithRemoteLoader({
           api={Object.assign({}, apis.candidateBill.getBillDetail, {
             params: { id }
           })}
-          modalFunc={() => {}}
           onClick={({ data, close }) => {
             return modal({
               title: '编辑账单',
-              record: get(data, 'bill') || {},
+              client: get(data, 'bill') || {},
               formProps: [
                 {
                   data: billTransform.input(data, formatView),

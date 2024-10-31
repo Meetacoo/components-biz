@@ -9,10 +9,10 @@ import PaymentSelect from '../../PaymentSelect';
 // 候选人账单
 const ProjectBillInfoFormInner = createWithRemoteLoader({
   modules: ['components-core:FormInfo']
-})(({ remoteModules, record }) => {
+})(({ remoteModules, client }) => {
   const [FormInfo] = remoteModules;
   const { List } = FormInfo;
-  const { Input, RadioGroup, Upload, MoneyInput, DatePicker, InputNumber, AdvancedSelect } = FormInfo.fields;
+  const { Input, RadioGroup, Upload, MoneyInput, DatePicker, InputNumber, SuperSelect } = FormInfo.fields;
 
   const onsiteFields = [
       <MoneyInput name="amount" label="账单金额" rule="REQ" />,
@@ -71,24 +71,21 @@ const ProjectBillInfoFormInner = createWithRemoteLoader({
     <>
       <FormInfo
         list={[
-          <AdvancedSelect
+          <SuperSelect
             name="clientId"
             label="客户"
             single
-            allowClear={false}
-            showSelectedTag={false}
             disabled
-            api={{
-              loader: () => ({
-                pageData: [{ label: get(record, 'clientName'), value: get(record, 'clientId') }]
-              })
-            }}
-          /> /**
+            valueKey="clientId"
+            labelKey="clientName"
+            value={client}
+            interceptor="object-output-value"
+          />,
+          /**
        TODO
        * 所选候选人所在职位无项目，显示合同
        * 所选候选人所在职位都有项目，不显示合同
-       */,
-          <ContractSelect name="contractId" label="合同" rule="REQ" api={{ data: { clientId: get(record, 'clientId'), states: [5, 7] } }} /> /**
+       */ <ContractSelect name="contractId" label="合同" rule="REQ" api={{ data: { clientId: get(client, 'clientId'), states: [5, 7] } }} /> /**
          TODO
          * 所选候选人所在职位有项目，显示项目，不可修改
          * 职位无项目，不显示项目
@@ -142,7 +139,7 @@ const ProjectBillInfoFormInner = createWithRemoteLoader({
       />
       <FormInfo
         title="付款信息"
-        list={[<PaymentSelect name="paymentId" label="付款信息" rule="REQ" api={{ data: { clientId: get(record, 'clientId'), state: 5 } }} />]}
+        list={[<PaymentSelect name="paymentId" label="付款信息" rule="REQ" api={{ data: { clientId: get(client, 'clientId'), state: 5 } }} />]}
       />
       <BillAllocationForm />
     </>
