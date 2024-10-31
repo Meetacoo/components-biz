@@ -15,12 +15,8 @@
           "packageName": "@kne/remote-loader"
         },
         {
-          "name": "_userListData",
-          "packageName": "@components/CandidateSelect/doc/userListData.json"
-        },
-        {
-          "name": "_positionListData",
-          "packageName": "@components/CandidateSelect/doc/positionListData.json"
+          "name": "_presetMock",
+          "packageName": "@root/presetMock"
         }
       ]
     }

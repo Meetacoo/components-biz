@@ -3,6 +3,7 @@ import ProjectBillInfoFormInner from '../ProjectBillInfoFormInner';
 import { App, Button } from 'antd';
 import { billTransform } from '../index';
 import get from 'lodash/get';
+import GenerateBillDetail from '../GenerateBillDetail';
 
 const GenerateProjectBill = createWithRemoteLoader({
   modules: ['components-core:FormInfo']
@@ -30,7 +31,10 @@ const GenerateProjectBill = createWithRemoteLoader({
           {
             title: '生成账单',
             formProps: get(formProps, '[1]'),
-            children: <div>生成账单</div>
+            children: args => {
+              console.log('>>>>>', args);
+              return <GenerateBillDetail />;
+            }
           }
         ]
       });

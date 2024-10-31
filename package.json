@@ -86,7 +86,7 @@
     "sass": "^1.75.0"
   },
   "dependencies": {
-    "@kne/format-document-builder": "^0.1.10",
+    "@kne/format-document-builder": "^0.1.11",
     "@kne/use-ref-callback": "^0.1.2",
     "dayjs": "^1.11.13"
   }

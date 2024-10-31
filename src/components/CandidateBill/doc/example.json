@@ -26,8 +26,8 @@
           "packageName": "@kne/remote-loader"
         },
         {
-          "name": "_flowData",
-          "packageName": "@components/CandidateBill/doc/mock/flow.json"
+          "name": "_presetMock",
+          "packageName": "@root/presetMock"
         }
       ]
     },
@@ -37,6 +37,10 @@
       "code": "./generate-bill.js",
       "scope": [
         {
+          "name": "_CandidateBill",
+          "packageName": "@components/CandidateBill"
+        },
+        {
           "name": "remoteLoader",
           "packageName": "@kne/remote-loader"
         },
@@ -45,44 +49,27 @@
           "packageName": "antd"
         },
         {
+          "name": "_presetMock",
+          "packageName": "@root/presetMock"
+        }
+      ]
+    },
+    {
+      "title": "GenerateBillDetail",
+      "description": "生成账单详情",
+      "code": "./generate-bill-detail.js",
+      "scope": [
+        {
           "name": "_CandidateBill",
           "packageName": "@components/CandidateBill"
         },
         {
-          "name": "_projectListData",
-          "packageName": "@components/ProjectSelect/doc/projectList.json"
+          "name": "remoteLoader",
+          "packageName": "@kne/remote-loader"
         },
         {
-          "name": "_ContractSelect",
-          "packageName": "@components/ContractSelect"
-        },
-        {
-          "name": "_data",
-          "packageName": "@components/ContractSelect/doc/contractListData.json"
-        },
-        {
-          "name": "_userListData",
-          "packageName": "@components/CandidateSelect/doc/userListData.json"
-        },
-        {
-          "name": "_positionListData",
-          "packageName": "@components/CandidateSelect/doc/positionListData.json"
-        },
-        {
-          "name": "_paymentData",
-          "packageName": "@components/BillNotice/doc/paymentData.json"
-        },
-        {
-          "name": "_paymentList",
-          "packageName": "@components/PaymentSelect/doc/paymentList.json"
-        },
-        {
-          "name": "_flowData",
-          "packageName": "@components/CandidateBill/doc/mock/flow.json"
-        },
-        {
-          "name": "_lodash",
-          "packageName": "lodash"
+          "name": "_presetMock",
+          "packageName": "@root/presetMock"
         }
       ]
     },
@@ -100,36 +87,8 @@
           "packageName": "@components/CandidateBill"
         },
         {
-          "name": "_projectListData",
-          "packageName": "@components/ProjectSelect/doc/projectList.json"
-        },
-        {
-          "name": "_ContractSelect",
-          "packageName": "@components/ContractSelect"
-        },
-        {
-          "name": "_data",
-          "packageName": "@components/ContractSelect/doc/contractListData.json"
-        },
-        {
-          "name": "_userListData",
-          "packageName": "@components/CandidateSelect/doc/userListData.json"
-        },
-        {
-          "name": "_positionListData",
-          "packageName": "@components/CandidateSelect/doc/positionListData.json"
-        },
-        {
-          "name": "_paymentList",
-          "packageName": "@components/PaymentSelect/doc/paymentList.json"
-        },
-        {
-          "name": "_flowData",
-          "packageName": "@components/CandidateBill/doc/mock/flow.json"
-        },
-        {
-          "name": "_lodash",
-          "packageName": "lodash"
+          "name": "_presetMock",
+          "packageName": "@root/presetMock"
         }
       ]
     },
@@ -147,36 +106,8 @@
           "packageName": "@components/CandidateBill"
         },
         {
-          "name": "_projectListData",
-          "packageName": "@components/ProjectSelect/doc/projectList.json"
-        },
-        {
-          "name": "_ContractSelect",
-          "packageName": "@components/ContractSelect"
-        },
-        {
-          "name": "_data",
-          "packageName": "@components/ContractSelect/doc/contractListData.json"
-        },
-        {
-          "name": "_userListData",
-          "packageName": "@components/CandidateSelect/doc/userListData.json"
-        },
-        {
-          "name": "_positionListData",
-          "packageName": "@components/CandidateSelect/doc/positionListData.json"
-        },
-        {
-          "name": "_paymentList",
-          "packageName": "@components/PaymentSelect/doc/paymentList.json"
-        },
-        {
-          "name": "_flowData",
-          "packageName": "@components/CandidateBill/doc/mock/flow.json"
-        },
-        {
-          "name": "_lodash",
-          "packageName": "lodash"
+          "name": "_presetMock",
+          "packageName": "@root/presetMock"
         }
       ]
     },
@@ -194,32 +125,8 @@
           "packageName": "@components/CandidateBill"
         },
         {
-          "name": "mockData",
-          "packageName": "@components/CandidateBill/doc/mock"
-        },
-        {
-          "name": "_lodash",
-          "packageName": "lodash"
-        },
-        {
-          "name": "_paymentList",
-          "packageName": "@components/PaymentSelect/doc/paymentList.json"
-        },
-        {
-          "name": "_flowData",
-          "packageName": "@components/CandidateBill/doc/mock/flow.json"
-        },
-        {
-          "name": "_contractList",
-          "packageName": "@components/ContractSelect/doc/contractListData.json"
-        },
-        {
-          "name": "_ContractSelect",
-          "packageName": "@components/ContractSelect"
-        },
-        {
-          "name": "_projectListData",
-          "packageName": "@components/ProjectSelect/doc/projectList.json"
+          "name": "_presetMock",
+          "packageName": "@root/presetMock"
         }
       ]
     },
@@ -237,8 +144,8 @@
           "packageName": "@components/CandidateBill"
         },
         {
-          "name": "mockData",
-          "packageName": "@components/CandidateBill/doc/mock"
+          "name": "_presetMock",
+          "packageName": "@root/presetMock"
         }
       ]
     }

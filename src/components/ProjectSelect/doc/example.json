@@ -15,8 +15,8 @@
           "packageName": "@kne/remote-loader"
         },
         {
-          "name": "_projectListData",
-          "packageName": "@components/ProjectSelect/doc/projectList.json"
+          "name": "_presetMock",
+          "packageName": "@root/presetMock"
         }
       ]
     }

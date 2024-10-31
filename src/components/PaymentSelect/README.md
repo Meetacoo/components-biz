@@ -13,54 +13,34 @@
 
 - 这里填写示例标题
 - 这里填写示例说明
-- _PaymentSelect(@components/PaymentSelect),remoteLoader(@kne/remote-loader),_paymentList(@components/PaymentSelect/doc/paymentList.json)
+- _PaymentSelect(@components/PaymentSelect),remoteLoader(@kne/remote-loader),_presetMock(@root/presetMock)
 
 ```jsx
-const { default: PaymentSelect, INVOICE_TYPE_ENUM } = _PaymentSelect;
+const { default: PaymentSelect } = _PaymentSelect;
 const { createWithRemoteLoader } = remoteLoader;
-
-const { default: paymentList } = _paymentList;
+const { default: presetMock, paymentList } = _presetMock;
 
 const BaseExample = createWithRemoteLoader({
   modules: ['components-core:Global@PureGlobal', 'components-core:FormInfo@Form']
 })(({ remoteModules }) => {
   const [PureGlobal, Form] = remoteModules;
-  return (
-    <PureGlobal
-      preset={{
-        apis: {
-          payment: {
-            getPaymentList: {
-              loader: () => {
-                return paymentList.data;
-              }
-            },
-            getPaymentById: {
-              loader: () => {
-                return paymentList.data.pageData[0];
-              }
-            }
-          }
-        },
-        enums: { INVOICE_TYPE_ENUM }
+  return (<PureGlobal
+    preset={presetMock}
+  >
+    <Form
+      data={{
+        payment2: (() => {
+          const value = paymentList.data.pageData[0];
+          return {
+            value: value.id, label: value.invoiceTitle
+          };
+        })()
       }}
     >
-      <Form
-        data={{
-          payment2: (() => {
-            const value = paymentList.data.pageData[0];
-            return {
-              value: value.id,
-              label: value.invoiceTitle
-            };
-          })()
-        }}
-      >
-        <PaymentSelect name="payment" label="付款信息" />
-        <PaymentSelect name="payment2" label="付款信息(有默认值)" />
-      </Form>
-    </PureGlobal>
-  );
+      <PaymentSelect name="payment" label="付款信息" />
+      <PaymentSelect name="payment2" label="付款信息(有默认值)" />
+    </Form>
+  </PureGlobal>);
 });
 
 render(<BaseExample />);
@@ -69,36 +49,20 @@ render(<BaseExample />);
 
 - 这里填写示例标题
 - 这里填写示例说明
-- _PaymentSelect(@components/PaymentSelect),remoteLoader(@kne/remote-loader),_paymentList(@components/PaymentSelect/doc/paymentList.json)
+- _PaymentSelect(@components/PaymentSelect),remoteLoader(@kne/remote-loader),_presetMock(@root/presetMock)
 
 ```jsx
-const { Preview, INVOICE_TYPE_ENUM } = _PaymentSelect;
+const { Preview } = _PaymentSelect;
 const { createWithRemoteLoader } = remoteLoader;
-
-const { default: paymentList } = _paymentList;
+const { default: presetMock } = _presetMock;
 
 const BaseExample = createWithRemoteLoader({
   modules: ['components-core:Global@PureGlobal']
 })(({ remoteModules }) => {
   const [PureGlobal] = remoteModules;
-  return (
-    <PureGlobal
-      preset={{
-        apis: {
-          payment: {
-            getPaymentById: {
-              loader: ({ params }) => {
-                return paymentList.data.pageData[params.id];
-              }
-            }
-          }
-        },
-        enums: { INVOICE_TYPE_ENUM }
-      }}
-    >
+  return (<PureGlobal preset={presetMock}>
       <Preview id={0} />
-    </PureGlobal>
-  );
+    </PureGlobal>);
 });
 
 render(<BaseExample />);

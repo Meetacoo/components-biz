@@ -15,8 +15,8 @@
           "packageName": "@kne/remote-loader"
         },
         {
-          "name": "_paymentList",
-          "packageName": "@components/PaymentSelect/doc/paymentList.json"
+          "name": "_presetMock",
+          "packageName": "@root/presetMock"
         }
       ]
     },
@@ -34,8 +34,8 @@
           "packageName": "@kne/remote-loader"
         },
         {
-          "name": "_paymentList",
-          "packageName": "@components/PaymentSelect/doc/paymentList.json"
+          "name": "_presetMock",
+          "packageName": "@root/presetMock"
         }
       ]
     }

@@ -5,7 +5,6 @@ import CandidateSelect from '@components/CandidateSelect';
 import get from 'lodash/get';
 import BillAllocationForm from '../BillAllocationForm';
 import PaymentSelect from '../../PaymentSelect';
-import ApprovalProcess from '../ApprovalProcess';
 
 // 候选人账单
 const ProjectBillInfoFormInner = createWithRemoteLoader({
@@ -146,7 +145,6 @@ const ProjectBillInfoFormInner = createWithRemoteLoader({
         list={[<PaymentSelect name="paymentId" label="付款信息" rule="REQ" api={{ data: { clientId: get(record, 'clientId'), state: 5 } }} />]}
       />
       <BillAllocationForm />
-      <FormInfo title="账单审批流程" list={[<ApprovalProcess label="账单审批流程" name="flowRequest" rule="REQ FLOW_USER" />]} />
     </>
   );
 });

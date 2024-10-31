@@ -15,8 +15,8 @@
           "packageName": "@kne/remote-loader"
         },
         {
-          "name": "_data",
-          "packageName": "@components/ContractSelect/doc/contractListData.json"
+          "name": "_presetMock",
+          "packageName": "@root/presetMock"
         }
       ]
     },
@@ -34,8 +34,8 @@
           "packageName": "@kne/remote-loader"
         },
         {
-          "name": "_dataDetail",
-          "packageName": "@components/ContractSelect/doc/contractDetailData.json"
+          "name": "_presetMock",
+          "packageName": "@root/presetMock"
         }
       ]
     }

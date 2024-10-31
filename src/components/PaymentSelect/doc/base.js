@@ -1,32 +1,13 @@
-const { default: PaymentSelect, INVOICE_TYPE_ENUM } = _PaymentSelect;
+const { default: PaymentSelect } = _PaymentSelect;
 const { createWithRemoteLoader } = remoteLoader;
-
-const { default: paymentList } = _paymentList;
+const { default: presetMock, paymentList } = _presetMock;
 
 const BaseExample = createWithRemoteLoader({
   modules: ['components-core:Global@PureGlobal', 'components-core:FormInfo@Form']
 })(({ remoteModules }) => {
   const [PureGlobal, Form] = remoteModules;
   return (
-    <PureGlobal
-      preset={{
-        apis: {
-          payment: {
-            getPaymentList: {
-              loader: () => {
-                return paymentList.data;
-              }
-            },
-            getPaymentById: {
-              loader: () => {
-                return paymentList.data.pageData[0];
-              }
-            }
-          }
-        },
-        enums: { INVOICE_TYPE_ENUM }
-      }}
-    >
+    <PureGlobal preset={presetMock}>
       <Form
         data={{
           payment2: (() => {
