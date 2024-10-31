@@ -10,7 +10,7 @@ const BaseExample = createWithRemoteLoader({
   return (
     <PureGlobal preset={presetMock}>
       <Form>
-        <BillInfoFormInner />
+        <BillInfoFormInner client={{ clientName: '测试客户', clientId: '123' }} trackingList={[]} />
       </Form>
     </PureGlobal>
   );

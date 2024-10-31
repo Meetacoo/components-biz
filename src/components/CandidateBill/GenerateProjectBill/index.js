@@ -42,9 +42,9 @@ const GenerateProjectBill = createWithRemoteLoader({
 });
 
 export const GenerateProjectBillButton = createWithRemoteLoader({
-  modules: ['components-core:Global@usePreset', 'components-core:InfoPage@formatView']
-})(({ remoteModules, onReload, inputData, ...props }) => {
-  const [usePreset, formatView] = remoteModules;
+  modules: ['components-core:Global@usePreset']
+})(({ remoteModules, onReload, client, ...props }) => {
+  const [usePreset] = remoteModules;
   const { apis, ajax } = usePreset();
   const { message } = App.useApp();
 
@@ -55,11 +55,10 @@ export const GenerateProjectBillButton = createWithRemoteLoader({
           {...props}
           onClick={() => {
             modal({
-              record: get(inputData, 'bill'),
+              client,
               formProps: [
                 {
-                  data: inputData ? billTransform.input(inputData, formatView) : null,
-                  onSubmit: async data => {
+                  onSubmit: async (data, { stepCacheRef }) => {
                     const { data: resData } = await ajax(
                       Object.assign({}, apis.candidateBill.addBill, {
                         data: Object.assign({}, data)
@@ -69,11 +68,12 @@ export const GenerateProjectBillButton = createWithRemoteLoader({
                       return false;
                     }
                     message.success('生成账单成功');
+                    stepCacheRef.current.billInfo = resData.data;
                     onReload && onReload();
                   }
                 },
                 {
-                  onSubmit: async () => {}
+                  onSubmit: async (data, { childrenRef }) => {}
                 }
               ]
             });
@@ -106,7 +106,7 @@ export const EditBillProjectButton = createWithRemoteLoader({
               formProps: [
                 {
                   data: billTransform.input(data, formatView),
-                  onSubmit: async data => {
+                  onSubmit: async (data, { stepCacheRef }) => {
                     const { data: resData } = await ajax(
                       Object.assign({}, apis.candidateBill.saveBill, {
                         data: Object.assign({}, data)
@@ -116,6 +116,7 @@ export const EditBillProjectButton = createWithRemoteLoader({
                       return false;
                     }
                     message.success('编辑账单成功');
+                    stepCacheRef.current.billInfo = resData.data;
                     onReload && onReload();
                   }
                 },
