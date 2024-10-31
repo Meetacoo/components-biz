@@ -8,7 +8,7 @@ import PaymentSelect from '../../PaymentSelect';
 
 const BillInfoFormInner = createWithRemoteLoader({
   modules: ['components-core:FormInfo']
-})(({ remoteModules, client }) => {
+})(({ remoteModules, client, billType, phases }) => {
   const [FormInfo] = remoteModules;
   const { RadioGroup, MoneyInput, TextArea, Upload, SuperSelect } = FormInfo.fields;
 
@@ -60,6 +60,12 @@ const BillInfoFormInner = createWithRemoteLoader({
             rule="REQ"
             minLength={1}
             block
+            clientId={get(client, 'clientId')}
+            phases={phases}
+            showBatchDelete={billType === 3}
+            showRowSelection={billType === 3}
+            showAdd={billType === 3}
+            showDelete={billType === 3}
           />
         ]}
       />
@@ -69,6 +75,7 @@ const BillInfoFormInner = createWithRemoteLoader({
           <RadioGroup
             name="typeId"
             label="账单类目"
+            disabled
             rule="REQ"
             options={[
               { value: 6, label: '面试到岗' },

@@ -71,7 +71,7 @@ export const GenerateProjectBillButton = createWithRemoteLoader({
                   onSubmit: async (data, { stepCacheRef }) => {
                     const { data: resData } = await ajax(
                       Object.assign({}, apis.candidateBill.addBill, {
-                        data: Object.assign({}, data)
+                        data: Object.assign({}, data, { type: 1 })
                       })
                     );
                     if (resData.code !== 0) {
@@ -115,7 +115,7 @@ export const EditBillProjectButton = createWithRemoteLoader({
                   onSubmit: async (data, { stepCacheRef }) => {
                     const { data: resData } = await ajax(
                       Object.assign({}, apis.candidateBill.saveBill, {
-                        data: Object.assign({}, data)
+                        data: Object.assign({}, data, { type: 1 })
                       })
                     );
                     if (resData.code !== 0) {

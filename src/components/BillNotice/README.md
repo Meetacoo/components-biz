@@ -27,17 +27,27 @@ const BaseExample = createWithRemoteLoader({
 })(({ remoteModules }) => {
   const [PureGlobal] = remoteModules;
   const ref = useRef();
-  return (<PureGlobal preset={presetMock}>
-    <BillNotice data={billInfo} ref={ref} />
-    <Flex gap={8} justify="center">
-      <Button onClick={() => {
-        console.log(ref.current?.getRenderHtml());
-      }}>获取HTML</Button>
-      <Button onClick={() => {
-        console.log(ref.current?.getFormData());
-      }}>获取表单数据</Button>
-    </Flex>
-  </PureGlobal>);
+  return (
+    <PureGlobal preset={presetMock}>
+      <BillNotice data={billInfo} ref={ref} />
+      <Flex gap={8} justify="center">
+        <Button
+          onClick={() => {
+            console.log(ref.current?.getRenderHtml());
+          }}
+        >
+          获取HTML
+        </Button>
+        <Button
+          onClick={() => {
+            console.log(ref.current?.getFormData());
+          }}
+        >
+          获取表单数据
+        </Button>
+      </Flex>
+    </PureGlobal>
+  );
 });
 
 render(<BaseExample />);
