@@ -17,7 +17,16 @@ const BillInfoFormInner = createWithRemoteLoader({
     <>
       <FormInfo
         list={[
-          <SuperSelect name="clientId" label="客户" single disabled valueKey="clientId" labelKey="clientName" value={client} />,
+          <SuperSelect
+            name="clientId"
+            label="客户"
+            single
+            disabled
+            valueKey="clientId"
+            labelKey="clientName"
+            value={client}
+            interceptor="object-output-value"
+          />,
           <ContractSelect name="contractId" label="合同" rule="REQ" api={{ data: { clientId: get(client, 'clientId'), states: [5, 7] } }} />,
           <RadioGroup
             name="withoutProject"
