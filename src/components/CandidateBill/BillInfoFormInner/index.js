@@ -8,29 +8,17 @@ import PaymentSelect from '../../PaymentSelect';
 
 const BillInfoFormInner = createWithRemoteLoader({
   modules: ['components-core:FormInfo', 'components-core:FormInfo@formModule']
-})(({ remoteModules, record }) => {
+})(({ remoteModules, client }) => {
   const [FormInfo, formModule] = remoteModules;
   const { FormItem } = formModule;
-  const { RadioGroup, MoneyInput, TextArea, Upload, AdvancedSelect } = FormInfo.fields;
+  const { RadioGroup, MoneyInput, TextArea, Upload, SuperSelect } = FormInfo.fields;
 
   return (
     <>
       <FormInfo
         list={[
-          <AdvancedSelect
-            name="clientId"
-            label="客户"
-            single
-            allowClear={false}
-            showSelectedTag={false}
-            disabled
-            api={{
-              loader: () => ({
-                pageData: [{ label: get(record, 'clientName'), value: get(record, 'clientId') }]
-              })
-            }}
-          />,
-          <ContractSelect name="contractId" label="合同" rule="REQ" api={{ data: { clientId: get(record, 'clientId'), states: [5, 7] } }} />,
+          <SuperSelect name="clientId" label="客户" single disabled valueKey="clientId" labelKey="clientName" value={client} />,
+          <ContractSelect name="contractId" label="合同" rule="REQ" api={{ data: { clientId: get(client, 'clientId'), states: [5, 7] } }} />,
           <RadioGroup
             name="withoutProject"
             hidden
@@ -90,7 +78,7 @@ const BillInfoFormInner = createWithRemoteLoader({
       />
       <FormInfo
         title="付款信息"
-        list={[<PaymentSelect name="paymentId" label="付款信息" rule="REQ" api={{ data: { clientId: get(record, 'clientId'), state: 5 } }} />]}
+        list={[<PaymentSelect name="paymentId" label="付款信息" rule="REQ" api={{ data: { clientId: get(client, 'clientId'), state: 5 } }} />]}
       />
       <BillAllocationForm />
     </>

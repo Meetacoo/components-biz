@@ -112,10 +112,14 @@ const preset = {
         loader: async () => billDetail
       },
       addBill: {
-        loader: () => {}
+        loader: () => {
+          return billInfo;
+        }
       },
       saveBill: {
-        loader: () => {}
+        loader: () => {
+          return billInfo;
+        }
       }
     },
     user: {
