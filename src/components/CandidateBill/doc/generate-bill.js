@@ -1,7 +1,7 @@
 const { createWithRemoteLoader } = remoteLoader;
 const { GenerateBill, GenerateProjectBill } = _CandidateBill;
 const { Button, Space } = antd;
-const { default: presetMock } = _presetMock;
+const { default: presetMock, billInfo } = _presetMock;
 
 const BaseExample = createWithRemoteLoader({
   modules: ['components-core:Global@PureGlobal']
@@ -19,7 +19,9 @@ const BaseExample = createWithRemoteLoader({
                     title: '生成候选人账单',
                     formProps: [
                       {
-                        onSubmit: async () => {}
+                        onSubmit: async (data, { stepCacheRef }) => {
+                          stepCacheRef.current.billInfo = billInfo;
+                        }
                       },
                       {
                         onSubmit: async () => {}
@@ -42,7 +44,9 @@ const BaseExample = createWithRemoteLoader({
                     title: '生成候选人账单',
                     formProps: [
                       {
-                        onSubmit: async () => {}
+                        onSubmit: async (data, { stepCacheRef }) => {
+                          stepCacheRef.current.billInfo = billInfo;
+                        }
                       },
                       {
                         onSubmit: async () => {}

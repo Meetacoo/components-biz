@@ -24,11 +24,9 @@ const BaseExample = createWithRemoteLoader({
 })(({ remoteModules }) => {
   const [Form, PureGlobal] = remoteModules;
   return (
-    <PureGlobal
-      preset={presetMock}
-    >
+    <PureGlobal preset={presetMock}>
       <Form>
-        <CandidateSelect name="candidate" label="候选人" minLength={1}/>
+        <CandidateSelect name="candidate" label="候选人" minLength={1} />
       </Form>
     </PureGlobal>
   );

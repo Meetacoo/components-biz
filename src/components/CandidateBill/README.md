@@ -59,64 +59,57 @@ render(<BaseExample />);
 const { createWithRemoteLoader } = remoteLoader;
 const { GenerateBill, GenerateProjectBill } = _CandidateBill;
 const { Button, Space } = antd;
-const { default: presetMock } = _presetMock;
+const { default: presetMock, billInfo } = _presetMock;
 
 const BaseExample = createWithRemoteLoader({
   modules: ['components-core:Global@PureGlobal']
 })(({ remoteModules }) => {
   const [PureGlobal] = remoteModules;
-  return (
-    <PureGlobal preset={presetMock}>
-      <Space>
-        <GenerateBill>
-          {({ modal }) => {
-            return (
-              <Button
-                onClick={() => {
-                  modal({
-                    title: '生成候选人账单',
-                    formProps: [
-                      {
-                        onSubmit: async () => {}
-                      },
-                      {
-                        onSubmit: async () => {}
-                      }
-                    ]
-                  });
-                }}
-              >
-                生成候选人账单
-              </Button>
-            );
-          }}
-        </GenerateBill>
-        <GenerateProjectBill>
-          {({ modal }) => {
-            return (
-              <Button
-                onClick={() => {
-                  modal({
-                    title: '生成候选人账单',
-                    formProps: [
-                      {
-                        onSubmit: async () => {}
-                      },
-                      {
-                        onSubmit: async () => {}
-                      }
-                    ]
-                  });
-                }}
-              >
-                生成项目账单
-              </Button>
-            );
-          }}
-        </GenerateProjectBill>
-      </Space>
-    </PureGlobal>
-  );
+  return (<PureGlobal preset={presetMock}>
+    <Space>
+      <GenerateBill>
+        {({ modal }) => {
+          return (<Button
+            onClick={() => {
+              modal({
+                title: '生成候选人账单', formProps: [{
+                  onSubmit: async (data, { stepCacheRef }) => {
+                    stepCacheRef.current.billInfo = billInfo;
+                  }
+                }, {
+                  onSubmit: async () => {
+
+                  }
+                }]
+              });
+            }}
+          >
+            生成候选人账单
+          </Button>);
+        }}
+      </GenerateBill>
+      <GenerateProjectBill>
+        {({ modal }) => {
+          return (<Button
+            onClick={() => {
+              modal({
+                title: '生成候选人账单', formProps: [{
+                  onSubmit: async (data, { stepCacheRef }) => {
+                    stepCacheRef.current.billInfo = billInfo;
+                  }
+                }, {
+                  onSubmit: async () => {
+                  }
+                }]
+              });
+            }}
+          >
+            生成项目账单
+          </Button>);
+        }}
+      </GenerateProjectBill>
+    </Space>
+  </PureGlobal>);
 });
 
 render(<BaseExample />);
@@ -131,7 +124,7 @@ render(<BaseExample />);
 const { GenerateBillDetail, FLOW_USER } = _CandidateBill;
 const { createWithRemoteLoader } = remoteLoader;
 
-const { default: presetMock } = _presetMock;
+const { default: presetMock, billInfo } = _presetMock;
 
 const BaseExample = createWithRemoteLoader({
   modules: ['components-core:Global@PureGlobal', 'components-core:FormInfo@Form']
@@ -141,51 +134,7 @@ const BaseExample = createWithRemoteLoader({
     <PureGlobal preset={presetMock}>
       <Form rules={{ FLOW_USER }}>
         <GenerateBillDetail
-          billDetail={{
-            bankInfoOperation: 'xxxx',
-            totalAmount: '1000',
-            projects: [
-              {
-                id: 223,
-                noticeId: 122,
-                projectTypeId: 7,
-                projectType: '入职到岗',
-                costType: 1,
-                amount: 1900000,
-                num: null,
-                projectAttachments: null
-              },
-              {
-                id: 223,
-                noticeId: 122,
-                projectTypeId: 7,
-                projectType: '入职到岗',
-                costType: 1,
-                amount: 1900000,
-                num: null,
-                projectAttachments: null
-              }
-            ],
-            clientName: '华威股份有限公司',
-            clientNum: '666666',
-            clientNameChinese: '华威股份有限公司',
-            clientNameEnglish: 'FA Talent Human Resources Service Co.',
-            clientAddress: '北京市朝阳区东三环北路嘉铭中心B座15层',
-            contact: '19829288292',
-            consultant: '张三',
-            attention: '张三',
-            date: '2023-07-21',
-            team: 'FAT',
-            userInfo: {
-              email: 'fuling@165.com',
-              phone: '13988882221',
-              name: '福玲',
-              englishName: '福玲',
-              gender: 'M',
-              createdAt: '2022-11-18T08:22:56.000+00:00',
-              updatedAt: '2023-02-28T02:22:43.000+00:00'
-            }
-          }}
+          billDetail={billInfo}
         />
       </Form>
     </PureGlobal>

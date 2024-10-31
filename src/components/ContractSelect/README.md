@@ -24,9 +24,7 @@ const BaseExample = createWithRemoteLoader({
 })(({ remoteModules }) => {
   const [PureGlobal, Form] = remoteModules;
   return (
-    <PureGlobal
-      preset={presetMock}
-    >
+    <PureGlobal preset={presetMock}>
       <Form
         data={{
           contract2: Object.assign({}, contractList.data.pageData[0], {
@@ -59,9 +57,11 @@ const BaseExample = createWithRemoteLoader({
   modules: ['components-core:Global@PureGlobal']
 })(({ remoteModules }) => {
   const [PureGlobal] = remoteModules;
-  return (<PureGlobal preset={presetMock}>
-    <Preview />
-  </PureGlobal>);
+  return (
+    <PureGlobal preset={presetMock}>
+      <Preview />
+    </PureGlobal>
+  );
 });
 
 render(<BaseExample />);

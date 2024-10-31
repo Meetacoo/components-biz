@@ -24,23 +24,24 @@ const BaseExample = createWithRemoteLoader({
   modules: ['components-core:Global@PureGlobal', 'components-core:FormInfo@Form']
 })(({ remoteModules }) => {
   const [PureGlobal, Form] = remoteModules;
-  return (<PureGlobal
-    preset={presetMock}
-  >
-    <Form
-      data={{
-        payment2: (() => {
-          const value = paymentList.data.pageData[0];
-          return {
-            value: value.id, label: value.invoiceTitle
-          };
-        })()
-      }}
-    >
-      <PaymentSelect name="payment" label="付款信息" />
-      <PaymentSelect name="payment2" label="付款信息(有默认值)" />
-    </Form>
-  </PureGlobal>);
+  return (
+    <PureGlobal preset={presetMock}>
+      <Form
+        data={{
+          payment2: (() => {
+            const value = paymentList.data.pageData[0];
+            return {
+              value: value.id,
+              label: value.invoiceTitle
+            };
+          })()
+        }}
+      >
+        <PaymentSelect name="payment" label="付款信息" />
+        <PaymentSelect name="payment2" label="付款信息(有默认值)" />
+      </Form>
+    </PureGlobal>
+  );
 });
 
 render(<BaseExample />);
@@ -60,9 +61,11 @@ const BaseExample = createWithRemoteLoader({
   modules: ['components-core:Global@PureGlobal']
 })(({ remoteModules }) => {
   const [PureGlobal] = remoteModules;
-  return (<PureGlobal preset={presetMock}>
+  return (
+    <PureGlobal preset={presetMock}>
       <Preview id={0} />
-    </PureGlobal>);
+    </PureGlobal>
+  );
 });
 
 render(<BaseExample />);

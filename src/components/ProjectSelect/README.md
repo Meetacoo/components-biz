@@ -26,9 +26,7 @@ const BaseExample = createWithRemoteLoader({
   const [FormInfo, PureGlobal] = remoteModules;
   const { Form } = FormInfo;
   return (
-    <PureGlobal
-      preset={presetMock}
-    >
+    <PureGlobal preset={presetMock}>
       <Form>
         <FormInfo
           list={[
