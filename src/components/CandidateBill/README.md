@@ -39,9 +39,7 @@ const BaseExample = createWithRemoteLoader({
 })(({ remoteModules }) => {
   const [PureGlobal, Form] = remoteModules;
   return (
-    <PureGlobal
-      preset={presetMock}
-    >
+    <PureGlobal preset={presetMock}>
       <Form rules={{ FLOW_USER }}>
         <ApprovalProcess label="账单审批流程" name="flowRequest" rule="REQ FLOW_USER" />
       </Form>
@@ -68,9 +66,7 @@ const BaseExample = createWithRemoteLoader({
 })(({ remoteModules }) => {
   const [PureGlobal] = remoteModules;
   return (
-    <PureGlobal
-      preset={presetMock}
-    >
+    <PureGlobal preset={presetMock}>
       <Space>
         <GenerateBill>
           {({ modal }) => {
@@ -142,9 +138,7 @@ const BaseExample = createWithRemoteLoader({
 })(({ remoteModules }) => {
   const [PureGlobal, Form] = remoteModules;
   return (
-    <PureGlobal
-      preset={presetMock}
-    >
+    <PureGlobal preset={presetMock}>
       <Form rules={{ FLOW_USER }}>
         <GenerateBillDetail
           billDetail={{
@@ -269,9 +263,7 @@ const BaseExample = createWithRemoteLoader({
 })(({ remoteModules }) => {
   const [PureGlobal, Layout] = remoteModules;
   return (
-    <PureGlobal
-      preset={presetMock}
-    >
+    <PureGlobal preset={presetMock}>
       <Layout navigation={{ isFixed: false }}>
         <BillCenterPage />
       </Layout>
@@ -296,13 +288,13 @@ const BaseExample = createWithRemoteLoader({
   modules: ['components-core:Global@PureGlobal', 'components-core:Layout']
 })(({ remoteModules }) => {
   const [PureGlobal, Layout] = remoteModules;
-  return (<PureGlobal
-    preset={presetMock}
-  >
-    <Layout navigation={{ isFixed: false }}>
-      <BillCenterDetail optionFixed={false} />
-    </Layout>
-  </PureGlobal>);
+  return (
+    <PureGlobal preset={presetMock}>
+      <Layout navigation={{ isFixed: false }}>
+        <BillCenterDetail optionFixed={false} />
+      </Layout>
+    </PureGlobal>
+  );
 });
 
 render(<BaseExample />);

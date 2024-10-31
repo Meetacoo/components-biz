@@ -156,11 +156,13 @@ const preset = {
       },
       getPaymentById: {
         loader: ({ params }) => {
-          return paymentList.data.pageData[params.id];
+          return paymentList.data.pageData[0];
         }
       }
     }
   }
 };
+
+export { projectList, contractDetail, contractList, astUserList, positionList, paymentList, billList, billDetail, companyData, bankData };
 
 export default preset;

@@ -13,48 +13,25 @@
 
 - preview
 - 合同预览
-- _ContractSelect(@components/ContractSelect),remoteLoader(@kne/remote-loader),_data(@components/ContractSelect/doc/contractListData.json)
+- _ContractSelect(@components/ContractSelect),remoteLoader(@kne/remote-loader),_presetMock(@root/presetMock)
 
 ```jsx
-const { default: ContractSelect, CONTRACT_STATE_ENUM } = _ContractSelect;
+const { default: ContractSelect } = _ContractSelect;
 const { createWithRemoteLoader } = remoteLoader;
-const { data: contractData } = _data;
+const { default: presetMock, contractList } = _presetMock;
 const BaseExample = createWithRemoteLoader({
   modules: ['components-core:Global@PureGlobal', 'components-core:FormInfo@Form']
 })(({ remoteModules }) => {
   const [PureGlobal, Form] = remoteModules;
   return (
     <PureGlobal
-      preset={{
-        enums: {
-          CONTRACT_STATE_ENUM
-        },
-        apis: {
-          oss: {
-            loader: () => {
-              return 'test.png';
-            }
-          },
-          contract: {
-            getContractList: {
-              loader: () => {
-                return contractData;
-              }
-            },
-            getContractById: {
-              loader: () => {
-                return contractData.pageData[0];
-              }
-            }
-          }
-        }
-      }}
+      preset={presetMock}
     >
       <Form
         data={{
-          contract2: Object.assign({}, contractData.pageData[0], {
-            label: contractData.pageData[0].name,
-            value: contractData.pageData[0].id
+          contract2: Object.assign({}, contractList.data.pageData[0], {
+            label: contractList.data.pageData[0].name,
+            value: contractList.data.pageData[0].id
           })
         }}
       >
@@ -71,39 +48,20 @@ render(<BaseExample />);
 
 - preview
 - 合同预览
-- _ContractSelect(@components/ContractSelect),remoteLoader(@kne/remote-loader),_dataDetail(@components/ContractSelect/doc/contractDetailData.json)
+- _ContractSelect(@components/ContractSelect),remoteLoader(@kne/remote-loader),_presetMock(@root/presetMock)
 
 ```jsx
 const { Preview } = _ContractSelect;
 const { createWithRemoteLoader } = remoteLoader;
-const { data: contractDetail } = _dataDetail;
+const { default: presetMock } = _presetMock;
 
 const BaseExample = createWithRemoteLoader({
   modules: ['components-core:Global@PureGlobal']
 })(({ remoteModules }) => {
   const [PureGlobal] = remoteModules;
-  return (
-    <PureGlobal
-      preset={{
-        apis: {
-          oss: {
-            loader: () => {
-              return 'test.png';
-            }
-          },
-          contract: {
-            getContractById: {
-              loader: () => {
-                return contractDetail;
-              }
-            }
-          }
-        }
-      }}
-    >
-      <Preview />
-    </PureGlobal>
-  );
+  return (<PureGlobal preset={presetMock}>
+    <Preview />
+  </PureGlobal>);
 });
 
 render(<BaseExample />);

@@ -1,6 +1,6 @@
 const { createWithRemoteLoader } = remoteLoader;
 const { default: ProjectSelect, ProjectDetailSelect } = _ProjectSelect;
-const { default: projectListData } = _projectListData;
+const { default: presetMock } = _presetMock;
 
 const BaseExample = createWithRemoteLoader({
   modules: ['components-core:FormInfo', 'components-core:Global@PureGlobal']
@@ -8,25 +8,7 @@ const BaseExample = createWithRemoteLoader({
   const [FormInfo, PureGlobal] = remoteModules;
   const { Form } = FormInfo;
   return (
-    <PureGlobal
-      preset={{
-        apis: {
-          client: {},
-          project: {
-            getList: {
-              loader: () => {
-                return projectListData.data;
-              }
-            },
-            getDetail: {
-              loader: () => {
-                return projectListData.data.projectList[0];
-              }
-            }
-          }
-        }
-      }}
-    >
+    <PureGlobal preset={presetMock}>
       <Form>
         <FormInfo
           list={[

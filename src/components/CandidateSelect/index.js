@@ -56,7 +56,7 @@ const CandidateSelect = createWithRemoteLoader({
       <div style={{ display: 'none' }}>
         <SuperSelectTableListField
           valueKey="id"
-          labelKey="candidateName"
+          labelKey="cvName"
           filterRender={({ setSearchProps }) => {
             return (
               <Filter
@@ -101,12 +101,12 @@ const CandidateSelect = createWithRemoteLoader({
           columns={[
             {
               title: '候选人姓名',
-              name: 'candidateName',
+              name: 'cvName',
               span: 6
             },
             {
               title: '职位',
-              name: 'deliveryPosition',
+              name: 'jdName',
               span: 6
             },
             {
