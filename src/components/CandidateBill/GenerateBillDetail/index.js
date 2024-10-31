@@ -20,3 +20,4 @@ const GenerateBillDetail = createWithRemoteLoader({
 });
 
 export default GenerateBillDetail;
+export { default as BillNoticeSave } from './BillNoticeSave';

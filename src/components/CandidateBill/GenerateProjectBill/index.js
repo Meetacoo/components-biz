@@ -3,7 +3,8 @@ import ProjectBillInfoFormInner from '../ProjectBillInfoFormInner';
 import { App, Button } from 'antd';
 import { billTransform } from '../index';
 import get from 'lodash/get';
-import GenerateBillDetail from '../GenerateBillDetail';
+import merge from 'lodash/merge';
+import GenerateBillDetail, { BillNoticeSave } from '../GenerateBillDetail';
 
 const GenerateProjectBill = createWithRemoteLoader({
   modules: ['components-core:FormInfo']
@@ -11,34 +12,42 @@ const GenerateProjectBill = createWithRemoteLoader({
   const [FormInfo] = remoteModules;
   const { useFormStepModal } = FormInfo;
   const formStepModal = useFormStepModal();
-  return children({
-    modal: props => {
-      const { formProps, client, ...others } = Object.assign(
-        {},
-        {
-          title: '生成账单'
-        },
-        props
-      );
-      return formStepModal({
-        ...others,
-        items: [
-          {
-            title: '填写账单信息',
-            formProps: get(formProps, '[0]'),
-            children: <ProjectBillInfoFormInner client={client} />
-          },
-          {
-            title: '生成账单',
-            formProps: get(formProps, '[1]'),
-            children: ({ stepCacheRef }) => {
-              return <GenerateBillDetail billDetail={stepCacheRef.current.billInfo} />;
-            }
+  return (
+    <BillNoticeSave>
+      {({ save }) => {
+        return children({
+          modal: props => {
+            const { formProps, client, ...others } = Object.assign(
+              {},
+              {
+                title: '生成账单'
+              },
+              props
+            );
+            return formStepModal({
+              ...others,
+              items: [
+                {
+                  title: '填写账单信息',
+                  formProps: get(formProps, '[0]'),
+                  children: <ProjectBillInfoFormInner client={client} />
+                },
+                {
+                  title: '生成账单',
+                  formProps: merge({}, get(formProps, '[1]'), {
+                    onSubmit: save
+                  }),
+                  children: ({ stepCacheRef }) => {
+                    return <GenerateBillDetail billDetail={stepCacheRef.current.billInfo} />;
+                  }
+                }
+              ]
+            });
           }
-        ]
-      });
-    }
-  });
+        });
+      }}
+    </BillNoticeSave>
+  );
 });
 
 export const GenerateProjectBillButton = createWithRemoteLoader({
@@ -71,9 +80,6 @@ export const GenerateProjectBillButton = createWithRemoteLoader({
                     stepCacheRef.current.billInfo = resData.data;
                     onReload && onReload();
                   }
-                },
-                {
-                  onSubmit: async (data, { childrenRef }) => {}
                 }
               ]
             });
@@ -118,9 +124,6 @@ export const EditBillProjectButton = createWithRemoteLoader({
                     stepCacheRef.current.billInfo = resData.data;
                     onReload && onReload();
                   }
-                },
-                {
-                  onSubmit: async () => {}
                 }
               ]
             });
