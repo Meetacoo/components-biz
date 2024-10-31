@@ -31,7 +31,7 @@ const BillInfoFormInner = createWithRemoteLoader({
            * 所选候选人所在职位无项目，显示合同
            * 所选候选人所在职位都有项目，不显示合同
            */
-          <ContractSelect name="contractId" label="合同" api={{ data: { clientId: get(record, 'clientId'), states: [5, 7] } }} /> /**
+          <ContractSelect name="contractId" label="合同" api={{ data: { clientId: get(client, 'clientId'), states: [5, 7] } }} /> /**
            TODO
            * 所选候选人所在职位有项目，显示项目，不可修改
            * 职位无项目，不显示项目
