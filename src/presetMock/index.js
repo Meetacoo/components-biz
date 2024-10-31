@@ -10,8 +10,8 @@ import positionList from './positionList.json';
 import paymentList from './paymentList.json';
 import billList from './billList.json';
 import billDetail from './billDetail.json';
-import companyData from '../components/BillNotice/doc/mock/companyData.json';
-import bankData from '../components/BillNotice/doc/mock/bankData.json';
+import companyData from './companyData.json';
+import bankData from './bankData.json';
 
 const billInfo = {
   bankInfoOperation: 'xxxx',

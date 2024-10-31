@@ -19,8 +19,8 @@
           "packageName": "antd"
         },
         {
-          "name": "_mock",
-          "packageName": "@components/BillNotice/doc/mock"
+          "name": "_presetMock",
+          "packageName": "@root/presetMock"
         },
         {
           "name": "_ReactFetch",
@@ -46,8 +46,8 @@
           "packageName": "antd"
         },
         {
-          "name": "_mock",
-          "packageName": "@components/BillNotice/doc/mock"
+          "name": "_presetMock",
+          "packageName": "@root/presetMock"
         },
         {
           "name": "_ReactFetch",
