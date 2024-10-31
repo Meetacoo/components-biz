@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import RemoteLoader, { createWithRemoteLoader } from '@kne/remote-loader';
 import Fetch from '@kne/react-fetch';
 import FormatDocumentBuilder from '@kne/format-document-builder';
@@ -14,6 +15,7 @@ const BillContent = createWithRemoteLoader({
     const [usePreset, fields, Form] = remoteModules;
     const { apis, ajax } = usePreset();
     const { SuperSelect } = fields;
+
     return (
       <Fetch
         loader={async () => {

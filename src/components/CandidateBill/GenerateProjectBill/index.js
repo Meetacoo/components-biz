@@ -26,6 +26,7 @@ const GenerateProjectBill = createWithRemoteLoader({
             );
             return formStepModal({
               ...others,
+              autoClose: true,
               items: [
                 {
                   title: '填写账单信息',
@@ -37,8 +38,8 @@ const GenerateProjectBill = createWithRemoteLoader({
                   formProps: merge({}, get(formProps, '[1]'), {
                     onSubmit: save
                   }),
-                  children: ({ stepCacheRef }) => {
-                    return <GenerateBillDetail billDetail={stepCacheRef.current.billInfo} />;
+                  children: ({ stepCacheRef, childrenRef }) => {
+                    return <GenerateBillDetail billDetail={stepCacheRef.current.billInfo} ref={childrenRef} />;
                   }
                 }
               ]

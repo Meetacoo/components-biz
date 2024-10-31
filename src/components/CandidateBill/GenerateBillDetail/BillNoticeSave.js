@@ -10,6 +10,7 @@ const BillNoticeSave = createWithRemoteLoader({
   const { message } = App.useApp();
   return children({
     save: async (data, { childrenRef }) => {
+      console.log(childrenRef.current.getRenderHtml(), childrenRef.current.getFormData());
       const { data: resData } = await ajax(
         merge({}, apis.candidateBill.saveBillNotice, {
           data: Object.assign({}, data)
