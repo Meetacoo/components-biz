@@ -37,19 +37,29 @@ const billTransform = {
       paymentId: { label: get(bill, 'invoiceTitle'), value: get(bill, 'paymentId') },
       projectId: get(bill, 'projectId') ? { label: get(bill, 'projectName'), value: get(bill, 'projectId') } : null
     });
-    // 为候选人账单时
+    // 为项目账单时
     if (get(bill, 'type') === 1) {
       const billItems = (get(data, 'billItems') || []).map(({ billItem, trackingList }) =>
         Object.assign({}, billItem, {
           amount: get(billItem, 'amount') ? getAmount(formatView, billItem.amount) : 0,
           typeId: get(billItem, 'typeId') || 1,
-          trackingList
+          trackingList: (trackingList || []).map(item =>
+            Object.assign({}, item, {
+              candidateName: get(item, 'cvName'),
+              deliveryPosition: get(item, 'jdName')
+            })
+          )
         })
       );
       inputData.billItems = billItems;
     } else {
       inputData.typeId = get(data, 'billItems[0].billItem.typeId');
-      inputData.trackingList = get(data, 'billItems[0].trackingList');
+      inputData.trackingList = (get(data, 'billItems[0].trackingList') || []).map(item =>
+        Object.assign({}, item, {
+          candidateName: get(item, 'cvName'),
+          deliveryPosition: get(item, 'jdName')
+        })
+      );
     }
     console.log('inputData===', inputData, get(data, 'billItems') || []);
     return inputData;

@@ -40,6 +40,8 @@ const ProjectBillInfoFormInner = createWithRemoteLoader({
         rule="REQ"
         minLength={1}
         block
+        clientId={get(client, 'clientId')}
+        phases={[40]}
       />
     ],
     inductionFields = [
@@ -53,6 +55,8 @@ const ProjectBillInfoFormInner = createWithRemoteLoader({
         rule="REQ"
         minLength={1}
         block
+        clientId={get(client, 'clientId')}
+        phases={[70]}
       />
     ],
     otherFields = [<MoneyInput name="amount" label="账单金额" rule="REQ" />, <Input name="typeName" label="账单类目名称" rule="REQ LEN-0-20" />];

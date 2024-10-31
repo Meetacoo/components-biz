@@ -17,7 +17,7 @@ const GenerateBill = createWithRemoteLoader({
       {({ save }) => {
         return children({
           modal: props => {
-            const { formProps, client, ...others } = Object.assign(
+            const { formProps, client, billType, phases, ...others } = Object.assign(
               {},
               {
                 title: '生成账单'
@@ -30,7 +30,7 @@ const GenerateBill = createWithRemoteLoader({
                 {
                   title: '填写账单信息',
                   formProps: get(formProps, '[0]'),
-                  children: <BillInfoFormInner client={client} />
+                  children: <BillInfoFormInner client={client} billType={billType} phases={phases} />
                 },
                 {
                   title: '生成账单',
@@ -54,7 +54,7 @@ export const GenerateBillButton = createWithRemoteLoader({
   modules: ['components-core:Global@usePreset']
 })(({ remoteModules, ...p }) => {
   const [usePreset] = remoteModules;
-  const { client, trackingList, ...props } = Object.assign(
+  const { client, trackingList, billType, onClick, typeId, phases, ...props } = Object.assign(
     {},
     {
       trackingList: []
@@ -69,18 +69,24 @@ export const GenerateBillButton = createWithRemoteLoader({
         <Button
           {...props}
           onClick={() => {
+            if (onClick?.()) {
+              return;
+            }
             modal({
               title: '生成账单',
               client,
+              billType,
+              phases,
               formProps: [
                 {
                   data: {
-                    trackingList
+                    trackingList,
+                    typeId
                   },
                   onSubmit: async (data, { stepCacheRef }) => {
                     const { data: resData } = await ajax(
                       merge({}, apis.candidateBill.addBill, {
-                        data: Object.assign({}, data)
+                        data: Object.assign({}, data, { type: billType })
                       })
                     );
                     if (resData.code !== 0) {
@@ -101,7 +107,7 @@ export const GenerateBillButton = createWithRemoteLoader({
 
 export const EditBillButton = createWithRemoteLoader({
   modules: ['components-core:Global@usePreset', 'components-core:FetchButton', 'components-core:InfoPage@formatView']
-})(({ remoteModules, id, onReload, ...props }) => {
+})(({ remoteModules, id, onReload, billType, phases, ...props }) => {
   const [usePreset, FetchButton, formatView] = remoteModules;
   const { apis, ajax } = usePreset();
   const { message } = App.useApp();
@@ -117,13 +123,15 @@ export const EditBillButton = createWithRemoteLoader({
             modal({
               title: '编辑账单',
               client: get(data, 'bill') || {},
+              billType,
+              phases,
               formProps: [
                 {
                   data: billTransform.input(data, formatView),
                   onSubmit: async (data, { stepCacheRef }) => {
                     const { data: resData } = await ajax(
                       Object.assign({}, apis.candidateBill.saveBill, {
-                        data: Object.assign({}, data)
+                        data: Object.assign({}, data, { type: billType })
                       })
                     );
                     if (resData.code !== 0) {

@@ -188,7 +188,7 @@ const preset = {
       }
     },
     ats: {
-      getTrackingList: {
+      getList: {
         loader: () => {
           return astUserList.data;
         }

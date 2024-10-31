@@ -25,12 +25,12 @@ const CandidateSelect = createWithRemoteLoader({
         columns={[
           {
             title: '候选人姓名',
-            name: 'cvName',
+            name: 'candidateName',
             type: 'user'
           },
           {
             title: '职位',
-            name: 'jdName',
+            name: 'deliveryPosition',
             type: 'mainInfo',
             hover: false,
             primary: false
@@ -56,7 +56,7 @@ const CandidateSelect = createWithRemoteLoader({
       <div style={{ display: 'none' }}>
         <SuperSelectTableListField
           valueKey="id"
-          labelKey="cvName"
+          labelKey="candidateName"
           filterRender={({ setSearchProps }) => {
             return (
               <Filter
@@ -87,7 +87,7 @@ const CandidateSelect = createWithRemoteLoader({
               />
             );
           }}
-          api={Object.assign({}, apis.ats.getTrackingList, {
+          api={Object.assign({}, apis.ats.getList, {
             data: { clientIds: [clientId], phases },
             transformData: data => {
               return {
@@ -101,12 +101,12 @@ const CandidateSelect = createWithRemoteLoader({
           columns={[
             {
               title: '候选人姓名',
-              name: 'cvName',
+              name: 'candidateName',
               span: 6
             },
             {
               title: '职位',
-              name: 'jdName',
+              name: 'deliveryPosition',
               span: 6
             },
             {
