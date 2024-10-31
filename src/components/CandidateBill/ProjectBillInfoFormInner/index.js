@@ -97,9 +97,7 @@ const ProjectBillInfoFormInner = createWithRemoteLoader({
             ]}
           />,
           // 项目账单。合同有项目，显示项目字段
-          <FormItem display={({ formData }) => get(formData, 'withoutProject') === 1}>
-            {() => <ProjectSelect name="projectId" label="项目" rule="REQ" />}
-          </FormItem>,
+          <ProjectSelect name="projectId" label="项目" rule="REQ" display={({ formData }) => get(formData, 'withoutProject') === 1} />,
           <RadioGroup
             name="feeType"
             label="费用类别"
@@ -120,28 +118,49 @@ const ProjectBillInfoFormInner = createWithRemoteLoader({
           const billType = get(formData, `billItems[${index}].typeId`);
           const moreFields = (billType && fieldsMapping[billType]) || [];
           return [
-            <RadioGroup
-              name="typeId"
-              label="账单类目"
-              rule="REQ"
-              options={[
-                { value: 1, label: 'onsite' },
-                { value: 2, label: 'mapping' },
-                {
-                  value: 3,
-                  label: '项目管理'
-                },
-                { value: 4, label: '项目启动金' },
-                { value: 5, label: '内推' },
-                {
-                  value: 6,
-                  label: '面试到岗'
-                },
-                { value: 7, label: '入职到岗' },
-                { value: 8, label: '其他' }
-              ]}
-              block
-            />,
+            <FormItem block>
+              {({ setFields }) => (
+                <RadioGroup
+                  name="typeId"
+                  label="账单类目"
+                  rule="REQ"
+                  options={[
+                    { value: 1, label: 'onsite' },
+                    { value: 2, label: 'mapping' },
+                    {
+                      value: 3,
+                      label: '项目管理'
+                    },
+                    { value: 4, label: '项目启动金' },
+                    { value: 5, label: '内推' },
+                    {
+                      value: 6,
+                      label: '面试到岗'
+                    },
+                    { value: 7, label: '入职到岗' },
+                    { value: 8, label: '其他' }
+                  ]}
+                  onChange={() => {
+                    setFields([
+                      {
+                        name: 'trackingList',
+                        value: [],
+                        groupName: 'billItems',
+                        groupIndex: index,
+                        runValidate: false
+                      },
+                      {
+                        name: 'attachments',
+                        value: [],
+                        groupName: 'billItems',
+                        groupIndex: index,
+                        runValidate: false
+                      }
+                    ]);
+                  }}
+                />
+              )}
+            </FormItem>,
             ...moreFields
           ];
         }}
