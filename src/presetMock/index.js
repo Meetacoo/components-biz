@@ -120,6 +120,9 @@ const preset = {
         loader: () => {
           return billInfo;
         }
+      },
+      saveBillNotice: {
+        loader: () => {}
       }
     },
     user: {
