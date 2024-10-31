@@ -82,7 +82,7 @@ const ProjectBillInfoFormInner = createWithRemoteLoader({
             value={client}
             interceptor="object-output-value"
           />,
-          <ContractSelect name="contractId" label="合同" rule="REQ" api={{ data: { clientId: get(record, 'clientId'), states: [5, 7] } }} />,
+          <ContractSelect name="contractId" label="合同" rule="REQ" api={{ data: { clientId: get(client, 'clientId'), states: [5, 7] } }} />,
           <RadioGroup
             name="withoutProject"
             rule="REQ"
