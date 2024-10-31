@@ -31,9 +31,8 @@ const GenerateProjectBill = createWithRemoteLoader({
           {
             title: '生成账单',
             formProps: get(formProps, '[1]'),
-            children: args => {
-              console.log('>>>>>', args);
-              return <GenerateBillDetail />;
+            children: ({ stepCacheRef }) => {
+              return <GenerateBillDetail billDetail={stepCacheRef.current.billInfo} />;
             }
           }
         ]

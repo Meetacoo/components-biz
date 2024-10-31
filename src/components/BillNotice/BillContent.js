@@ -66,7 +66,12 @@ const BillContent = createWithRemoteLoader({
                       options: companyList,
                       open: isActive,
                       inputRender: (inputProps, { value, ...props }) => {
-                        return <div dangerouslySetInnerHTML={{ __html: templateRenders.renderCompany((value && value[0]) || companyList[0]) }} />;
+                        return (
+                          <div
+                            style={{ padding: '3px' }}
+                            dangerouslySetInnerHTML={{ __html: templateRenders.renderCompany((value && value[0]) || companyList[0]) }}
+                          />
+                        );
                       },
                       onOpenChange: () => {
                         blur();
@@ -148,7 +153,12 @@ const BillContent = createWithRemoteLoader({
                       options: bankList,
                       open: isActive,
                       inputRender: (inputProps, { value, ...props }) => {
-                        return <div dangerouslySetInnerHTML={{ __html: templateRenders.renderBankInfo((value && value[0]) || bankList[0]) }} />;
+                        return (
+                          <div
+                            style={{ padding: '3px' }}
+                            dangerouslySetInnerHTML={{ __html: templateRenders.renderBankInfo((value && value[0]) || bankList[0]) }}
+                          />
+                        );
                       },
                       onOpenChange: () => {
                         blur();
