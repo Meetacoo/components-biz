@@ -65,51 +65,62 @@ const BaseExample = createWithRemoteLoader({
   modules: ['components-core:Global@PureGlobal']
 })(({ remoteModules }) => {
   const [PureGlobal] = remoteModules;
-  return (<PureGlobal preset={presetMock}>
-    <Space>
-      <GenerateBill>
-        {({ modal }) => {
-          return (<Button
-            onClick={() => {
-              modal({
-                title: '生成候选人账单', formProps: [{
-                  onSubmit: async (data, { stepCacheRef }) => {
-                    stepCacheRef.current.billInfo = billInfo;
-                  }
-                }, {
-                  onSubmit: async () => {
-
-                  }
-                }]
-              });
-            }}
-          >
-            生成候选人账单
-          </Button>);
-        }}
-      </GenerateBill>
-      <GenerateProjectBill>
-        {({ modal }) => {
-          return (<Button
-            onClick={() => {
-              modal({
-                title: '生成候选人账单', formProps: [{
-                  onSubmit: async (data, { stepCacheRef }) => {
-                    stepCacheRef.current.billInfo = billInfo;
-                  }
-                }, {
-                  onSubmit: async () => {
-                  }
-                }]
-              });
-            }}
-          >
-            生成项目账单
-          </Button>);
-        }}
-      </GenerateProjectBill>
-    </Space>
-  </PureGlobal>);
+  return (
+    <PureGlobal preset={presetMock}>
+      <Space>
+        <GenerateBill>
+          {({ modal }) => {
+            return (
+              <Button
+                onClick={() => {
+                  modal({
+                    title: '生成候选人账单',
+                    formProps: [
+                      {
+                        onSubmit: async (data, { stepCacheRef }) => {
+                          stepCacheRef.current.billInfo = billInfo;
+                        }
+                      },
+                      {
+                        onSubmit: async () => {}
+                      }
+                    ]
+                  });
+                }}
+              >
+                生成候选人账单
+              </Button>
+            );
+          }}
+        </GenerateBill>
+        <GenerateProjectBill>
+          {({ modal }) => {
+            return (
+              <Button
+                onClick={() => {
+                  modal({
+                    title: '生成候选人账单',
+                    formProps: [
+                      {
+                        onSubmit: async (data, { stepCacheRef }) => {
+                          stepCacheRef.current.billInfo = billInfo;
+                        }
+                      },
+                      {
+                        onSubmit: async () => {}
+                      }
+                    ]
+                  });
+                }}
+              >
+                生成项目账单
+              </Button>
+            );
+          }}
+        </GenerateProjectBill>
+      </Space>
+    </PureGlobal>
+  );
 });
 
 render(<BaseExample />);
@@ -133,9 +144,7 @@ const BaseExample = createWithRemoteLoader({
   return (
     <PureGlobal preset={presetMock}>
       <Form rules={{ FLOW_USER }}>
-        <GenerateBillDetail
-          billDetail={billInfo}
-        />
+        <GenerateBillDetail billDetail={billInfo} />
       </Form>
     </PureGlobal>
   );

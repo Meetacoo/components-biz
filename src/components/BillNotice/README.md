@@ -13,29 +13,20 @@
 
 - base
 - 这里填写示例说明
-- _BillNotice(@components/BillNotice),remoteLoader(@kne/remote-loader),antd(antd),_mock(@components/BillNotice/doc/mock),_ReactFetch(@kne/react-fetch)
+- _BillNotice(@components/BillNotice),remoteLoader(@kne/remote-loader),antd(antd),_presetMock(@root/presetMock),_ReactFetch(@kne/react-fetch)
 
 ```jsx
 const { createWithRemoteLoader } = remoteLoader;
 const { default: BillNotice } = _BillNotice;
-const { default: mockApis, billInfo } = _mock;
+const { default: presetMock, billInfo } = _presetMock;
 
 const BaseExample = createWithRemoteLoader({
   modules: ['components-core:Global@PureGlobal']
 })(({ remoteModules }) => {
   const [PureGlobal] = remoteModules;
   return (
-    <PureGlobal
-      preset={{
-        apis: mockApis,
-        ajax: async api => {
-          return { data: { code: 0, data: api.loader() } };
-        }
-      }}
-    >
-      <BillNotice
-        data={billInfo}
-      />
+    <PureGlobal preset={presetMock}>
+      <BillNotice data={billInfo} />
     </PureGlobal>
   );
 });
@@ -46,7 +37,7 @@ render(<BaseExample />);
 
 - template
 - 这里填写示例说明
-- _BillNotice(@components/BillNotice),remoteLoader(@kne/remote-loader),antd(antd),_mock(@components/BillNotice/doc/mock),_ReactFetch(@kne/react-fetch)
+- _BillNotice(@components/BillNotice),remoteLoader(@kne/remote-loader),antd(antd),_presetMock(@root/presetMock),_ReactFetch(@kne/react-fetch)
 
 ```jsx
 const { createWithRemoteLoader } = remoteLoader;
