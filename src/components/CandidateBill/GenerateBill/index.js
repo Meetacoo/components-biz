@@ -51,9 +51,9 @@ const GenerateBill = createWithRemoteLoader({
 });
 
 export const GenerateBillButton = createWithRemoteLoader({
-  modules: ['components-core:Global@usePreset']
+  modules: ['components-core:Global@usePreset', 'components-core:InfoPage@formatView']
 })(({ remoteModules, ...p }) => {
-  const [usePreset] = remoteModules;
+  const [usePreset, formatView] = remoteModules;
   const { client, trackingList, billType, onClick, typeId, phases, projectInfo, ...props } = Object.assign(
     {},
     {
@@ -82,7 +82,12 @@ export const GenerateBillButton = createWithRemoteLoader({
                 {
                   data: {
                     trackingList,
-                    typeId
+                    typeId,
+                    projectId: projectInfo,
+                    standardAmount: billTransform.getAmount(
+                      formatView,
+                      (trackingList || []).reduce((prev, cur) => prev + cur.standardAmount, 0)
+                    )
                   },
                   onSubmit: async (data, { stepCacheRef }) => {
                     const { data: resData } = await ajax(

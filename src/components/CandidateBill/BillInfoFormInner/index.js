@@ -7,9 +7,9 @@ import BillAllocationForm from '../BillAllocationForm';
 import PaymentSelect from '../../PaymentSelect';
 
 const BillInfoFormInner = createWithRemoteLoader({
-  modules: ['components-core:FormInfo']
+  modules: ['components-core:FormInfo', 'components-core:Common@isNotEmpty']
 })(({ remoteModules, client, billType, phases, projectInfo }) => {
-  const [FormInfo] = remoteModules;
+  const [FormInfo, isNotEmpty] = remoteModules;
   const { RadioGroup, MoneyInput, TextArea, Upload, SuperSelect } = FormInfo.fields;
 
   return (
@@ -26,22 +26,16 @@ const BillInfoFormInner = createWithRemoteLoader({
             value={client}
             interceptor="object-output-value"
           />,
-          /**
-           TODO
-           * 所选候选人所在职位无项目，显示合同
-           * 所选候选人所在职位都有项目，不显示合同
-           */
+          // 所选候选人所在职位无项目，显示合同
+          // 所选候选人所在职位都有项目，不显示合同
           <ContractSelect
             name="contractId"
             label="合同"
             api={{ data: { clientId: get(client, 'clientId'), states: [5, 7] } }}
             display={!projectInfo}
           />,
-          /**
-           TODO
-           * 所选候选人所在职位有项目，显示项目，不可修改
-           * 职位无项目，不显示项目
-           */
+          // 所选候选人所在职位有项目，显示项目，不可修改
+          // 职位无项目，不显示项目
           <ProjectSelect
             name="projectId"
             label="项目"
@@ -59,6 +53,7 @@ const BillInfoFormInner = createWithRemoteLoader({
               name: 'projectName',
               id: 'projectId'
             }}
+            disabled
           />,
           <RadioGroup
             name="feeType"
@@ -89,6 +84,7 @@ const BillInfoFormInner = createWithRemoteLoader({
             showRowSelection={billType === 3}
             showAdd={billType === 3}
             showDelete={billType === 3}
+            controllerOpen={false}
           />
         ]}
       />
@@ -106,9 +102,21 @@ const BillInfoFormInner = createWithRemoteLoader({
             ]}
             block
           />,
-          <MoneyInput name="standardAmount" label="标准账单总金额" rule="REQ" />,
+          <MoneyInput
+            name="standardAmount"
+            label="标准账单总金额"
+            rule="REQ"
+            disabled
+            display={({ formData }) => (get(formData, 'trackingList') || []).every(item => isNotEmpty(get(item, 'standardAmount')))}
+          />,
           <MoneyInput name="amount" label="账单总金额" rule="REQ" />,
-          <TextArea name="amountDiffReason" label="标准账单总金额与自填账单总金额不一致的原因" rule="REQ" block />,
+          <TextArea
+            name="amountDiffReason"
+            label="标准账单总金额与自填账单总金额不一致的原因"
+            rule="REQ"
+            block
+            display={({ formData }) => isNotEmpty(get(formData, 'standardAmount')) && +get(formData, 'standardAmount') !== +get(formData, 'amount')}
+          />,
           <TextArea name="remark" label="备注" rule="REQ" block />,
           <Upload name="attachments" label="附件" block />
         ]}

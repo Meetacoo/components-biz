@@ -64,7 +64,8 @@ const billTransform = {
     console.log('inputData===', inputData, get(data, 'billItems') || []);
     return inputData;
   },
-  getUserName
+  getUserName,
+  getAmount
 };
 
 export default billTransform;
