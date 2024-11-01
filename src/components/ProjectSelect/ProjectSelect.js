@@ -10,7 +10,7 @@ import style from './style.module.scss';
 
 const ProjectSelectField = createWithRemoteLoader({
   modules: ['components-core:Common@createListField', 'components-core:Table', 'components-core:Global@usePreset']
-})(({ remoteModules, data, ...others }) => {
+})(({ remoteModules, data, fieldNames = { serialNum: 'serialNum', name: 'name', id: 'id' }, ...others }) => {
   const [createListField, Table, usePreset] = remoteModules;
   const { apis, ajax } = usePreset();
   const formatValue = item => {
@@ -18,8 +18,8 @@ const ProjectSelectField = createWithRemoteLoader({
       return;
     }
     return Object.assign({}, item, {
-      value: item.id,
-      label: `${item.serialNum} ${item.name}`
+      value: item[fieldNames.id],
+      label: `${item[fieldNames.serialNum]} ${item[fieldNames.name]}`
     });
   };
   const props = Object.assign(
@@ -64,10 +64,10 @@ const ProjectSelectField = createWithRemoteLoader({
           return (
             <Flex vertical gap={24}>
               {list.map(item => {
-                const checked = value.indexOf(item.id) > -1;
+                const checked = value.indexOf(item[fieldNames.id]) > -1;
                 return (
                   <Flex
-                    key={item.id}
+                    key={item[fieldNames.id]}
                     className={classnames(style['project-item'], {
                       [style['is-selected']]: checked
                     })}

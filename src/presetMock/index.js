@@ -12,6 +12,7 @@ import billList from './billList.json';
 import billDetail from './billDetail.json';
 import companyData from './companyData.json';
 import bankData from './bankData.json';
+import trackingBillState from './trackingBillState.json';
 
 const billInfo = {
   bankInfoOperation: 'xxxx',
@@ -123,6 +124,9 @@ const preset = {
       },
       saveBillNotice: {
         loader: () => {}
+      },
+      getTrackingBillState: {
+        loader: () => trackingBillState
       }
     },
     user: {
