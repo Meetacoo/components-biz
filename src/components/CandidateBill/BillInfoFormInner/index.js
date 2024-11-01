@@ -8,7 +8,7 @@ import PaymentSelect from '../../PaymentSelect';
 
 const BillInfoFormInner = createWithRemoteLoader({
   modules: ['components-core:FormInfo']
-})(({ remoteModules, client, billType, phases }) => {
+})(({ remoteModules, client, billType, phases, projectInfo }) => {
   const [FormInfo] = remoteModules;
   const { RadioGroup, MoneyInput, TextArea, Upload, SuperSelect } = FormInfo.fields;
 
@@ -31,12 +31,35 @@ const BillInfoFormInner = createWithRemoteLoader({
            * 所选候选人所在职位无项目，显示合同
            * 所选候选人所在职位都有项目，不显示合同
            */
-          <ContractSelect name="contractId" label="合同" api={{ data: { clientId: get(client, 'clientId'), states: [5, 7] } }} /> /**
+          <ContractSelect
+            name="contractId"
+            label="合同"
+            api={{ data: { clientId: get(client, 'clientId'), states: [5, 7] } }}
+            display={!projectInfo}
+          />,
+          /**
            TODO
            * 所选候选人所在职位有项目，显示项目，不可修改
            * 职位无项目，不显示项目
-           */,
-          <ProjectSelect name="projectId" label="项目" rule="REQ" />,
+           */
+          <ProjectSelect
+            name="projectId"
+            label="项目"
+            rule="REQ"
+            display={!!projectInfo}
+            api={
+              projectInfo
+                ? {
+                    loader: () => ({ projectList: [projectInfo] })
+                  }
+                : null
+            }
+            fieldNames={{
+              serialNum: 'projectSerialNum',
+              name: 'projectName',
+              id: 'projectId'
+            }}
+          />,
           <RadioGroup
             name="feeType"
             label="费用类别"

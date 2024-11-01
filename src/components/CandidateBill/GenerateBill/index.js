@@ -17,7 +17,7 @@ const GenerateBill = createWithRemoteLoader({
       {({ save }) => {
         return children({
           modal: props => {
-            const { formProps, client, billType, phases, ...others } = Object.assign(
+            const { formProps, client, billType, phases, projectInfo, ...others } = Object.assign(
               {},
               {
                 title: '生成账单'
@@ -30,7 +30,7 @@ const GenerateBill = createWithRemoteLoader({
                 {
                   title: '填写账单信息',
                   formProps: get(formProps, '[0]'),
-                  children: <BillInfoFormInner client={client} billType={billType} phases={phases} />
+                  children: <BillInfoFormInner client={client} billType={billType} phases={phases} projectInfo={projectInfo} />
                 },
                 {
                   title: '生成账单',
@@ -54,7 +54,7 @@ export const GenerateBillButton = createWithRemoteLoader({
   modules: ['components-core:Global@usePreset']
 })(({ remoteModules, ...p }) => {
   const [usePreset] = remoteModules;
-  const { client, trackingList, billType, onClick, typeId, phases, ...props } = Object.assign(
+  const { client, trackingList, billType, onClick, typeId, phases, projectInfo, ...props } = Object.assign(
     {},
     {
       trackingList: []
@@ -77,6 +77,7 @@ export const GenerateBillButton = createWithRemoteLoader({
               client,
               billType,
               phases,
+              projectInfo,
               formProps: [
                 {
                   data: {

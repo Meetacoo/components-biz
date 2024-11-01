@@ -1,7 +1,8 @@
 import { createWithRemoteLoader } from '@kne/remote-loader';
 import { Flex } from 'antd';
-import getColumns from './getColumns';
 import { useMemo } from 'react';
+import ProjectDetailSelectRenderList from './ProjectDetailSelectRenderList';
+import getColumns from './getColumns';
 
 const ProjectDetailSelectField = createWithRemoteLoader({
   modules: ['components-core:Common@createListField', 'components-core:Table', 'components-core:Global@usePreset']
@@ -35,6 +36,7 @@ const ProjectDetailSelectField = createWithRemoteLoader({
         },
         renderList: ({ props, data, list, value, onSelect }) => {
           const { single, fieldNames = { serialNum: 'serialNum', name: 'name' } } = props;
+
           return (
             <Flex vertical gap={12}>
               <div>
@@ -61,6 +63,26 @@ const ProjectDetailSelectField = createWithRemoteLoader({
                 columns={[...getColumns()]}
               />
             </Flex>
+          );
+          return (
+            <ProjectDetailSelectRenderList
+              data={data}
+              dataSource={list || []}
+              rowSelection={{
+                type: single ? 'radio' : 'checkbox',
+                hideSelectAll: true,
+                selectedRowKeys: value,
+                onSelect: item => {
+                  onSelect(item);
+                }
+              }}
+              onRow={item => {
+                return {
+                  onClick: () => onSelect(item)
+                };
+              }}
+              fieldNames={fieldNames}
+            />
           );
         }
       }),

@@ -1,20 +1,24 @@
 import { useRef } from 'react';
 import { createWithRemoteLoader } from '@kne/remote-loader';
+import get from 'lodash/get';
+import ProjectDetailSelectRenderList from '../ProjectSelect/ProjectDetailSelectRenderList';
 
 const CandidateSelect = createWithRemoteLoader({
   modules: [
     'components-field:BatchSelect',
     'components-core:Common@SuperSelectTableListField',
     'components-core:Global@usePreset',
-    'components-core:Filter'
+    'components-core:Filter',
+    'components-core:Modal@useModal'
   ]
 })(({ remoteModules, clientId, phases, ...props }) => {
-  const [BatchSelect, SuperSelectTableListField, usePreset, Filter] = remoteModules;
+  const [BatchSelect, SuperSelectTableListField, usePreset, Filter, useModal] = remoteModules;
   const { apis } = usePreset();
   const { getFilterValue } = Filter;
   const { SuperSelectFilterItem } = Filter.fields;
   const ref = useRef(null);
   const callbackRef = useRef(null);
+  const modal = useModal();
   return (
     <>
       <BatchSelect
@@ -37,8 +41,33 @@ const CandidateSelect = createWithRemoteLoader({
           },
           {
             title: '项目细分服务',
-            name: 'projectPrice',
-            type: 'mainInfo'
+            name: 'projectInfo',
+            type: 'mainInfo',
+            valueOf: ({ projectInfo }) => {
+              return projectInfo ? (
+                <span
+                  onClick={() => {
+                    modal({
+                      title: '付款信息预览',
+                      children: (
+                        <ProjectDetailSelectRenderList
+                          data={projectInfo}
+                          fieldNames={{
+                            serialNum: 'projectSerialNum',
+                            name: 'projectName'
+                          }}
+                          dataSource={[get(projectInfo, 'projectPrice')]}
+                        />
+                      )
+                    });
+                  }}
+                >
+                  {(get(projectInfo, 'projectPrice.rsfwlx') || '') +
+                    (get(projectInfo, 'projectPrice.rsxffw') || '') +
+                    (get(projectInfo, 'projectPrice.rstj') || '')}
+                </span>
+              ) : null;
+            }
           },
           {
             title: '标准账单金额',
@@ -101,15 +130,15 @@ const CandidateSelect = createWithRemoteLoader({
           columns={[
             {
               title: '候选人姓名',
-              name: 'candidateName',
-              span: 6
+              name: 'candidateName'
+              // span: 6
             },
             {
               title: '职位',
-              name: 'deliveryPosition',
-              span: 6
-            },
-            {
+              name: 'deliveryPosition'
+              // span: 6
+            }
+            /*{
               title: '项目细分服务',
               name: 'projectPrice',
               span: 6
@@ -118,7 +147,7 @@ const CandidateSelect = createWithRemoteLoader({
               title: '标准账单金额',
               name: 'standardAmount',
               span: 6
-            }
+            }*/
           ]}
           onChange={value => {
             callbackRef.current && callbackRef.current(value);
