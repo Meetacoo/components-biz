@@ -5,6 +5,7 @@ import CandidateSelect from '@components/CandidateSelect';
 import get from 'lodash/get';
 import BillAllocationForm from '../BillAllocationForm';
 import PaymentSelect from '../../PaymentSelect';
+import BillAmount from '../BillAmount';
 
 // 项目账单
 const ProjectBillInfoFormInner = createWithRemoteLoader({
@@ -13,24 +14,24 @@ const ProjectBillInfoFormInner = createWithRemoteLoader({
   const [FormInfo, formModule] = remoteModules;
   const { FormItem } = formModule;
   const { List } = FormInfo;
-  const { Input, RadioGroup, Upload, MoneyInput, DatePicker, InputNumber, SuperSelect } = FormInfo.fields;
+  const { Input, RadioGroup, Upload, DatePicker, InputNumber, SuperSelect } = FormInfo.fields;
 
-  const onsiteFields = [
-      <MoneyInput name="amount" label="账单金额" rule="REQ" />,
+  const onsiteFields = index => [
+      <BillAmount index={index} />,
       <DatePicker picker="month" name="month" label="费用所属月份" rule="REQ" />,
       <InputNumber name="num" label="开票人数" rule="REQ" addonAfter="人" precision={1} />,
       <Upload block name="attachments" label="onsite人员" rule="REQ" />
     ],
-    mappingFields = [<MoneyInput name="amount" label="账单金额" rule="REQ" />, <Upload block name="attachments" label="mapping报告" />],
-    projectManageFields = [<MoneyInput name="amount" label="账单金额" rule="REQ" />],
-    projectStartFeeFields = [<MoneyInput name="amount" label="账单金额" rule="REQ" />],
-    referralFields = [
-      <MoneyInput name="amount" label="账单金额" rule="REQ" />,
+    mappingFields = index => [<BillAmount index={index} />, <Upload block name="attachments" label="mapping报告" />],
+    projectManageFields = index => [<BillAmount index={index} />],
+    projectStartFeeFields = index => [<BillAmount index={index} />],
+    referralFields = index => [
+      <BillAmount index={index} />,
       <InputNumber name="num" label="内推人数" rule="REQ" addonAfter="人" precision={1} />,
       <Upload block name="attachments" label="内推名单" rule="REQ" />
     ],
-    interviewFields = [
-      <MoneyInput name="amount" label="账单金额" rule="REQ" />,
+    interviewFields = index => [
+      <BillAmount index={index} />,
       <CandidateSelect
         labelRender={({ label, value }) => {
           return `${label}:${(value && value.length) || 0}人`;
@@ -44,8 +45,8 @@ const ProjectBillInfoFormInner = createWithRemoteLoader({
         phases={[40]}
       />
     ],
-    inductionFields = [
-      <MoneyInput name="amount" label="账单金额" rule="REQ" />,
+    inductionFields = index => [
+      <BillAmount index={index} />,
       <CandidateSelect
         labelRender={({ label, value }) => {
           return `${label}:${(value && value.length) || 0}人`;
@@ -59,7 +60,7 @@ const ProjectBillInfoFormInner = createWithRemoteLoader({
         phases={[50, 60, 70]}
       />
     ],
-    otherFields = [<MoneyInput name="amount" label="账单金额" rule="REQ" />, <Input name="typeName" label="账单类目名称" rule="REQ LEN-0-20" />];
+    otherFields = index => [<BillAmount index={index} />, <Input name="typeName" label="账单类目名称" rule="REQ LEN-0-20" />];
 
   const fieldsMapping = {
     1: onsiteFields,
@@ -116,7 +117,7 @@ const ProjectBillInfoFormInner = createWithRemoteLoader({
         list={(key, { index }, context) => {
           const { formData } = context;
           const billType = get(formData, `billItems[${index}].typeId`);
-          const moreFields = (billType && fieldsMapping[billType]) || [];
+          const moreFields = (billType && fieldsMapping[billType](index)) || [];
           return [
             <FormItem block>
               {({ setFields }) => (
@@ -169,7 +170,7 @@ const ProjectBillInfoFormInner = createWithRemoteLoader({
         title="付款信息"
         list={[<PaymentSelect name="paymentId" label="付款信息" rule="REQ" api={{ data: { clientId: get(client, 'clientId'), state: 5 } }} />]}
       />
-      <BillAllocationForm />
+      <BillAllocationForm type={1} />
     </>
   );
 });

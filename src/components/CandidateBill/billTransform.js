@@ -26,6 +26,35 @@ const allocationFormat = ({ userMap, item, formatView, billAmount }) => {
   };
 };
 
+const transformAllocation = (totalAmount, formatView, formData, openApi) => {
+  let allocations = formData.allocations || [];
+  if (allocations.length > 0) {
+    allocations.forEach((item, index) => {
+      if (item.amountPercent > 0) {
+        item.amount = formatView((totalAmount || 0) * (item.amountPercent || 0), 'number--100-useGrouping:false');
+      } else if (item.amount > 0) {
+        item.amountPercent = formatView((item.amount || 0) / (totalAmount || 0), 'number-percent-useGrouping:false');
+      }
+      openApi.setFields([
+        {
+          name: 'amount',
+          value: item.amount,
+          groupName: 'allocations',
+          groupIndex: index,
+          runValidate: true
+        },
+        {
+          name: 'amountPercent',
+          value: item.amountPercent,
+          groupName: 'allocations',
+          groupIndex: index,
+          runValidate: true
+        }
+      ]);
+    });
+  }
+};
+
 const billTransform = {
   input: (data, formatView) => {
     const bill = get(data, 'bill') || {};
@@ -65,7 +94,8 @@ const billTransform = {
     return inputData;
   },
   getUserName,
-  getAmount
+  getAmount,
+  transformAllocation
 };
 
 export default billTransform;

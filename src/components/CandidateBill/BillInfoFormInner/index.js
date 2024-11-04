@@ -5,6 +5,7 @@ import CandidateSelect from '@components/CandidateSelect';
 import { get } from 'lodash';
 import BillAllocationForm from '../BillAllocationForm';
 import PaymentSelect from '../../PaymentSelect';
+import BillAmount from '../BillAmount';
 
 const BillInfoFormInner = createWithRemoteLoader({
   modules: ['components-core:FormInfo', 'components-core:Common@isNotEmpty']
@@ -109,7 +110,7 @@ const BillInfoFormInner = createWithRemoteLoader({
             disabled
             display={({ formData }) => (get(formData, 'trackingList') || []).every(item => isNotEmpty(get(item, 'standardAmount')))}
           />,
-          <MoneyInput name="amount" label="账单总金额" rule="REQ" />,
+          <BillAmount name="amount" label="账单总金额" rule="REQ" />,
           <TextArea
             name="amountDiffReason"
             label="标准账单总金额与自填账单总金额不一致的原因"

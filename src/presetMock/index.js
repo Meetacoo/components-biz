@@ -117,7 +117,7 @@ const preset = {
           return billInfo;
         }
       },
-      saveBill: {
+      updateBill: {
         loader: () => {
           return billInfo;
         }
@@ -215,6 +215,33 @@ const preset = {
         loader: ({ params }) => {
           return paymentList.data.pageData[0];
         }
+      }
+    }
+  },
+  formInfo: {
+    rules: {
+      BILL_ALLOCATIONS_SUMMARY: (value, type, { data: formData }) => {
+        const format = val => {
+          return new Intl.NumberFormat(
+            {},
+            {
+              maximumFractionDigits: 2,
+              useGrouping: false
+            }
+          ).format(val);
+        };
+        const sum = (formData.allocations || []).reduce((prev, item) => +(prev || 0) + +(item.amount || 0), 0);
+        const totalAmount =
+          type === 'project' ? formData.billItems.reduce((prev, cur) => +(prev || 0) + +(cur.amount || 0), 0) : +(formData.amount || 0);
+        if (sum !== totalAmount) {
+          return {
+            result: false,
+            errMsg: sum > totalAmount ? `分配金额合计不可超过${totalAmount}` : `还剩${format(totalAmount - sum)}金额未分配`
+          };
+        }
+        return {
+          result: true
+        };
       }
     }
   }
