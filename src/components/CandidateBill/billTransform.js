@@ -22,7 +22,7 @@ const allocationFormat = ({ userMap, item, formatView, billAmount }) => {
     // uid: get(item,  'uid'),
     uid: { label: getUserName({ userMap, user: item }), value: get(item, 'uid') },
     amount: getAmount(formatView, item.amount),
-    amountPercent: item.amount && billAmount ? formatView(item.amount / billAmount, 'number-percent') : null
+    amountPercent: item.amount && billAmount ? formatView(item.amount / billAmount, 'number-percent').replace('%', '') : null
   };
 };
 
@@ -60,6 +60,7 @@ const billTransform = {
     const bill = get(data, 'bill') || {};
     const userMap = new Map((get(data, 'userInfos') || []).map(item => [item.uid, item]));
     let inputData = Object.assign({}, bill, {
+      clientId: { label: get(bill, 'clientName'), value: get(bill, 'clientId') },
       contractId: { label: get(bill, 'contractName'), value: get(bill, 'contractId') },
       amount: getAmount(formatView, get(bill, 'amount')),
       allocations: (get(data, 'allocations') || []).map(item => allocationFormat({ userMap, item, formatView, billAmount: get(bill, 'amount') })),
@@ -92,6 +93,42 @@ const billTransform = {
     }
     console.log('inputData===', inputData, get(data, 'billItems') || []);
     return inputData;
+  },
+  output: (data, type, bill) => {
+    let billData = {
+      id: get(bill, 'bill.id'),
+      clientId: get(data, 'clientId.value') || null,
+      contractId: get(data, 'contractId.value') || null,
+      projectId: get(data, 'projectId.projectId') || null,
+      feeType: get(data, 'feeType'),
+      amount: (get(data, 'amount') || 0) * 100,
+      paymentId: get(data, 'paymentId.value'),
+      attachments: get(data, 'attachments'),
+      allocations: (get(data, 'allocations') || []).map(item => ({
+        uid: get(item, 'uid.value'),
+        amount: (get(item, 'amount') || 0) * 100
+      }))
+    };
+    if (type === 1) {
+    } else {
+      billData = Object.assign({}, billData, {
+        standardAmount: get(data, 'standardAmount') || null,
+        amountDiffReason: get(data, 'amountDiffReason') || null,
+        remark: get(data, 'remark') || null,
+        billItems: [
+          {
+            billItem: {
+              id: get(bill, 'billItems[0].billItem.id') || null,
+              billId: get(bill, 'bill.id'),
+              typeId: get(data, 'typeId'),
+              amount: (get(data, 'amount') || 0) * 100
+            },
+            trackingIdList: get(data, 'trackingList').map(({ trackingId }) => trackingId)
+          }
+        ]
+      });
+    }
+    return billData;
   },
   getUserName,
   getAmount,

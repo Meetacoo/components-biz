@@ -14,7 +14,7 @@ const ProjectBillInfoFormInner = createWithRemoteLoader({
   const [FormInfo, formModule] = remoteModules;
   const { FormItem } = formModule;
   const { List } = FormInfo;
-  const { Input, RadioGroup, Upload, DatePicker, InputNumber, SuperSelect } = FormInfo.fields;
+  const { Input, RadioGroup, Upload, DatePicker, InputNumber, SuperSelect, MoneyInput, TextArea } = FormInfo.fields;
 
   const onsiteFields = index => [
       <BillAmount index={index} />,
@@ -77,27 +77,25 @@ const ProjectBillInfoFormInner = createWithRemoteLoader({
     <>
       <FormInfo
         list={[
-          <SuperSelect
-            name="clientId"
-            label="客户"
-            single
-            disabled
-            valueKey="clientId"
-            labelKey="clientName"
-            value={client}
-            interceptor="object-output-value"
+          <SuperSelect name="clientId" label="客户" single disabled valueType="all" />,
+          <ContractSelect
+            name="contractId"
+            label="合同"
+            rule="REQ"
+            api={{ data: { clientId: get(client, 'clientId'), states: [5, 7] } }}
+            onChange={value => {
+              console.log(value);
+            }}
           />,
-          <ContractSelect name="contractId" label="合同" rule="REQ" api={{ data: { clientId: get(client, 'clientId'), states: [5, 7] } }} />,
           <RadioGroup
             name="withoutProject"
-            rule="REQ"
             hidden
             options={[
               { value: 1, label: '合同有项目' },
               { value: 2, label: '合同没有项目' }
             ]}
           />,
-          // 项目账单。合同有项目，显示项目字段
+          // TODO 项目账单。合同有项目，显示项目字段
           <ProjectSelect name="projectId" label="项目" rule="REQ" display={({ formData }) => get(formData, 'withoutProject') === 1} />,
           <RadioGroup
             name="feeType"
@@ -166,6 +164,7 @@ const ProjectBillInfoFormInner = createWithRemoteLoader({
           ];
         }}
       />
+      <FormInfo list={[<MoneyInput name="amount" label="账单总金额" rule="REQ" block disabled />, <TextArea name="remark" label="备注" block />]} />
       <FormInfo
         title="付款信息"
         list={[<PaymentSelect name="paymentId" label="付款信息" rule="REQ" api={{ data: { clientId: get(client, 'clientId'), state: 5 } }} />]}

@@ -15,13 +15,17 @@ const BillAmount = createWithRemoteLoader({
       label="账单金额"
       rule="REQ"
       onChange={value => {
-        const totalAmount =
-          index || index === 0
-            ? (formData.billItems || []).reduce(
-                (pre, cur, currentIndex) => +(pre || 0) + (currentIndex === index ? +(value || 0) : +(cur.amount || 0)),
-                0
-              )
-            : value;
+        let totalAmount = value;
+        if (index || index === 0) {
+          totalAmount = (formData.billItems || []).reduce(
+            (pre, cur, currentIndex) => +(pre || 0) + (currentIndex === index ? +(value || 0) : +(cur.amount || 0)),
+            0
+          );
+          openApi.setField({
+            name: 'amount',
+            value: totalAmount
+          });
+        }
         billTransform.transformAllocation(totalAmount, formatView, formData, openApi);
       }}
     />

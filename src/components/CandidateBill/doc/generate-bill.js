@@ -10,7 +10,7 @@ const BaseExample = createWithRemoteLoader({
   return (
     <PureGlobal preset={presetMock}>
       <Space>
-        <GenerateBillButton client={{ clientId: '123', clientName: '测试客户' }} trackingList={astUserList.data.pageData.data.slice(3, 5)}>
+        <GenerateBillButton client={{ clientId: '123', clientName: '测试客户' }} trackingList={astUserList.data.pageData.data.slice(3, 5)} typeId={6}>
           生成候选人账单
         </GenerateBillButton>
         <EditBillButton id="123">编辑候选人账单</EditBillButton>

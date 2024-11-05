@@ -68,6 +68,9 @@ export const GenerateProjectBillButton = createWithRemoteLoader({
               client,
               formProps: [
                 {
+                  data: {
+                    clientId: { label: get(client, 'clientName'), value: get(client, 'clientId') }
+                  },
                   onSubmit: async (data, { stepCacheRef }) => {
                     const { data: resData } = await ajax(
                       Object.assign({}, apis.candidateBill.addBill, {
@@ -106,6 +109,7 @@ export const EditBillProjectButton = createWithRemoteLoader({
             params: { id }
           })}
           onClick={({ data, close }) => {
+            console.log('onClick--', data);
             return modal({
               title: '编辑账单',
               client: get(data, 'bill') || {},
@@ -113,8 +117,9 @@ export const EditBillProjectButton = createWithRemoteLoader({
                 {
                   data: billTransform.input(data, formatView),
                   onSubmit: async (data, { stepCacheRef }) => {
+                    console.log('onSubmit', data);
                     const { data: resData } = await ajax(
-                      Object.assign({}, apis.candidateBill.saveBill, {
+                      Object.assign({}, apis.candidateBill.updateBill, {
                         data: Object.assign({}, data, { type: 1 })
                       })
                     );

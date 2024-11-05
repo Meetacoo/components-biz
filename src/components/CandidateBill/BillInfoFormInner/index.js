@@ -17,16 +17,7 @@ const BillInfoFormInner = createWithRemoteLoader({
     <>
       <FormInfo
         list={[
-          <SuperSelect
-            name="clientId"
-            label="客户"
-            single
-            disabled
-            valueKey="clientId"
-            labelKey="clientName"
-            value={client}
-            interceptor="object-output-value"
-          />,
+          <SuperSelect name="clientId" label="客户" single disabled valueType="all" />,
           // 所选候选人所在职位无项目，显示合同
           // 所选候选人所在职位都有项目，不显示合同
           <ContractSelect
@@ -118,7 +109,7 @@ const BillInfoFormInner = createWithRemoteLoader({
             block
             display={({ formData }) => isNotEmpty(get(formData, 'standardAmount')) && +get(formData, 'standardAmount') !== +get(formData, 'amount')}
           />,
-          <TextArea name="remark" label="备注" rule="REQ" block />,
+          <TextArea name="remark" label="备注" block />,
           <Upload name="attachments" label="附件" block />
         ]}
       />

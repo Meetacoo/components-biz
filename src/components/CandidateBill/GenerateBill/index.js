@@ -81,6 +81,7 @@ export const GenerateBillButton = createWithRemoteLoader({
               formProps: [
                 {
                   data: {
+                    clientId: { label: get(client, 'clientName'), value: get(client, 'clientId') },
                     trackingList,
                     typeId,
                     projectId: projectInfo,
@@ -90,9 +91,10 @@ export const GenerateBillButton = createWithRemoteLoader({
                     )
                   },
                   onSubmit: async (data, { stepCacheRef }) => {
+                    const submitData = billTransform.output(data, billType, formatView);
                     const { data: resData } = await ajax(
                       merge({}, apis.candidateBill.addBill, {
-                        data: Object.assign({}, data, { type: billType })
+                        data: Object.assign({}, submitData, { type: billType })
                       })
                     );
                     if (resData.code !== 0) {
@@ -134,10 +136,11 @@ export const EditBillButton = createWithRemoteLoader({
               formProps: [
                 {
                   data: billTransform.input(data, formatView),
-                  onSubmit: async (data, { stepCacheRef }) => {
+                  onSubmit: async (formData, { stepCacheRef }) => {
+                    const submitData = billTransform.output(formData, billType, data);
                     const { data: resData } = await ajax(
-                      Object.assign({}, apis.candidateBill.saveBill, {
-                        data: Object.assign({}, data, { type: billType })
+                      Object.assign({}, apis.candidateBill.updateBill, {
+                        data: Object.assign({}, submitData, { type: get(data, 'bill.type') })
                       })
                     );
                     if (resData.code !== 0) {
