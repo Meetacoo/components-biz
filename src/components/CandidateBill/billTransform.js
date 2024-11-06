@@ -104,12 +104,13 @@ const billTransform = {
   },
   output: (data, type, bill) => {
     let billData = {
-      id: get(bill, 'bill.id'),
+      id: bill ? get(bill, 'bill.id') : null,
       clientId: get(data, 'clientId.value') || null,
       contractId: get(data, 'contractId.value') || null,
-      projectId: get(data, 'projectId.projectId') || null,
+      projectId: get(data, 'projectId.projectId') || get(data, 'projectId.value') || null,
       feeType: get(data, 'feeType'),
       amount: (get(data, 'amount') || 0) * 100,
+      remark: get(data, 'remark') || null,
       paymentId: get(data, 'paymentId.value') || null,
       attachments: get(data, 'attachments') || null,
       allocations: (get(data, 'allocations') || []).map(item => ({
@@ -118,11 +119,16 @@ const billTransform = {
       }))
     };
     if (type === 1) {
+      billData.billItems = get(data, 'billItems').map(item => ({
+        billItem: Object.assign({}, item, {
+          amount: (get(item, 'amount') || 0) * 100
+        }),
+        trackingIdList: get(item, 'trackingList')?.length ? get(item, 'trackingList').map(({ id, trackingId }) => trackingId || id) : null
+      }));
     } else {
       billData = Object.assign({}, billData, {
         standardAmount: get(data, 'standardAmount') || null,
         amountDiffReason: get(data, 'amountDiffReason') || null,
-        remark: get(data, 'remark') || null,
         billItems: [
           {
             billItem: {

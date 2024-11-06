@@ -73,10 +73,11 @@ export const GenerateProjectBillButton = createWithRemoteLoader({
                     billItems: [{ typeId: 1 }],
                     allocations: [{ uid: { label: billTransform.getUserName({ user: userInfo }), value: get(userInfo, 'uid') } }]
                   },
-                  onSubmit: async (data, { stepCacheRef }) => {
+                  onSubmit: async (formData, { stepCacheRef }) => {
+                    const submitData = billTransform.output(formData, 1);
                     const { data: resData } = await ajax(
                       Object.assign({}, apis.candidateBill.addBill, {
-                        data: Object.assign({}, data, { type: 1 })
+                        data: Object.assign({}, submitData, { type: 1 })
                       })
                     );
                     if (resData.code !== 0) {
@@ -117,11 +118,11 @@ export const EditBillProjectButton = createWithRemoteLoader({
               formProps: [
                 {
                   data: billTransform.input(data, formatView),
-                  onSubmit: async (data, { stepCacheRef }) => {
-                    console.log('onSubmit', data);
+                  onSubmit: async (formData, { stepCacheRef }) => {
+                    const submitData = billTransform.output(formData, 1, data);
                     const { data: resData } = await ajax(
                       Object.assign({}, apis.candidateBill.updateBill, {
-                        data: Object.assign({}, data, { type: 1 })
+                        data: Object.assign({}, submitData, { type: 1 })
                       })
                     );
                     if (resData.code !== 0) {

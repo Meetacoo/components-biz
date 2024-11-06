@@ -92,7 +92,7 @@ export const GenerateBillButton = createWithRemoteLoader({
                     allocations: [{ uid: { label: billTransform.getUserName({ user: userInfo }), value: get(userInfo, 'uid') } }]
                   },
                   onSubmit: async (data, { stepCacheRef }) => {
-                    const submitData = billTransform.output(data, billType, formatView);
+                    const submitData = billTransform.output(data, billType);
                     const { data: resData } = await ajax(
                       merge({}, apis.candidateBill.addBill, {
                         data: Object.assign({}, submitData, { type: billType })

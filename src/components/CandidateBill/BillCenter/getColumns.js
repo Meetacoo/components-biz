@@ -19,7 +19,7 @@ const getColumns = ({ formatView, hasPositionAuth, hasTalentAuth }) => {
       name: 'typeNames',
       title: '账单类目',
       type: 'otherSmall',
-      valueOf: ({ typeNames }) => typeNames.join('，')
+      valueOf: ({ typeNames }) => (typeNames ? typeNames.join('，') : null)
     },
     {
       name: 'amount',
