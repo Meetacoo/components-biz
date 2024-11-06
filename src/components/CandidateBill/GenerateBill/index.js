@@ -54,7 +54,7 @@ export const GenerateBillButton = createWithRemoteLoader({
   modules: ['components-core:Global@usePreset', 'components-core:InfoPage@formatView']
 })(({ remoteModules, ...p }) => {
   const [usePreset, formatView] = remoteModules;
-  const { client, trackingList, billType, onClick, typeId, phases, projectInfo, ...props } = Object.assign(
+  const { client, trackingList, billType, onClick, typeId, phases, projectInfo, userInfo, ...props } = Object.assign(
     {},
     {
       trackingList: []
@@ -88,7 +88,8 @@ export const GenerateBillButton = createWithRemoteLoader({
                     standardAmount: billTransform.getAmount(
                       formatView,
                       (trackingList || []).reduce((prev, cur) => prev + cur.standardAmount, 0)
-                    )
+                    ),
+                    allocations: [{ uid: { label: billTransform.getUserName({ user: userInfo }), value: get(userInfo, 'uid') } }]
                   },
                   onSubmit: async (data, { stepCacheRef }) => {
                     const submitData = billTransform.output(data, billType, formatView);
@@ -133,6 +134,7 @@ export const EditBillButton = createWithRemoteLoader({
               client: get(data, 'bill') || {},
               billType,
               phases,
+              projectInfo: get(data, 'bill.projectId') ? { label: get(data, 'bill.projectId'), projectName: get(data, 'bill.projectName') } : null,
               formProps: [
                 {
                   data: billTransform.input(data, formatView),

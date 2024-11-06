@@ -53,7 +53,7 @@ const GenerateProjectBill = createWithRemoteLoader({
 
 export const GenerateProjectBillButton = createWithRemoteLoader({
   modules: ['components-core:Global@usePreset']
-})(({ remoteModules, onReload, client, ...props }) => {
+})(({ remoteModules, onReload, client, userInfo, ...props }) => {
   const [usePreset] = remoteModules;
   const { apis, ajax } = usePreset();
   const { message } = App.useApp();
@@ -69,7 +69,8 @@ export const GenerateProjectBillButton = createWithRemoteLoader({
               formProps: [
                 {
                   data: {
-                    clientId: { label: get(client, 'clientName'), value: get(client, 'clientId') }
+                    clientId: { label: get(client, 'clientName'), value: get(client, 'clientId') },
+                    allocations: [{ uid: { label: billTransform.getUserName({ user: userInfo }), value: get(userInfo, 'uid') } }]
                   },
                   onSubmit: async (data, { stepCacheRef }) => {
                     const { data: resData } = await ajax(
@@ -109,7 +110,6 @@ export const EditBillProjectButton = createWithRemoteLoader({
             params: { id }
           })}
           onClick={({ data, close }) => {
-            console.log('onClick--', data);
             return modal({
               title: '编辑账单',
               client: get(data, 'bill') || {},

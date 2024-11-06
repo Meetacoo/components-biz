@@ -19,7 +19,6 @@ const getUserName = ({ userMap, user, withOrg = true }) => {
 
 const allocationFormat = ({ userMap, item, formatView, billAmount }) => {
   return {
-    // uid: get(item,  'uid'),
     uid: { label: getUserName({ userMap, user: item }), value: get(item, 'uid') },
     amount: getAmount(formatView, item.amount),
     amountPercent: item.amount && billAmount ? formatView(item.amount / billAmount, 'number-percent').replace('%', '') : null
@@ -55,6 +54,23 @@ const transformAllocation = (totalAmount, formatView, formData, openApi) => {
   }
 };
 
+const transformTrackingList = trackingList => {
+  return (trackingList || []).map(item =>
+    Object.assign({}, item, {
+      candidateName: get(item, 'cvName'),
+      deliveryPosition: get(item, 'jdName'),
+      projectInfo: get(item, 'projectId')
+        ? {
+            projectId: get(item, 'projectId'),
+            projectName: get(item, 'projectName'),
+            projectSerialNum: get(item, 'projectSerialNum'),
+            projectPrice: get(item, 'projectPrice')
+          }
+        : null
+    })
+  );
+};
+
 const billTransform = {
   input: (data, formatView) => {
     const bill = get(data, 'bill') || {};
@@ -65,7 +81,9 @@ const billTransform = {
       amount: getAmount(formatView, get(bill, 'amount')),
       allocations: (get(data, 'allocations') || []).map(item => allocationFormat({ userMap, item, formatView, billAmount: get(bill, 'amount') })),
       paymentId: { label: get(bill, 'invoiceTitle'), value: get(bill, 'paymentId') },
-      projectId: get(bill, 'projectId') ? { label: get(bill, 'projectName'), value: get(bill, 'projectId') } : null
+      projectId: get(bill, 'projectId')
+        ? { projectName: get(bill, 'projectName'), projectId: get(bill, 'projectId'), projectSerialNum: get(bill, 'projectSerialNum') }
+        : null
     });
     // 为项目账单时
     if (get(bill, 'type') === 1) {
@@ -73,23 +91,13 @@ const billTransform = {
         Object.assign({}, billItem, {
           amount: get(billItem, 'amount') ? getAmount(formatView, billItem.amount) : 0,
           typeId: get(billItem, 'typeId') || 1,
-          trackingList: (trackingList || []).map(item =>
-            Object.assign({}, item, {
-              candidateName: get(item, 'cvName'),
-              deliveryPosition: get(item, 'jdName')
-            })
-          )
+          trackingList: transformTrackingList(trackingList || [])
         })
       );
       inputData.billItems = billItems;
     } else {
       inputData.typeId = get(data, 'billItems[0].billItem.typeId');
-      inputData.trackingList = (get(data, 'billItems[0].trackingList') || []).map(item =>
-        Object.assign({}, item, {
-          candidateName: get(item, 'cvName'),
-          deliveryPosition: get(item, 'jdName')
-        })
-      );
+      inputData.trackingList = transformTrackingList(get(data, 'billItems[0].trackingList') || []);
     }
     console.log('inputData===', inputData, get(data, 'billItems') || []);
     return inputData;
@@ -102,8 +110,8 @@ const billTransform = {
       projectId: get(data, 'projectId.projectId') || null,
       feeType: get(data, 'feeType'),
       amount: (get(data, 'amount') || 0) * 100,
-      paymentId: get(data, 'paymentId.value'),
-      attachments: get(data, 'attachments'),
+      paymentId: get(data, 'paymentId.value') || null,
+      attachments: get(data, 'attachments') || null,
       allocations: (get(data, 'allocations') || []).map(item => ({
         uid: get(item, 'uid.value'),
         amount: (get(item, 'amount') || 0) * 100
