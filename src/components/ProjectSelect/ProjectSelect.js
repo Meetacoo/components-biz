@@ -10,7 +10,7 @@ import style from './style.module.scss';
 
 const ProjectSelectField = createWithRemoteLoader({
   modules: ['components-core:Common@createListField', 'components-core:Table', 'components-core:Global@usePreset']
-})(({ remoteModules, data, fieldNames = { serialNum: 'serialNum', name: 'name', id: 'id' }, ...others }) => {
+})(({ remoteModules, data, api: propsApi, fieldNames = { serialNum: 'serialNum', name: 'name', id: 'id' }, ...others }) => {
   const [createListField, Table, usePreset] = remoteModules;
   const { apis, ajax } = usePreset();
   const formatValue = item => {
@@ -26,7 +26,7 @@ const ProjectSelectField = createWithRemoteLoader({
     {},
     {
       valueType: 'all',
-      api: Object.assign({}, apis.project.getList, { data }),
+      api: merge({}, Object.assign({}, apis.project.getList, { data }), propsApi),
       dataFormat: data => {
         return {
           list: (data.projectList || []).map(formatValue)

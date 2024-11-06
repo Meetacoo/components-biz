@@ -9,12 +9,13 @@ import BillAmount from '../BillAmount';
 
 // 项目账单
 const ProjectBillInfoFormInner = createWithRemoteLoader({
-  modules: ['components-core:FormInfo', 'components-core:FormInfo@formModule']
+  modules: ['components-core:FormInfo', 'components-core:FormInfo@formModule', 'components-core:Global@usePreset']
 })(({ remoteModules, client }) => {
-  const [FormInfo, formModule] = remoteModules;
+  const [FormInfo, formModule, usePreset] = remoteModules;
   const { FormItem } = formModule;
   const { List } = FormInfo;
   const { Input, RadioGroup, Upload, DatePicker, InputNumber, SuperSelect, MoneyInput, TextArea } = FormInfo.fields;
+  const { apis, ajax } = usePreset();
 
   const onsiteFields = index => [
       <BillAmount index={index} />,
@@ -83,8 +84,18 @@ const ProjectBillInfoFormInner = createWithRemoteLoader({
             label="合同"
             rule="REQ"
             api={{ data: { clientId: get(client, 'clientId'), states: [5, 7] } }}
-            onChange={value => {
-              console.log(value);
+            onChange={(value, { formData, openApi }) => {
+              ajax(
+                Object.assign({}, apis.project.getContractProjectList, {
+                  cache: 'ProjectInput-getContractProjectList',
+                  data: { contractId: get(value, 'value') }
+                })
+              ).then(({ data }) => {
+                openApi.setField({ name: 'withoutProject', value: 2 });
+                if (data.code === 0 && Array.isArray(data.data.projectList) && data.data.projectList.length > 0) {
+                  openApi.setField({ name: 'withoutProject', value: 1 });
+                }
+              });
             }}
           />,
           <RadioGroup
@@ -95,8 +106,20 @@ const ProjectBillInfoFormInner = createWithRemoteLoader({
               { value: 2, label: '合同没有项目' }
             ]}
           />,
-          // TODO 项目账单。合同有项目，显示项目字段
-          <ProjectSelect name="projectId" label="项目" rule="REQ" display={({ formData }) => get(formData, 'withoutProject') === 1} />,
+          // 项目账单。合同有项目，显示项目字段
+          <FormItem display={({ formData }) => get(formData, 'withoutProject') === 1}>
+            {({ formData }) => (
+              <ProjectSelect
+                name="projectId"
+                label="项目"
+                rule="REQ"
+                api={Object.assign({}, apis.project.getContractProjectList, {
+                  cache: 'ProjectInput-getContractProjectList',
+                  data: { contractId: get(formData, 'contractId.value') }
+                })}
+              />
+            )}
+          </FormItem>,
           <RadioGroup
             name="feeType"
             label="费用类别"

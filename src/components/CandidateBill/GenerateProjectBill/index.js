@@ -70,6 +70,7 @@ export const GenerateProjectBillButton = createWithRemoteLoader({
                 {
                   data: {
                     clientId: { label: get(client, 'clientName'), value: get(client, 'clientId') },
+                    billItems: [{ typeId: 1 }],
                     allocations: [{ uid: { label: billTransform.getUserName({ user: userInfo }), value: get(userInfo, 'uid') } }]
                   },
                   onSubmit: async (data, { stepCacheRef }) => {
