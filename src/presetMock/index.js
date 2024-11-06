@@ -13,6 +13,10 @@ import billDetail from './billDetail.json';
 import companyData from './companyData.json';
 import bankData from './bankData.json';
 import trackingBillState from './trackingBillState.json';
+import addBill from './addBill.json';
+import accountInfo from './accountInfo.json';
+
+const noticeInfo = addBill.data.notice;
 
 const billInfo = {
   bankInfoOperation: 'xxxx',
@@ -49,7 +53,7 @@ const billInfo = {
   attention: '张三',
   date: '2023-07-21',
   team: 'FAT',
-  userInfo: {
+  accountInfo: {
     email: 'fuling@165.com',
     phone: '13988882221',
     name: '福玲',
@@ -114,12 +118,12 @@ const preset = {
       },
       addBill: {
         loader: () => {
-          return billInfo;
+          return addBill.data;
         }
       },
       updateBill: {
         loader: () => {
-          return billInfo;
+          return addBill.data;
         }
       },
       saveBillNotice: {
@@ -159,6 +163,11 @@ const preset = {
     client: {},
     project: {
       getList: {
+        loader: () => {
+          return projectList.data;
+        }
+      },
+      getContractProjectList: {
         loader: () => {
           return projectList.data;
         }
@@ -218,6 +227,9 @@ const preset = {
       }
     }
   },
+  global: {
+    accountInfo
+  },
   formInfo: {
     rules: {
       BILL_ALLOCATIONS_SUMMARY: (value, type, { data: formData }) => {
@@ -247,6 +259,19 @@ const preset = {
   }
 };
 
-export { projectList, contractDetail, contractList, astUserList, positionList, paymentList, billList, billDetail, companyData, bankData, billInfo };
+export {
+  projectList,
+  contractDetail,
+  contractList,
+  astUserList,
+  positionList,
+  paymentList,
+  billList,
+  billDetail,
+  companyData,
+  bankData,
+  billInfo,
+  noticeInfo
+};
 
 export default preset;

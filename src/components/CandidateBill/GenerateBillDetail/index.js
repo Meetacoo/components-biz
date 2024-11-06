@@ -12,7 +12,7 @@ const GenerateBillDetail = createWithRemoteLoader({
     return (
       <>
         <InfoPage.Part>
-          <BillNotice data={billDetail} className={style['bill-notice']} ref={ref} />
+          <BillNotice data={billDetail.notice} className={style['bill-notice']} ref={ref} />
         </InfoPage.Part>
         <div className={style['flow']}>
           <FormInfo title="账单审批流程" list={[<ApprovalProcess label="账单审批流程" name="flowRequest" rule="REQ FLOW_USER" />]} />

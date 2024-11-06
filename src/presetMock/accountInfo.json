@@ -1,0 +1,27 @@
+{
+  "userInfo": {
+    "id": 2,
+    "email": "a@a.com",
+    "phone": "13774418888",
+    "password": "bca4701944a77772fe67ba35b2c44f81",
+    "salt": "Re1ygJCT",
+    "name": "胡金赟",
+    "englishName": "sss",
+    "avatar": "",
+    "gender": "M",
+    "state": 0,
+    "createdAt": "2022-04-15T08:53:25.000+00:00",
+    "isAdmin": 0,
+    "updatedAt": "2023-05-05T10:28:22.000+00:00"
+  },
+  "organization": {
+    "id": 1,
+    "coId": 1,
+    "parentId": 0,
+    "name": "1222",
+    "enName": "",
+    "createdAt": "2022-04-18T03:57:36.000+00:00",
+    "updatedAt": "2022-04-18T03:57:36.000+00:00",
+    "deleted": false
+  }
+}

@@ -19,18 +19,18 @@
     <div>Client Name (English):<span
       style='margin-left: 8px;color: #666666;display: inline-block;max-width: 50%;vertical-align: top;'
       class='selected-client-name-english'><%= data.clientNameEnglish %></span></div>
-    <div>Client address:<span style='margin-left: 8px;color: #666666;'><%= data.clientAddress %></span></div>
+    <div>Client address:<span style='margin-left: 8px;color: #666666;display: inline-block;' class="selected-address"><%= data.address %></span></div>
     <div>Attention:<span
       style='margin-left: 8px;color: #666666;display: inline-block;max-width: 50%;vertical-align: top;'
       class="selected-attention"><%= data.attention %></span></div>
     <div>Contact # <span style='margin-left: 8px;color: #666666;display: inline-block;'
-                         class="selected-date"><%= data.contact %></span></div>
+                         class="selected-contact"><%= data.contactMobile %></span></div>
   </div>
   <div>
     <div>日期 / Date:<span style='margin-left: 8px;color: #666666;display: inline-block;'
                            class="selected-date"><%= data.date %></span></div>
     <div>Consultant:<span style='margin-left: 8px;color: #666666;display: inline-block;'
                           class="selected-date"><%=data.consultant%></span></div>
-    <div>Team:<span style='margin-left: 8px;color: #666666;'><%= data.team || '' %></span></div>
+    <div>Team:<span style='margin-left: 8px;color: #666666;display: inline-block;' class="selected-team"><%= data.team || '' %></span></div>
   </div>
 </div>

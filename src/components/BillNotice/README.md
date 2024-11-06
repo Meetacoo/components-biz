@@ -18,7 +18,7 @@
 ```jsx
 const { createWithRemoteLoader } = remoteLoader;
 const { default: BillNotice } = _BillNotice;
-const { default: presetMock, billInfo } = _presetMock;
+const { default: presetMock, noticeInfo } = _presetMock;
 const { Button, Flex } = antd;
 const { useRef } = React;
 
@@ -29,7 +29,7 @@ const BaseExample = createWithRemoteLoader({
   const ref = useRef();
   return (
     <PureGlobal preset={presetMock}>
-      <BillNotice data={billInfo} ref={ref} />
+      <BillNotice data={noticeInfo} ref={ref} />
       <Flex gap={8} justify="center">
         <Button
           onClick={() => {

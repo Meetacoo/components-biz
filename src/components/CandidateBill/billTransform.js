@@ -109,7 +109,7 @@ const billTransform = {
       inputData.typeId = get(data, 'billItems[0].billItem.typeId');
       inputData.trackingList = transformTrackingList(get(data, 'billItems[0].trackingList') || []);
     }
-    console.log('inputData===', inputData, data, bill);
+    // console.log('inputData===', inputData, data, bill);
     return inputData;
   },
   output: (data, type, bill) => {
@@ -129,7 +129,6 @@ const billTransform = {
       }))
     };
     if (type === 1) {
-      console.log('type === 1', get(data, 'billItems'));
       billData.billItems = get(data, 'billItems').map(item => ({
         billItem: Object.assign({}, item, {
           amount: (get(item, 'amount') || 0) * 100

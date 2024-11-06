@@ -26,6 +26,7 @@ const GenerateBill = createWithRemoteLoader({
             );
             return formStepModal({
               ...others,
+              autoClose: true,
               items: [
                 {
                   title: '填写账单信息',

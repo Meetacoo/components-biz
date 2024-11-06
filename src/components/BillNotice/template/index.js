@@ -34,7 +34,7 @@ export const renderPage = (data, options) => {
       company: renderCompany(data.company, options),
       header: renderHeader(data, options),
       table: renderTable(data, options),
-      footer: renderFooter(data.userInfo, options)
+      footer: renderFooter(data, options)
     }
   });
 };
