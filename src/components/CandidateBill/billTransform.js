@@ -82,7 +82,14 @@ const billTransform = {
       allocations: (get(data, 'allocations') || []).map(item => allocationFormat({ userMap, item, formatView, billAmount: get(bill, 'amount') })),
       paymentId: { label: get(bill, 'invoiceTitle'), value: get(bill, 'paymentId') },
       projectId: get(bill, 'projectId')
-        ? { projectName: get(bill, 'projectName'), projectId: get(bill, 'projectId'), projectSerialNum: get(bill, 'projectSerialNum') }
+        ? {
+            projectName: get(bill, 'projectName'),
+            name: get(bill, 'projectName'),
+            projectId: get(bill, 'projectId'),
+            id: get(bill, 'projectId'),
+            projectSerialNum: get(bill, 'projectSerialNum'),
+            serialNum: get(bill, 'projectSerialNum')
+          }
         : null
     });
     // 为项目账单时
@@ -94,12 +101,15 @@ const billTransform = {
           trackingList: transformTrackingList(trackingList || [])
         })
       );
+      if (get(bill, 'projectId')) {
+        inputData.withoutProject = 1;
+      }
       inputData.billItems = billItems;
     } else {
       inputData.typeId = get(data, 'billItems[0].billItem.typeId');
       inputData.trackingList = transformTrackingList(get(data, 'billItems[0].trackingList') || []);
     }
-    console.log('inputData===', inputData, get(data, 'billItems') || []);
+    console.log('inputData===', inputData, data, bill);
     return inputData;
   },
   output: (data, type, bill) => {
@@ -119,6 +129,7 @@ const billTransform = {
       }))
     };
     if (type === 1) {
+      console.log('type === 1', get(data, 'billItems'));
       billData.billItems = get(data, 'billItems').map(item => ({
         billItem: Object.assign({}, item, {
           amount: (get(item, 'amount') || 0) * 100

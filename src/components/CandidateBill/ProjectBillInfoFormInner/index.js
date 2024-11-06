@@ -140,6 +140,8 @@ const ProjectBillInfoFormInner = createWithRemoteLoader({
           const billType = get(formData, `billItems[${index}].typeId`);
           const moreFields = (billType && fieldsMapping[billType](index)) || [];
           return [
+            <InputNumber label="ID" name="id" hidden />,
+            <InputNumber label="账单ID" name="billId" hidden />,
             <FormItem block>
               {({ setFields }) => (
                 <RadioGroup
