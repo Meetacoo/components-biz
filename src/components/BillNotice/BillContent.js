@@ -42,7 +42,7 @@ const BillContent = createWithRemoteLoader({
     const { global } = useGlobalContext('accountInfo');
     const { userInfo, organization } = global;
     const { billNotice, bankInfoList, contactList, addressList, itemList } = initData;
-    console.log(initData);
+
     const noticeData = useMemo(() => {
       let projectsTemp = [];
       (itemList || []).forEach(item => {
@@ -143,14 +143,7 @@ const BillContent = createWithRemoteLoader({
             render: value => value || '请输入客户号',
             canDelete: true
           },
-          clientNameChinese: {
-            className: 'selected-client-name-chinese',
-            default: billNotice.clientName || '请输入客户中文名',
-            type: 'TextArea',
-            width: '200px',
-            canEdit: false
-          },
-          clientNameEnglish: {
+          clientEnName: {
             className: 'selected-client-name-english',
             default: billNotice.clientEnName || '请输入客户英文名',
             type: 'Input',
@@ -244,7 +237,21 @@ const BillContent = createWithRemoteLoader({
             width: '100px',
             options: contactList.map(item => ({ label: item.name, value: getContactItem(item) })),
             render: value => (value ? `${typeof getJsonValue(value) === 'object' ? getJsonValue(value).name : value}` : '请选择Attention'),
-            canDelete: true
+            canDelete: true,
+            typeProps: ({ formApi }) => ({
+              onChange: value => {
+                formApi.setField({ name: 'contactMobile', value });
+              },
+              api: {
+                loader: async () => {
+                  return {
+                    pageData: contactList.map(item => ({ label: item.name, value: getContactItem(item) }))
+                  };
+                }
+              },
+              label: 'Attention',
+              labelHidden: true
+            })
           },
           contactMobile: {
             className: 'selected-contact',
@@ -256,7 +263,24 @@ const BillContent = createWithRemoteLoader({
               value: getContactItem(item)
             })),
             render: value => (value ? `${typeof getJsonValue(value) === 'object' ? getJsonValue(value).phone : value}` : '请选择Attention'),
-            canDelete: true
+            canDelete: true,
+            typeProps: ({ formApi }) => ({
+              onChange: value => {
+                formApi.setField({ name: 'attention', value });
+              },
+              api: {
+                loader: async () => {
+                  return {
+                    pageData: contactList.map(item => ({
+                      label: item?.phoneOfPerson?.number || item?.phoneOfWork?.number || item.phoneOfLandline,
+                      value: getContactItem(item)
+                    }))
+                  };
+                }
+              },
+              label: 'Contract',
+              labelHidden: true
+            })
           },
           remark: {
             className: 'selected-remark',
