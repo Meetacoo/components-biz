@@ -8,28 +8,28 @@
     <tr style='color: #222222;font-size: 14px;line-height: 20px;'>
       <th rowspan="5" style='text-align: center;font-size: 16px;line-height: 22px;font-weight: 500;'>发票信息</th>
       <td colspan='2' style='height: 32px;'>是否增值税一般纳税人</td>
-      <td colspan='6' style='color: #666666;'><%= data.payment.invoiceType === 1 ? '是' : '否' %></td>
+      <td colspan='6' style='color: #666666;'><%= data.payment?.invoiceType === 1 ? '是' : '否' %></td>
     </tr>
     <tr style='font-size: 14px;line-height: 20px;'>
       <td colspan='2' style='height: 32px;'>发票抬头：</td>
-      <td colspan='6' style='color: #666666;'><%= data.payment.invoiceTitle %></td>
+      <td colspan='6' style='color: #666666;'><%= data.payment?.invoiceTitle %></td>
     </tr>
     <tr style='font-size: 14px;line-height: 20px;'>
       <td colspan='2' style='height: 32px;'>纳税人识别号：</td>
-      <td colspan='6' style='color: #666666;'><%= data.payment.taxpayerIdNumber %></td>
+      <td colspan='6' style='color: #666666;'><%= data.payment?.taxpayerIdNumber %></td>
     </tr>
     <tr style='font-size: 14px;line-height: 20px;'>
       <td colspan='2' style='height: 32px;'>地址、电话：</td>
       <td colspan='6' style='color: #666666;'>
-        <div><%= data.payment.taxRegistrationAddress %></div>
-        <div><%= data.payment.taxRegistrationPhone %></div>
+        <div><%= data.payment?.taxRegistrationAddress %></div>
+        <div><%= data.payment?.taxRegistrationPhone %></div>
       </td>
     </tr>
     <tr style='font-size: 14px;line-height: 20px;'>
       <td colspan='2' style='height: 32px;'>开户行及账号：</td>
       <td colspan='6' style='color: #666666;'>
-        <div><%= data.payment.openingBankName %></div>
-        <div><%= data.payment.openingBackAccount %></div>
+        <div><%= data.payment?.openingBankName %></div>
+        <div><%= data.payment?.openingBackAccount %></div>
       </td>
     </tr>
     <tr style='text-align: center;font-size: 14px;line-height: 22px;font-weight: 500;'>
@@ -40,7 +40,7 @@
       <td>总金额<br />Total Amount<br />(CNY)</td>
       <td>备注<br />Remark</td>
     </tr>
-    <% data.itemList.forEach((item, index)=>{ %>
+    <% data.itemList?.forEach((item, index)=>{ %>
     <tr style='text-align: center;font-size: 14px;line-height: 28px;'>
       <td><%= item.typeName || '' %></td>
       <td><%= item.cvName || '' %></td>

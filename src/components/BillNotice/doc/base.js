@@ -9,6 +9,7 @@ const BaseExample = createWithRemoteLoader({
 })(({ remoteModules }) => {
   const [PureGlobal] = remoteModules;
   const ref = useRef();
+
   return (
     <PureGlobal preset={presetMock}>
       <BillNotice data={noticeInfo} ref={ref} />

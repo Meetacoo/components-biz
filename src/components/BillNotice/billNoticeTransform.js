@@ -52,7 +52,7 @@ const billNoticeTransform = {
       label: item?.phoneOfPerson?.number || item?.phoneOfWork?.number || item.phoneOfLandline,
       value: getContactItem(item)
     }));
-    return Object.assign({}, initData, {
+    return Object.assign({}, initData, userInfo, {
       billNotice: Object.assign({}, billNotice, {
         clientNum: get(billNotice, 'clientNum') || '',
         clientEnName: get(billNotice, 'clientEnName') || '',

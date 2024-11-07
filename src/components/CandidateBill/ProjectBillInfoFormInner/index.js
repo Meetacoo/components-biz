@@ -78,7 +78,7 @@ const ProjectBillInfoFormInner = createWithRemoteLoader({
     <>
       <FormInfo
         list={[
-          <SuperSelect name="clientId" label="客户" single disabled valueType="all" />,
+          <SuperSelect name="clientId" label="客户" single disabled valueType="all" rule="REQ" />,
           <ContractSelect
             name="contractId"
             label="合同"

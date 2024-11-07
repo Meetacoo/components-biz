@@ -23,9 +23,11 @@ const BillContent = createWithRemoteLoader({
     const { SuperSelect } = fields;
     const { global } = useGlobalContext('accountInfo');
     const { userInfo, organization } = global;
-    const { bankInfoList } = initData;
 
-    const noticeData = useMemo(() => billNoticeTransform.input({ initData, userInfo, organization, formatView }), [initData, userInfo, organization]);
+    const noticeData = useMemo(
+      () => (initData ? billNoticeTransform.input({ initData, userInfo, organization, formatView }) : null),
+      [initData, userInfo, organization]
+    );
 
     return (
       <FormatDocumentBuilder
@@ -147,7 +149,7 @@ const BillContent = createWithRemoteLoader({
                   return (
                     <div
                       style={{ padding: '3px' }}
-                      dangerouslySetInnerHTML={{ __html: templateRenders.renderBankInfo((value && value[0]) || bankInfoList[0]) }}
+                      dangerouslySetInnerHTML={{ __html: templateRenders.renderBankInfo((value && value[0]) || get(noticeData, 'bankInfoList')) }}
                     />
                   );
                 },
@@ -233,7 +235,7 @@ const BillContent = createWithRemoteLoader({
             render: value => value || '请添加备注'
           }
         }}
-        template={({ data, options }) => templateRenders.renderPage(Object.assign({}, noticeData, data, userInfo), options)}
+        template={({ data, options }) => templateRenders.renderPage(Object.assign({}, noticeData, data), options)}
       />
     );
   })

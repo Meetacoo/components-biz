@@ -17,7 +17,7 @@ const BillInfoFormInner = createWithRemoteLoader({
     <>
       <FormInfo
         list={[
-          <SuperSelect name="clientId" label="客户" single disabled valueType="all" />,
+          <SuperSelect name="clientId" label="客户" single disabled valueType="all" rule="REQ" />,
           // 所选候选人所在职位无项目，显示合同
           // 所选候选人所在职位都有项目，不显示合同
           <ContractSelect
