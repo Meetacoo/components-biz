@@ -1,30 +1,12 @@
 import { forwardRef, useMemo } from 'react';
 import RemoteLoader, { createWithRemoteLoader } from '@kne/remote-loader';
-import Fetch from '@kne/react-fetch';
 import FormatDocumentBuilder from '@kne/format-document-builder';
 import '@kne/format-document-builder/dist/index.css';
 import { Button } from 'antd';
 import dayjs from 'dayjs';
 import templateRenders from './template';
 import get from 'lodash/get';
-
-const getContactItem = item => {
-  return JSON.stringify({
-    id: item.id,
-    name: item.name,
-    phone: item?.phoneOfPerson?.number || item?.phoneOfWork?.number || item.phoneOfLandline
-  });
-};
-
-export const getJsonValue = str => {
-  if (typeof str == 'string') {
-    try {
-      return JSON.parse(str);
-    } catch (e) {
-      return false;
-    }
-  }
-};
+import billNoticeTransform from './billNoticeTransform';
 
 const BillContent = createWithRemoteLoader({
   modules: [
@@ -41,40 +23,10 @@ const BillContent = createWithRemoteLoader({
     const { SuperSelect } = fields;
     const { global } = useGlobalContext('accountInfo');
     const { userInfo, organization } = global;
-    const { billNotice, bankInfoList, contactList, addressList, itemList } = initData;
+    const { bankInfoList } = initData;
 
-    const noticeData = useMemo(() => {
-      let projectsTemp = [];
-      (itemList || []).forEach(item => {
-        if (item.trackingList?.length) {
-          const trackingIdList = item.trackingList.map((listItem, index) => {
-            const onboardDate = listItem?.joinedTime || listItem?.expectedJoinDate;
-            return Object.assign(
-              {},
-              listItem,
-              { typeName: item.billItem.typeName },
-              {
-                amount: item.trackingList.length === 1 ? formatView(get(item, 'billItem.amount'), 'number--100') : '',
-                onboardDate: onboardDate ? dayjs(onboardDate).format('YYYY-MM-DD') : null,
-                type: 'trackingList'
-              }
-            );
-          });
-          projectsTemp = [...projectsTemp, ...trackingIdList];
-        } else {
-          projectsTemp.push(
-            Object.assign({}, item.billItem, {
-              amount: formatView(get(item, 'billItem.amount'), 'number--100')
-            })
-          );
-        }
-      });
-      return Object.assign({}, initData, {
-        totalFee: formatView(get(initData, 'totalFee'), 'number--100'),
-        itemList: projectsTemp,
-        subjectList: get(initData, 'subjectList').filter(item => item.citable)
-      });
-    }, [initData]);
+    const noticeData = useMemo(() => billNoticeTransform.input({ initData, userInfo, organization, formatView }), [initData, userInfo, organization]);
+
     return (
       <FormatDocumentBuilder
         fields={{ SuperSelect }}
@@ -124,17 +76,9 @@ const BillContent = createWithRemoteLoader({
               };
             }
           },
-          clientName: {
-            className: 'selected-client-name',
-            default: billNotice.clientName || '请输入客户名称',
-            type: 'Input',
-            width: '300px',
-            height: '32px',
-            canEdit: false
-          },
           clientNum: {
             className: 'selected-client-num',
-            default: billNotice.clientNum || '',
+            default: get(noticeData, 'billNotice.clientNum') || '',
             type: 'TextArea',
             width: '200px',
             typeProps: () => ({
@@ -145,21 +89,16 @@ const BillContent = createWithRemoteLoader({
           },
           clientEnName: {
             className: 'selected-client-name-english',
-            default: billNotice.clientEnName || '请输入客户英文名',
+            default: get(noticeData, 'billNotice.clientEnName') || '',
             type: 'Input',
             width: '300px',
             height: '32px',
+            render: value => value || '请输入客户英文名',
             canDelete: true
-          },
-          consultant: {
-            className: 'selected-consultant',
-            default: billNotice?.consultant || `${userInfo.englishName || ''} ${userInfo.name || ''}`,
-            type: 'Input',
-            canEdit: false
           },
           team: {
             className: 'selected-team',
-            default: billNotice?.team || organization?.name,
+            default: get(noticeData, 'billNotice.team'),
             type: 'TextArea',
             width: '240px',
             canEdit: false,
@@ -184,7 +123,7 @@ const BillContent = createWithRemoteLoader({
           bankInfo: {
             className: 'selected-bank-info',
             type: 'SuperSelect',
-            default: bankInfoList[0],
+            default: get(noticeData, 'bankInfoList[0]'),
             canDelete: false,
             editButton: props => {
               return (
@@ -202,7 +141,7 @@ const BillContent = createWithRemoteLoader({
                 single: true,
                 labelKey: 'bankName',
                 valueKey: 'bankNo',
-                options: bankInfoList,
+                options: get(noticeData, 'bankInfoList'),
                 open: isActive,
                 inputRender: (inputProps, { value, ...props }) => {
                   return (
@@ -223,20 +162,23 @@ const BillContent = createWithRemoteLoader({
           },
           address: {
             className: 'selected-address',
-            default: billNotice.address || addressList?.[0] || '',
+            default: get(noticeData, 'billNotice.address'),
             type: 'Select',
             width: '100px',
-            options: addressList?.length ? addressList.map(item => ({ label: item, value: item })) : null,
+            options: get(noticeData, 'addressList'),
             canDelete: true,
             render: value => value || '请选择地址'
           },
           attention: {
             className: 'selected-attention',
-            default: contactList?.length ? getContactItem(contactList?.[0]) : '',
+            default: get(noticeData, 'billNotice.attention'),
             type: 'Select',
             width: '100px',
-            options: contactList.map(item => ({ label: item.name, value: getContactItem(item) })),
-            render: value => (value ? `${typeof getJsonValue(value) === 'object' ? getJsonValue(value).name : value}` : '请选择Attention'),
+            options: get(noticeData, 'contactList'),
+            render: value =>
+              value
+                ? `${typeof billNoticeTransform.getJsonValue(value) === 'object' ? billNoticeTransform.getJsonValue(value).name : value}`
+                : '请选择Attention',
             canDelete: true,
             typeProps: ({ formApi }) => ({
               onChange: value => {
@@ -245,7 +187,7 @@ const BillContent = createWithRemoteLoader({
               api: {
                 loader: async () => {
                   return {
-                    pageData: contactList.map(item => ({ label: item.name, value: getContactItem(item) }))
+                    pageData: get(noticeData, 'contactList')
                   };
                 }
               },
@@ -255,14 +197,14 @@ const BillContent = createWithRemoteLoader({
           },
           contactMobile: {
             className: 'selected-contact',
-            default: contactList?.length ? getContactItem(contactList?.[0]) : '',
+            default: get(noticeData, 'billNotice.contactMobile'),
             type: 'Select',
             width: '130px',
-            options: contactList.map(item => ({
-              label: item?.phoneOfPerson?.number || item?.phoneOfWork?.number || item.phoneOfLandline,
-              value: getContactItem(item)
-            })),
-            render: value => (value ? `${typeof getJsonValue(value) === 'object' ? getJsonValue(value).phone : value}` : '请选择Attention'),
+            options: get(noticeData, 'contactMobileList'),
+            render: value =>
+              value
+                ? `${typeof billNoticeTransform.getJsonValue(value) === 'object' ? billNoticeTransform.getJsonValue(value).phone : value}`
+                : '请选择Attention',
             canDelete: true,
             typeProps: ({ formApi }) => ({
               onChange: value => {
@@ -271,10 +213,7 @@ const BillContent = createWithRemoteLoader({
               api: {
                 loader: async () => {
                   return {
-                    pageData: contactList.map(item => ({
-                      label: item?.phoneOfPerson?.number || item?.phoneOfWork?.number || item.phoneOfLandline,
-                      value: getContactItem(item)
-                    }))
+                    pageData: get(noticeData, 'contactMobileList')
                   };
                 }
               },

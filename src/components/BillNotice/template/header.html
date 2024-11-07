@@ -7,7 +7,7 @@
   <div style='width: 70%'>
     <% if(!options?.isDeletedField('clientName')){ %>
     <div>致 / To：<span style='color: #666666;display: inline-block;max-width: 50%;vertical-align: top;'
-                       class='selected-client-name'><%= data.clientName %></span></div>
+                       class='selected-client-name'><%= data.billNotice.clientName %></span></div>
     <% } %>
     <div>客户号 / Client #：<span
       style='color: #666666;display: inline-block;max-width: 50%;vertical-align: top;'
@@ -15,7 +15,7 @@
     </div>
     <div>Client Name (Chinese)：<span
       style='color: #666666;display: inline-block;max-width: 50%;vertical-align: top;'
-      class='selected-client-name-chinese'><%= data.clientName %></span></div>
+      class='selected-client-name-chinese'><%= data.billNotice.clientName %></span></div>
     <div>Client Name (English)：<span
       style='color: #666666;display: inline-block;max-width: 50%;vertical-align: top;'
       class='selected-client-name-english'><%= data.clientEnName %></span></div>
@@ -30,7 +30,7 @@
     <div>日期 / Date：<span style='color: #666666;display: inline-block;'
                            class="selected-date"><%= data.date %></span></div>
     <div>Consultant：<span style='color: #666666;display: inline-block;'
-                          class="selected-date"><%=data.consultant%></span></div>
+                          class="selected-consultant"><%=data.billNotice.consultant%></span></div>
     <div>Team：<span style='color: #666666;display: inline-block;' class="selected-team"><%= data.team || '' %></span></div>
   </div>
 </div>
