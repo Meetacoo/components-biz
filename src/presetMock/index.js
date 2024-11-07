@@ -55,7 +55,7 @@ const billInfo = {
   team: 'FAT',
   accountInfo: {
     email: 'fuling@165.com',
-    phone: '13988882221',
+    phone: '18888888888',
     name: '福玲',
     englishName: '福玲',
     gender: 'M',

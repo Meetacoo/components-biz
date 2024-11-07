@@ -42,7 +42,7 @@ const BillContent = createWithRemoteLoader({
     const { global } = useGlobalContext('accountInfo');
     const { userInfo, organization } = global;
     const { billNotice, bankInfoList, contactList, addressList, itemList } = initData;
-
+    console.log(initData);
     const noticeData = useMemo(() => {
       let projectsTemp = [];
       (itemList || []).forEach(item => {
@@ -76,225 +76,201 @@ const BillContent = createWithRemoteLoader({
       });
     }, [initData]);
     return (
-      <Fetch
-        loader={async () => {
-          const [companyList, bankList] = await Promise.all([
-            ajax(Object.assign({}, apis.contract.getSubjectList)).then(({ data }) => {
-              if (data.code !== 0) {
-                throw new Error(data.msg);
-              }
-              return data.data;
-            }),
-            ajax(Object.assign({}, apis.contract.getBankData)).then(({ data }) => {
-              if (data.code !== 0) {
-                throw new Error(data.msg);
-              }
-              return data.data;
-            })
-          ]);
-
-          return { companyList: companyList.filter(item => item.citable), bankList };
-        }}
-        render={({ data: { companyList, bankList } }) => {
-          return (
-            <FormatDocumentBuilder
-              fields={{ SuperSelect }}
-              formRender={props => <Form {...props} />}
-              {...others}
-              ref={ref}
-              data={{
-                company: {
-                  className: 'selected-company',
-                  type: 'SuperSelect',
-                  default: get(noticeData, 'subjectList[0]'),
-                  canDelete: false,
-                  editButton: props => {
-                    return (
-                      <Button {...props} type="link" style={{ transform: 'translateX(-100%)' }}>
-                        切换
-                        <RemoteLoader module="components-core:Icon" type="arrow-thin-down" />
-                      </Button>
-                    );
-                  },
-                  typeProps: ({ isActive, blur }) => {
-                    return {
-                      label: '公司名称',
-                      labelHidden: true,
-                      isPopup: false,
-                      single: true,
-                      labelKey: 'companyName',
-                      valueKey: 'code',
-                      options: get(noticeData, 'subjectList'),
-                      open: isActive,
-                      inputRender: (inputProps, { value, ...props }) => {
-                        return (
-                          <div
-                            style={{ padding: '3px' }}
-                            dangerouslySetInnerHTML={{
-                              __html: templateRenders.renderCompany((value && value[0]) || get(noticeData, 'subjectList[0]'))
-                            }}
-                          />
-                        );
-                      },
-                      onOpenChange: () => {
-                        blur();
-                      },
-                      renderItemContent: ({ item }) => {
-                        return <div dangerouslySetInnerHTML={{ __html: templateRenders.renderCompany(item) }} />;
-                      }
-                    };
-                  }
+      <FormatDocumentBuilder
+        fields={{ SuperSelect }}
+        formRender={props => <Form {...props} />}
+        {...others}
+        ref={ref}
+        data={{
+          company: {
+            className: 'selected-company',
+            type: 'SuperSelect',
+            default: get(noticeData, 'subjectList[0]'),
+            canDelete: false,
+            editButton: props => {
+              return (
+                <Button {...props} type="link" style={{ transform: 'translateX(-100%)' }}>
+                  切换
+                  <RemoteLoader module="components-core:Icon" type="arrow-thin-down" />
+                </Button>
+              );
+            },
+            typeProps: ({ isActive, blur }) => {
+              return {
+                label: '公司名称',
+                labelHidden: true,
+                isPopup: false,
+                single: true,
+                labelKey: 'companyName',
+                valueKey: 'code',
+                options: get(noticeData, 'subjectList'),
+                open: isActive,
+                inputRender: (inputProps, { value, ...props }) => {
+                  return (
+                    <div
+                      style={{ padding: '3px' }}
+                      dangerouslySetInnerHTML={{
+                        __html: templateRenders.renderCompany((value && value[0]) || get(noticeData, 'subjectList[0]'))
+                      }}
+                    />
+                  );
                 },
-                clientName: {
-                  className: 'selected-client-name',
-                  default: billNotice.clientName || '请输入客户名称',
-                  type: 'Input',
-                  width: '300px',
-                  height: '32px',
-                  canEdit: false
+                onOpenChange: () => {
+                  blur();
                 },
-                clientNum: {
-                  className: 'selected-client-num',
-                  default: billNotice.clientNum || '',
-                  type: 'TextArea',
-                  width: '200px',
-                  typeProps: () => ({
-                    maxLength: 20
-                  }),
-                  render: value => value || '请输入客户号',
-                  canDelete: true
-                },
-                clientNameChinese: {
-                  className: 'selected-client-name-chinese',
-                  default: billNotice.clientName || '请输入客户中文名',
-                  type: 'TextArea',
-                  width: '200px',
-                  canEdit: false
-                },
-                clientNameEnglish: {
-                  className: 'selected-client-name-english',
-                  default: billNotice.clientEnName || '请输入客户英文名',
-                  type: 'Input',
-                  width: '300px',
-                  height: '32px',
-                  canDelete: true
-                },
-                consultant: {
-                  className: 'selected-consultant',
-                  default: billNotice?.consultant || `${userInfo.englishName || ''} ${userInfo.name || ''}`,
-                  type: 'Input',
-                  canEdit: false
-                },
-                team: {
-                  className: 'selected-team',
-                  default: billNotice?.team || organization?.name,
-                  type: 'TextArea',
-                  width: '240px',
-                  canEdit: false,
-                  canDelete: true
-                },
-                date: {
-                  className: 'selected-date',
-                  type: 'DatePicker',
-                  typeProps: ({ isActive, blur }) => ({
-                    bordered: false,
-                    open: isActive,
-                    format: 'YYYY-MM-DD',
-                    onChange: () => {
-                      blur();
-                    }
-                  }),
-                  width: '200px',
-                  render: value => {
-                    return value ? dayjs(value).format('YYYY-MM-DD') : '请选择日期';
-                  }
-                },
-                bankInfo: {
-                  className: 'selected-bank-info',
-                  type: 'SuperSelect',
-                  default: bankInfoList[0],
-                  canDelete: false,
-                  editButton: props => {
-                    return (
-                      <Button {...props} type="link" style={{ transform: 'translateX(-100%)' }}>
-                        切换
-                        <RemoteLoader module="components-core:Icon" type="arrow-thin-down" />
-                      </Button>
-                    );
-                  },
-                  typeProps: ({ isActive, blur }) => {
-                    return {
-                      label: '银行信息',
-                      labelHidden: true,
-                      isPopup: false,
-                      single: true,
-                      labelKey: 'bankName',
-                      valueKey: 'bankNo',
-                      options: bankInfoList,
-                      open: isActive,
-                      inputRender: (inputProps, { value, ...props }) => {
-                        return (
-                          <div
-                            style={{ padding: '3px' }}
-                            dangerouslySetInnerHTML={{ __html: templateRenders.renderBankInfo((value && value[0]) || bankInfoList[0]) }}
-                          />
-                        );
-                      },
-                      onOpenChange: () => {
-                        blur();
-                      },
-                      renderItemContent: ({ item }) => {
-                        return <div dangerouslySetInnerHTML={{ __html: templateRenders.renderBankInfo(item) }} />;
-                      }
-                    };
-                  }
-                },
-                address: {
-                  className: 'selected-address',
-                  default: billNotice.address || addressList?.[0] || '',
-                  type: 'Select',
-                  width: '100px',
-                  options: addressList?.length ? addressList.map(item => ({ label: item, value: item })) : null,
-                  canDelete: true,
-                  render: value => value || '请选择地址'
-                },
-                attention: {
-                  className: 'selected-attention',
-                  default: contactList?.length ? getContactItem(contactList?.[0]) : '',
-                  type: 'Select',
-                  width: '100px',
-                  options: contactList.map(item => ({ label: item.name, value: getContactItem(item) })),
-                  render: value => (value ? `${typeof getJsonValue(value) === 'object' ? getJsonValue(value).name : value}` : '请选择Attention'),
-                  canDelete: true
-                },
-                contactMobile: {
-                  className: 'selected-contact',
-                  default: contactList?.length ? getContactItem(contactList?.[0]) : '',
-                  type: 'Select',
-                  width: '130px',
-                  options: contactList.map(item => ({
-                    label: item?.phoneOfPerson?.number || item?.phoneOfWork?.number || item.phoneOfLandline,
-                    value: getContactItem(item)
-                  })),
-                  render: value => (value ? `${typeof getJsonValue(value) === 'object' ? getJsonValue(value).phone : value}` : '请选择Attention'),
-                  canDelete: true
-                },
-                remark: {
-                  className: 'selected-remark',
-                  default: '',
-                  type: 'TextArea',
-                  width: '130px',
-                  typeProps: () => ({
-                    maxLength: 200,
-                    autocomplete: 'off'
-                  }),
-                  render: value => value || '请添加备注'
+                renderItemContent: ({ item }) => {
+                  return <div dangerouslySetInnerHTML={{ __html: templateRenders.renderCompany(item) }} />;
                 }
-              }}
-              template={({ data, options }) => templateRenders.renderPage(Object.assign({}, noticeData, data, userInfo), options)}
-            />
-          );
+              };
+            }
+          },
+          clientName: {
+            className: 'selected-client-name',
+            default: billNotice.clientName || '请输入客户名称',
+            type: 'Input',
+            width: '300px',
+            height: '32px',
+            canEdit: false
+          },
+          clientNum: {
+            className: 'selected-client-num',
+            default: billNotice.clientNum || '',
+            type: 'TextArea',
+            width: '200px',
+            typeProps: () => ({
+              maxLength: 20
+            }),
+            render: value => value || '请输入客户号',
+            canDelete: true
+          },
+          clientNameChinese: {
+            className: 'selected-client-name-chinese',
+            default: billNotice.clientName || '请输入客户中文名',
+            type: 'TextArea',
+            width: '200px',
+            canEdit: false
+          },
+          clientNameEnglish: {
+            className: 'selected-client-name-english',
+            default: billNotice.clientEnName || '请输入客户英文名',
+            type: 'Input',
+            width: '300px',
+            height: '32px',
+            canDelete: true
+          },
+          consultant: {
+            className: 'selected-consultant',
+            default: billNotice?.consultant || `${userInfo.englishName || ''} ${userInfo.name || ''}`,
+            type: 'Input',
+            canEdit: false
+          },
+          team: {
+            className: 'selected-team',
+            default: billNotice?.team || organization?.name,
+            type: 'TextArea',
+            width: '240px',
+            canEdit: false,
+            canDelete: true
+          },
+          date: {
+            className: 'selected-date',
+            type: 'DatePicker',
+            typeProps: ({ isActive, blur }) => ({
+              bordered: false,
+              open: isActive,
+              format: 'YYYY-MM-DD',
+              onChange: () => {
+                blur();
+              }
+            }),
+            width: '200px',
+            render: value => {
+              return value ? dayjs(value).format('YYYY-MM-DD') : '请选择日期';
+            }
+          },
+          bankInfo: {
+            className: 'selected-bank-info',
+            type: 'SuperSelect',
+            default: bankInfoList[0],
+            canDelete: false,
+            editButton: props => {
+              return (
+                <Button {...props} type="link" style={{ transform: 'translateX(-100%)' }}>
+                  切换
+                  <RemoteLoader module="components-core:Icon" type="arrow-thin-down" />
+                </Button>
+              );
+            },
+            typeProps: ({ isActive, blur }) => {
+              return {
+                label: '银行信息',
+                labelHidden: true,
+                isPopup: false,
+                single: true,
+                labelKey: 'bankName',
+                valueKey: 'bankNo',
+                options: bankInfoList,
+                open: isActive,
+                inputRender: (inputProps, { value, ...props }) => {
+                  return (
+                    <div
+                      style={{ padding: '3px' }}
+                      dangerouslySetInnerHTML={{ __html: templateRenders.renderBankInfo((value && value[0]) || bankInfoList[0]) }}
+                    />
+                  );
+                },
+                onOpenChange: () => {
+                  blur();
+                },
+                renderItemContent: ({ item }) => {
+                  return <div dangerouslySetInnerHTML={{ __html: templateRenders.renderBankInfo(item) }} />;
+                }
+              };
+            }
+          },
+          address: {
+            className: 'selected-address',
+            default: billNotice.address || addressList?.[0] || '',
+            type: 'Select',
+            width: '100px',
+            options: addressList?.length ? addressList.map(item => ({ label: item, value: item })) : null,
+            canDelete: true,
+            render: value => value || '请选择地址'
+          },
+          attention: {
+            className: 'selected-attention',
+            default: contactList?.length ? getContactItem(contactList?.[0]) : '',
+            type: 'Select',
+            width: '100px',
+            options: contactList.map(item => ({ label: item.name, value: getContactItem(item) })),
+            render: value => (value ? `${typeof getJsonValue(value) === 'object' ? getJsonValue(value).name : value}` : '请选择Attention'),
+            canDelete: true
+          },
+          contactMobile: {
+            className: 'selected-contact',
+            default: contactList?.length ? getContactItem(contactList?.[0]) : '',
+            type: 'Select',
+            width: '130px',
+            options: contactList.map(item => ({
+              label: item?.phoneOfPerson?.number || item?.phoneOfWork?.number || item.phoneOfLandline,
+              value: getContactItem(item)
+            })),
+            render: value => (value ? `${typeof getJsonValue(value) === 'object' ? getJsonValue(value).phone : value}` : '请选择Attention'),
+            canDelete: true
+          },
+          remark: {
+            className: 'selected-remark',
+            default: '',
+            type: 'TextArea',
+            width: '130px',
+            typeProps: () => ({
+              maxLength: 200,
+              autocomplete: 'off'
+            }),
+            render: value => value || '请添加备注'
+          }
         }}
+        template={({ data, options }) => templateRenders.renderPage(Object.assign({}, noticeData, data, userInfo), options)}
       />
     );
   })

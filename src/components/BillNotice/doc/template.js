@@ -47,7 +47,7 @@ const BaseExample = createWithRemoteLoader({
           dangerouslySetInnerHTML={{
             __html: templateRenders.renderFooter({
               email: 'fuling@165.com',
-              phone: '13988882221',
+              phone: '18888888888',
               name: '福玲',
               englishName: '福玲',
               gender: 'M',
@@ -172,7 +172,7 @@ const BaseExample = createWithRemoteLoader({
                           team: 'FAT',
                           userInfo: {
                             email: 'fuling@165.com',
-                            phone: '13988882221',
+                            phone: '18888888888',
                             name: '福玲',
                             englishName: '福玲',
                             gender: 'M',
