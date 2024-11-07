@@ -41,7 +41,7 @@ const BillContent = createWithRemoteLoader({
     const { SuperSelect } = fields;
     const { global } = useGlobalContext('accountInfo');
     const { userInfo, organization } = global;
-    const { billNotice, subjectList, bankInfoList, contactList, addressList, itemList } = initData;
+    const { billNotice, bankInfoList, contactList, addressList, itemList } = initData;
 
     const noticeData = useMemo(() => {
       let projectsTemp = [];
@@ -71,7 +71,8 @@ const BillContent = createWithRemoteLoader({
       });
       return Object.assign({}, initData, {
         totalFee: formatView(get(initData, 'totalFee'), 'number--100'),
-        itemList: projectsTemp
+        itemList: projectsTemp,
+        subjectList: get(initData, 'subjectList').filter(item => item.citable)
       });
     }, [initData]);
     return (
@@ -105,7 +106,7 @@ const BillContent = createWithRemoteLoader({
                 company: {
                   className: 'selected-company',
                   type: 'SuperSelect',
-                  default: subjectList[0],
+                  default: get(noticeData, 'subjectList[0]'),
                   canDelete: false,
                   editButton: props => {
                     return (
@@ -123,13 +124,15 @@ const BillContent = createWithRemoteLoader({
                       single: true,
                       labelKey: 'companyName',
                       valueKey: 'code',
-                      options: subjectList,
+                      options: get(noticeData, 'subjectList'),
                       open: isActive,
                       inputRender: (inputProps, { value, ...props }) => {
                         return (
                           <div
                             style={{ padding: '3px' }}
-                            dangerouslySetInnerHTML={{ __html: templateRenders.renderCompany((value && value[0]) || subjectList[0]) }}
+                            dangerouslySetInnerHTML={{
+                              __html: templateRenders.renderCompany((value && value[0]) || get(noticeData, 'subjectList[0]'))
+                            }}
                           />
                         );
                       },
