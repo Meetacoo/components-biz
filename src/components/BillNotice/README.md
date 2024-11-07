@@ -17,7 +17,7 @@
 
 ```jsx
 const { createWithRemoteLoader } = remoteLoader;
-const { default: BillNotice } = _BillNotice;
+const { default: BillNotice, billNoticeTransform } = _BillNotice;
 const { default: presetMock, noticeInfo } = _presetMock;
 const { Button, Flex } = antd;
 const { useRef } = React;
@@ -41,7 +41,7 @@ const BaseExample = createWithRemoteLoader({
         </Button>
         <Button
           onClick={() => {
-            console.log(ref.current?.getFormData());
+            console.log(ref.current?.getFormData(), billNoticeTransform.output(ref.current?.getFormData()));
           }}
         >
           获取表单数据
@@ -71,7 +71,7 @@ const BaseExample = createWithRemoteLoader({
   modules: ['components-core:Global@PureGlobal', 'components-core:InfoPage@formatView']
 })(({ remoteModules }) => {
   const [PureGlobal, formatView] = remoteModules;
-  const {userInfo, organization} = mockApis.global.accountInfo;
+  const { userInfo, organization } = mockApis.global.accountInfo;
   const noticeData = billNoticeTransform.input({
     initData: noticeInfo,
     userInfo,
@@ -120,6 +120,7 @@ const BaseExample = createWithRemoteLoader({
               email: 'fuling@165.com',
               phone: '18888888888',
               name: '福玲',
+              contact: '福玲',
               englishName: '福玲',
               gender: 'M',
               createdAt: '2022-11-18T08:22:56.000+00:00',
@@ -130,29 +131,35 @@ const BaseExample = createWithRemoteLoader({
         <Divider>客户信息</Divider>
         <div
           dangerouslySetInnerHTML={{
-            __html: templateRenders.renderHeader(Object.assign({}, {
-              billNotice: {
-                clientName: '华威股份有限公司',
-                clientNum: '666666',
-                clientEnName: 'FA Talent Human Resources Service Co.',
-                clientAddress: '北京市朝阳区东三环北路嘉铭中心B座15层',
-                contact: '19829288292',
-                consultant: '张三',
-                attention: '张三',
-                date: '2023-07-21',
-                team: 'FAT'
-              },
-            }, {
-              clientName: '华威股份有限公司',
-              clientNum: '666666',
-              clientEnName: 'FA Talent Human Resources Service Co.',
-              clientAddress: '北京市朝阳区东三环北路嘉铭中心B座15层',
-              contact: '19829288292',
-              consultant: '张三',
-              attention: '张三',
-              date: '2023-07-21',
-              team: 'FAT'
-            }))
+            __html: templateRenders.renderHeader(
+              Object.assign(
+                {},
+                {
+                  billNotice: {
+                    clientName: '华威股份有限公司',
+                    clientNum: '666666',
+                    clientEnName: 'FA Talent Human Resources Service Co.',
+                    clientAddress: '北京市朝阳区东三环北路嘉铭中心B座15层',
+                    contact: '19829288292',
+                    consultant: '张三',
+                    attention: '张三',
+                    date: '2023-07-21',
+                    team: 'FAT'
+                  }
+                },
+                {
+                  clientName: '华威股份有限公司',
+                  clientNum: '666666',
+                  clientEnName: 'FA Talent Human Resources Service Co.',
+                  clientAddress: '北京市朝阳区东三环北路嘉铭中心B座15层',
+                  contact: '19829288292',
+                  consultant: '张三',
+                  attention: '张三',
+                  date: '2023-07-21',
+                  team: 'FAT'
+                }
+              )
+            )
           }}
         />
         <Divider>发票相关</Divider>

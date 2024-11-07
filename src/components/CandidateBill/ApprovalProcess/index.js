@@ -5,10 +5,17 @@ import transform from 'lodash/transform';
 import get from 'lodash/get';
 
 const ApprovalProcessField = createWithRemoteLoader({
-  modules: ['components-core:Global@usePreset', 'components-core:InfoPage@Flow', 'components-core:FormInfo@SuperSelect', 'components-core:Icon']
+  modules: [
+    'components-core:Global@usePreset',
+    'components-core:InfoPage@Flow',
+    'components-core:FormInfo@SuperSelect',
+    'components-core:Icon',
+    'components-core:FormInfo@useFormContext'
+  ]
 })(({ remoteModules, value, onChange, ...props }) => {
-  const [usePreset, Flow, SuperSelect, Icon] = remoteModules;
+  const [usePreset, Flow, SuperSelect, Icon, useFormContext] = remoteModules;
   const { apis } = usePreset();
+  const { formData, openApi } = useFormContext();
 
   const valueNodeListMap = new Map((get(value, 'nodeList') || []).map(item => [item.nodeId, item]));
 
@@ -84,6 +91,7 @@ const ApprovalProcessField = createWithRemoteLoader({
                               onChange={currentValue => {
                                 onChange(
                                   Object.assign({}, value, {
+                                    flowNo,
                                     nodeList: flowNodes.map(flow => {
                                       const userId = (() => {
                                         if (!(flow.actionType === 1 && flow.roleType === 3)) {

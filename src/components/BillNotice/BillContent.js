@@ -36,7 +36,7 @@ const BillContent = createWithRemoteLoader({
         {...others}
         ref={ref}
         data={{
-          company: {
+          subjectCode: {
             className: 'selected-company',
             type: 'SuperSelect',
             default: get(noticeData, 'subjectList[0]'),
@@ -89,6 +89,15 @@ const BillContent = createWithRemoteLoader({
             render: value => value || '请输入客户号',
             canDelete: true
           },
+          clientName: {
+            className: 'selected-client-name',
+            default: get(noticeData, 'billNotice.clientName') || '',
+            type: 'Input',
+            width: '300px',
+            height: '32px',
+            render: value => value || '请输入客户名称',
+            canEdit: false
+          },
           clientEnName: {
             className: 'selected-client-name-english',
             default: get(noticeData, 'billNotice.clientEnName') || '',
@@ -98,6 +107,12 @@ const BillContent = createWithRemoteLoader({
             render: value => value || '请输入客户英文名',
             canDelete: true
           },
+          consultant: {
+            className: 'selected-consultant',
+            default: get(noticeData, 'billNotice.consultant'),
+            type: 'Input',
+            canEdit: false
+          },
           team: {
             className: 'selected-team',
             default: get(noticeData, 'billNotice.team'),
@@ -106,7 +121,7 @@ const BillContent = createWithRemoteLoader({
             canEdit: false,
             canDelete: true
           },
-          date: {
+          noticeDate: {
             className: 'selected-date',
             type: 'DatePicker',
             typeProps: ({ isActive, blur }) => ({
@@ -162,9 +177,9 @@ const BillContent = createWithRemoteLoader({
               };
             }
           },
-          address: {
+          clientAddress: {
             className: 'selected-address',
-            default: get(noticeData, 'billNotice.address'),
+            default: get(noticeData, 'billNotice.clientAddress'),
             type: 'Select',
             width: '100px',
             options: get(noticeData, 'addressList'),
@@ -222,6 +237,24 @@ const BillContent = createWithRemoteLoader({
               label: 'Contract',
               labelHidden: true
             })
+          },
+          contact: {
+            className: 'selected-contact',
+            default: get(noticeData, 'billNotice.contact'),
+            type: 'Input',
+            canEdit: false
+          },
+          phone: {
+            className: 'selected-phone',
+            default: get(noticeData, 'billNotice.phone'),
+            type: 'Input',
+            canEdit: false
+          },
+          email: {
+            className: 'selected-email',
+            default: get(noticeData, 'billNotice.email'),
+            type: 'Input',
+            canEdit: false
           },
           remark: {
             className: 'selected-remark',

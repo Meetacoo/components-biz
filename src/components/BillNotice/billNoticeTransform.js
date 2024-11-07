@@ -21,7 +21,7 @@ const getJsonValue = str => {
 
 const billNoticeTransform = {
   input: ({ initData, userInfo, organization, formatView }) => {
-    const { billNotice, contactList, addressList, itemList } = initData;
+    const { billNotice, contactList, addressList, itemList, bankInfoList } = initData;
     let projectsTemp = [];
     (itemList || []).forEach(item => {
       if (item.trackingList?.length) {
@@ -52,15 +52,19 @@ const billNoticeTransform = {
       label: item?.phoneOfPerson?.number || item?.phoneOfWork?.number || item.phoneOfLandline,
       value: getContactItem(item)
     }));
-    return Object.assign({}, initData, userInfo, {
+    return Object.assign({}, initData, {
       billNotice: Object.assign({}, billNotice, {
         clientNum: get(billNotice, 'clientNum') || '',
         clientEnName: get(billNotice, 'clientEnName') || '',
-        address: get(billNotice, 'address') || get(addressList, '[0]') || '',
+        clientAddress: get(billNotice, 'address') || get(addressList, '[0]') || '',
         attention: get(billNotice, 'attention') || get(contractList, '[0].value') || '',
         contactMobile: get(billNotice, 'contactMobile') || get(contractList, '[0].value') || '',
         consultant: get(billNotice, 'consultant') || `${userInfo.englishName || ''} ${userInfo.name || ''}`,
-        team: billNotice?.team || organization?.name
+        team: billNotice?.team || organization?.name,
+        contact: get(billNotice, 'contact') || `${userInfo.englishName || ''} ${userInfo.name || ''}`,
+        phone: get(billNotice, 'phone') || userInfo.phone || '',
+        email: get(billNotice, 'email') || userInfo.email || '',
+        bankInfo: get(billNotice, 'bankInfo') || get(bankInfoList, '[0]') || null
       }),
       totalFee: formatView(get(initData, 'totalFee'), 'number--100'),
       itemList: projectsTemp,
@@ -69,6 +73,21 @@ const billNoticeTransform = {
       contactList: contractList,
       contactMobileList: contactMobileList
     });
+  },
+  output: data => {
+    const outputData = Object.assign({}, data, {
+      noticeDate: get(data, 'noticeDate'),
+      subjectCode: get(data, 'subjectCode.code'),
+      attention:
+        typeof billNoticeTransform.getJsonValue(get(data, 'attention')) === 'object'
+          ? billNoticeTransform.getJsonValue(get(data, 'attention')).name
+          : null,
+      contactMobile:
+        typeof billNoticeTransform.getJsonValue(get(data, 'contactMobile')) === 'object'
+          ? billNoticeTransform.getJsonValue(get(data, 'contactMobile')).phone
+          : null
+    });
+    return outputData;
   },
   getJsonValue
 };

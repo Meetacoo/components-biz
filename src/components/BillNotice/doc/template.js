@@ -58,6 +58,7 @@ const BaseExample = createWithRemoteLoader({
               email: 'fuling@165.com',
               phone: '18888888888',
               name: '福玲',
+              contact: '福玲',
               englishName: '福玲',
               gender: 'M',
               createdAt: '2022-11-18T08:22:56.000+00:00',
