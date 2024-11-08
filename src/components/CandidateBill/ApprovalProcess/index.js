@@ -1,24 +1,17 @@
 import { createWithRemoteLoader } from '@kne/remote-loader';
 import Fetch from '@kne/react-fetch';
 import { Button } from 'antd';
-import transform from 'lodash/transform';
 import get from 'lodash/get';
 
+import { billNoticeTransform } from '../../BillNotice';
+
 const ApprovalProcessField = createWithRemoteLoader({
-  modules: [
-    'components-core:Global@usePreset',
-    'components-core:InfoPage@Flow',
-    'components-core:FormInfo@SuperSelect',
-    'components-core:Icon',
-    'components-core:FormInfo@useFormContext'
-  ]
+  modules: ['components-core:Global@usePreset', 'components-core:InfoPage@Flow', 'components-core:FormInfo@SuperSelect', 'components-core:Icon']
 })(({ remoteModules, value, onChange, ...props }) => {
-  const [usePreset, Flow, SuperSelect, Icon, useFormContext] = remoteModules;
+  const [usePreset, Flow, SuperSelect, Icon] = remoteModules;
   const { apis } = usePreset();
-  const { formData, openApi } = useFormContext();
 
   const valueNodeListMap = new Map((get(value, 'nodeList') || []).map(item => [item.nodeId, item]));
-
   return (
     <Fetch
       {...Object.assign({}, apis.flow.getFlowCondition, {
@@ -33,6 +26,12 @@ const ApprovalProcessField = createWithRemoteLoader({
             })}
             render={({ data }) => {
               const { flowNodes } = data;
+              if (!value) {
+                const nodes = flowNodes.filter(flow => flow.actionType === 1 && flow.roleType === 3);
+                if (!nodes.length) {
+                  onChange(billNoticeTransform.nodeListTransform({ flowNodes, flowNo }));
+                }
+              }
               return (
                 <Flow
                   {...props}
@@ -90,35 +89,13 @@ const ApprovalProcessField = createWithRemoteLoader({
                               }}
                               onChange={currentValue => {
                                 onChange(
-                                  Object.assign({}, value, {
+                                  billNoticeTransform.nodeListTransform({
+                                    flowRequest: value,
+                                    flowNodes,
                                     flowNo,
-                                    nodeList: flowNodes.map(flow => {
-                                      const userId = (() => {
-                                        if (!(flow.actionType === 1 && flow.roleType === 3)) {
-                                          return (flow.userList || []).map(item => item.userId);
-                                        }
-                                        if (flow.id === target.id) {
-                                          return currentValue ? [currentValue.value] : null;
-                                        }
-
-                                        const currentNode = valueNodeListMap.get(flow.id);
-                                        if (!currentNode) {
-                                          return null;
-                                        }
-                                        return currentNode.userId;
-                                      })();
-                                      return Object.assign(
-                                        {},
-                                        transform(
-                                          ['level', 'order', 'actionType', 'roleType', 'userName', 'auditType'],
-                                          (result, name) => {
-                                            result[name] = flow[name];
-                                          },
-                                          {}
-                                        ),
-                                        { userId, nodeId: flow.id }
-                                      );
-                                    })
+                                    target,
+                                    currentValue,
+                                    valueNodeListMap
                                   })
                                 );
                               }}

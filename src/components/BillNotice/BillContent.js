@@ -1,4 +1,4 @@
-import { forwardRef, useMemo } from 'react';
+import { forwardRef, useEffect, useMemo } from 'react';
 import RemoteLoader, { createWithRemoteLoader } from '@kne/remote-loader';
 import FormatDocumentBuilder from '@kne/format-document-builder';
 import '@kne/format-document-builder/dist/index.css';
@@ -124,6 +124,7 @@ const BillContent = createWithRemoteLoader({
           noticeDate: {
             className: 'selected-date',
             type: 'DatePicker',
+            default: get(noticeData, 'billNotice.noticeDate'),
             typeProps: ({ isActive, blur }) => ({
               bordered: false,
               open: isActive,
@@ -132,7 +133,7 @@ const BillContent = createWithRemoteLoader({
                 blur();
               }
             }),
-            width: '200px',
+            width: '150px',
             render: value => {
               return value ? dayjs(value).format('YYYY-MM-DD') : '请选择日期';
             }

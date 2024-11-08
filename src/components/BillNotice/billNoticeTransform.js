@@ -1,5 +1,6 @@
 import get from 'lodash/get';
 import dayjs from 'dayjs';
+import transform from 'lodash/transform';
 
 const getContactItem = item => {
   return JSON.stringify({
@@ -17,6 +18,39 @@ const getJsonValue = str => {
       return false;
     }
   }
+};
+
+const nodeListTransform = ({ flowRequest = {}, flowNodes, currentValue, target, flowNo, valueNodeListMap }) => {
+  return Object.assign({}, flowRequest, {
+    flowNo,
+    nodeList: flowNodes.map(flow => {
+      const userId = (() => {
+        if (!(flow.actionType === 1 && flow.roleType === 3)) {
+          return (flow.userList || []).map(item => item.userId);
+        }
+        if (flow.id === target.id) {
+          return currentValue ? [currentValue.value] : null;
+        }
+
+        const currentNode = valueNodeListMap.get(flow.id);
+        if (!currentNode) {
+          return null;
+        }
+        return currentNode.userId;
+      })();
+      return Object.assign(
+        {},
+        transform(
+          ['level', 'order', 'actionType', 'roleType', 'userName', 'auditType'],
+          (result, name) => {
+            result[name] = flow[name];
+          },
+          {}
+        ),
+        { userId, nodeId: flow.id }
+      );
+    })
+  });
 };
 
 const billNoticeTransform = {
@@ -54,13 +88,14 @@ const billNoticeTransform = {
     }));
     return Object.assign({}, initData, {
       billNotice: Object.assign({}, billNotice, {
-        clientNum: get(billNotice, 'clientNum') || '',
-        clientEnName: get(billNotice, 'clientEnName') || '',
-        clientAddress: get(billNotice, 'address') || get(addressList, '[0]') || '',
-        attention: get(billNotice, 'attention') || get(contractList, '[0].value') || '',
-        contactMobile: get(billNotice, 'contactMobile') || get(contractList, '[0].value') || '',
+        clientNum: get(billNotice, 'clientNum') || null,
+        clientEnName: get(billNotice, 'clientEnName') || null,
+        clientAddress: get(billNotice, 'address') || get(addressList, '[0]') || null,
+        attention: get(billNotice, 'attention') || get(contractList, '[0].value') || null,
+        contactMobile: get(billNotice, 'contactMobile') || get(contractList, '[0].value') || null,
+        noticeDate: get(billNotice, 'noticeDate') || '',
         consultant: get(billNotice, 'consultant') || `${userInfo.englishName || ''} ${userInfo.name || ''}`,
-        team: billNotice?.team || organization?.name,
+        team: billNotice?.team || organization?.name || null,
         contact: get(billNotice, 'contact') || `${userInfo.englishName || ''} ${userInfo.name || ''}`,
         phone: get(billNotice, 'phone') || userInfo.phone || '',
         email: get(billNotice, 'email') || userInfo.email || '',
@@ -87,8 +122,10 @@ const billNoticeTransform = {
           ? billNoticeTransform.getJsonValue(get(data, 'contactMobile')).phone
           : null
     });
+    console.log('output---', data, outputData);
     return outputData;
   },
+  nodeListTransform,
   getJsonValue
 };
 

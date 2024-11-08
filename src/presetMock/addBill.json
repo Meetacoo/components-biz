@@ -66,7 +66,8 @@
         "team": null,
         "phone": null,
         "email": "a@a.com",
-        "remark": ""
+        "remark": "",
+        "deleteFields": ["clientAddress", "contactMobile"]
       },
       "itemList": [
         {

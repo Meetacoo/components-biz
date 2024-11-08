@@ -15,16 +15,22 @@ const BillNoticeSave = createWithRemoteLoader({
       // console.log(data, stepCacheRef, childrenRef.current.getRenderHtml());
       const { billId, id } = get(stepCacheRef, 'current.billInfo.notice.billNotice');
       const submitNotice = billNoticeTransform.output(
-        Object.assign({}, data, childrenRef.current.getFormData(), {
-          billId,
-          id
-        })
+        Object.assign(
+          {},
+          childrenRef.current.getFormData(),
+          {
+            billId,
+            id,
+            flowRequest: get(stepCacheRef, 'current.billInfo.flowRequest'),
+            pdfData: childrenRef.current.getRenderHtml(),
+            deleteFields: get(childrenRef.current, 'deleteFields')
+          },
+          data
+        )
       );
-      console.log(get(stepCacheRef, 'current.billInfo'), submitNotice);
-      return false;
       const { data: resData } = await ajax(
         merge({}, apis.candidateBill.saveBillNotice, {
-          data: Object.assign({}, data)
+          data: Object.assign({}, submitNotice)
         })
       );
       if (resData.code !== 0) {

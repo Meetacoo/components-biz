@@ -9,28 +9,40 @@
     <div>致 / To：<span style='color: #666666;display: inline-block;max-width: 50%;vertical-align: top;'
                        class='selected-client-name'><%= data.billNotice?.clientName %></span></div>
     <% } %>
+    <% if(!options?.isDeletedField('clientNum')){ %>
     <div>客户号 / Client #：<span
       style='color: #666666;display: inline-block;max-width: 50%;vertical-align: top;'
       class='selected-client-num'><%= data.clientNum %></span>
     </div>
+    <% } %>
     <div>Client Name (Chinese)：<span
       style='color: #666666;display: inline-block;max-width: 50%;vertical-align: top;'
       class='selected-client-name-chinese'><%= data.billNotice?.clientName %></span></div>
+    <% if(!options?.isDeletedField('clientEnName')){ %>
     <div>Client Name (English)：<span
       style='color: #666666;display: inline-block;max-width: 50%;vertical-align: top;'
       class='selected-client-name-english'><%= data.clientEnName %></span></div>
+    <% } %>
+    <% if(!options?.isDeletedField('clientAddress')){ %>
     <div>Client address：<span style='color: #666666;display: inline-block;' class="selected-address"><%= data.clientAddress %></span></div>
+    <% } %>
+    <% if(!options?.isDeletedField('attention')){ %>
     <div>Attention：<span
       style='color: #666666;display: inline-block;max-width: 50%;vertical-align: top;'
       class="selected-attention"><%= data.attention %></span></div>
+    <% } %>
+    <% if(!options?.isDeletedField('contactMobile')){ %>
     <div>Contact #：<span style='color: #666666;display: inline-block;'
                          class="selected-contact"><%= data.contactMobile %></span></div>
+    <% } %>
   </div>
   <div>
     <div>日期 / Date：<span style='color: #666666;display: inline-block;'
                            class="selected-date"><%= data.noticeDate %></span></div>
     <div>Consultant：<span style='color: #666666;display: inline-block;'
                           class="selected-consultant"><%=data.billNotice?.consultant%></span></div>
+    <% if(!options?.isDeletedField('team')){ %>
     <div>Team：<span style='color: #666666;display: inline-block;' class="selected-team"><%= data.team || '' %></span></div>
+    <% } %>
   </div>
 </div>
