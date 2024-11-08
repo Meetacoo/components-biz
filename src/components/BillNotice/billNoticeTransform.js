@@ -86,20 +86,21 @@ const billNoticeTransform = {
       label: item?.phoneOfPerson?.number || item?.phoneOfWork?.number || item.phoneOfLandline,
       value: getContactItem(item)
     }));
+    const deleteFields = get(billNotice, 'deleteFields');
     return Object.assign({}, initData, {
       billNotice: Object.assign({}, billNotice, {
-        clientNum: get(billNotice, 'clientNum') || null,
-        clientEnName: get(billNotice, 'clientEnName') || null,
-        clientAddress: get(billNotice, 'address') || get(addressList, '[0]') || null,
-        attention: get(billNotice, 'attention') || get(contractList, '[0].value') || null,
-        contactMobile: get(billNotice, 'contactMobile') || get(contractList, '[0].value') || null,
+        clientNum: deleteFields && deleteFields.indexOf('clientNum') > -1 ? null : get(billNotice, 'clientNum') || '',
+        clientEnName: deleteFields && deleteFields.indexOf('clientEnName') > -1 ? null : get(billNotice, 'clientEnName') || '',
+        clientAddress: deleteFields && deleteFields.indexOf('clientAddress') > -1 ? null : get(addressList, '[0]') || '',
+        attention: deleteFields && deleteFields.indexOf('attention') > -1 ? null : get(contractList, '[0].value') || '',
+        contactMobile: deleteFields && deleteFields.indexOf('contactMobile') > -1 ? null : get(contractList, '[0].value') || '',
+        team: deleteFields && deleteFields.indexOf('team') > -1 ? null : billNotice?.team || organization?.name || '',
         noticeDate: get(billNotice, 'noticeDate') || '',
         consultant: get(billNotice, 'consultant') || `${userInfo.englishName || ''} ${userInfo.name || ''}`,
-        team: billNotice?.team || organization?.name || null,
         contact: get(billNotice, 'contact') || `${userInfo.englishName || ''} ${userInfo.name || ''}`,
         phone: get(billNotice, 'phone') || userInfo.phone || '',
         email: get(billNotice, 'email') || userInfo.email || '',
-        bankInfo: get(billNotice, 'bankInfo') || get(bankInfoList, '[0]') || null
+        bankInfo: get(billNotice, 'bankInfo') || get(bankInfoList, '[0]')
       }),
       totalFee: formatView(get(initData, 'totalFee'), 'number--100'),
       itemList: projectsTemp,
@@ -110,20 +111,27 @@ const billNoticeTransform = {
     });
   },
   output: data => {
-    const outputData = Object.assign({}, data, {
+    const deleteFields = get(data, 'deleteFields.length');
+    return Object.assign({}, data, {
       noticeDate: get(data, 'noticeDate'),
       subjectCode: get(data, 'subjectCode.code'),
+      clientNum: deleteFields && deleteFields.indexOf('clientNum') > -1 ? null : get(data, 'clientNum'),
+      clientEnName: deleteFields && deleteFields.indexOf('clientEnName') > -1 ? null : get(data, 'clientEnName'),
+      clientAddress: deleteFields && deleteFields.indexOf('clientAddress') > -1 ? null : get(data, 'clientAddress'),
       attention:
-        typeof billNoticeTransform.getJsonValue(get(data, 'attention')) === 'object'
-          ? billNoticeTransform.getJsonValue(get(data, 'attention')).name
-          : null,
+        deleteFields && deleteFields.indexOf('attention') > -1
+          ? null
+          : typeof billNoticeTransform.getJsonValue(get(data, 'attention')) === 'object'
+            ? billNoticeTransform.getJsonValue(get(data, 'attention')).name
+            : '',
       contactMobile:
-        typeof billNoticeTransform.getJsonValue(get(data, 'contactMobile')) === 'object'
-          ? billNoticeTransform.getJsonValue(get(data, 'contactMobile')).phone
-          : null
+        deleteFields && deleteFields.indexOf('contactMobile') > -1
+          ? null
+          : typeof billNoticeTransform.getJsonValue(get(data, 'contactMobile')) === 'object'
+            ? billNoticeTransform.getJsonValue(get(data, 'contactMobile')).phone
+            : '',
+      team: deleteFields && deleteFields.indexOf('team') > -1 ? null : get(data, 'team')
     });
-    console.log('output---', data, outputData);
-    return outputData;
   },
   nodeListTransform,
   getJsonValue
