@@ -68,7 +68,34 @@
       "name": "福玲"
     }
   ],
-  "billCheckRecords": [],
+  "billCheckRecords": [
+    {
+      "id": 6,
+      "billId": 178,
+      "state": 2,
+      "flowInstanceId": "202411111428183428",
+      "remark": "",
+      "coId": 1,
+      "appId": 1,
+      "orgId": 1,
+      "uid": 2,
+      "name": "胡金赟",
+      "createdAt": "2024-11-11T14:28:19.000+08:00"
+    },
+    {
+      "id": 5,
+      "billId": 178,
+      "state": 1,
+      "flowInstanceId": "202411111405469137",
+      "remark": "",
+      "coId": 1,
+      "appId": 1,
+      "orgId": 1,
+      "uid": 2,
+      "name": "胡金赟",
+      "createdAt": "2024-11-11T14:05:47.000+08:00"
+    }
+  ],
   "userInfos": [
     {
       "id": 140,
