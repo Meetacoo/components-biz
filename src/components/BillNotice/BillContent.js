@@ -25,7 +25,15 @@ const BillContent = createWithRemoteLoader({
     const { userInfo, organization } = global;
 
     const noticeData = useMemo(
-      () => (initData ? billNoticeTransform.input({ initData, userInfo, organization, formatView }) : null),
+      () =>
+        initData
+          ? billNoticeTransform.input({
+              initData,
+              userInfo,
+              organization,
+              formatView
+            })
+          : null,
       [initData, userInfo, organization]
     );
 
@@ -189,51 +197,54 @@ const BillContent = createWithRemoteLoader({
           },
           attention: {
             className: 'selected-attention',
-            default: get(noticeData, 'billNotice.attention'),
-            type: 'Select',
+            default: (get(noticeData, 'contactList') || []).find(item => item.value === get(noticeData, 'billNotice.attention')),
+            type: 'SuperSelect',
             width: '100px',
-            options: get(noticeData, 'contactList'),
             render: value =>
               value
                 ? `${typeof billNoticeTransform.getJsonValue(value) === 'object' ? billNoticeTransform.getJsonValue(value).name : value}`
                 : '请选择Attention',
             canDelete: true,
-            typeProps: ({ formApi }) => ({
+            typeProps: ({ formApi, isActive, blur }) => ({
+              interceptor: 'object-output-value',
+              open: isActive,
+              showSelectedTag: false,
+              onOpenChange: () => {
+                blur();
+              },
               onChange: value => {
-                formApi.setField({ name: 'contactMobile', value });
+                formApi.setField({
+                  name: 'contactMobile',
+                  value: value ? Object.assign({}, value, { label: billNoticeTransform.getJsonValue(value?.value)?.phone }) : null
+                });
               },
-              api: {
-                loader: async () => {
-                  return {
-                    pageData: get(noticeData, 'contactList')
-                  };
-                }
-              },
+              single: true,
+              options: get(noticeData, 'contactList'),
               label: 'Attention',
               labelHidden: true
             })
           },
           contactMobile: {
             className: 'selected-contact',
-            default: get(noticeData, 'billNotice.contactMobile'),
-            type: 'Select',
+            default: (get(noticeData, 'contactMobileList') || []).find(item => item.value === get(noticeData, 'billNotice.contactMobile')),
+            type: 'SuperSelect',
             width: '130px',
-            options: get(noticeData, 'contactMobileList'),
             render: value =>
               value
                 ? `${typeof billNoticeTransform.getJsonValue(value) === 'object' ? billNoticeTransform.getJsonValue(value).phone : value}`
                 : '请选择Attention',
             canDelete: true,
-            typeProps: ({ formApi }) => ({
+            typeProps: ({ formApi, isActive, blur }) => ({
+              interceptor: 'object-output-value',
+              open: isActive,
+              showSelectedTag: false,
+              onOpenChange: () => {
+                blur();
+              },
+              single: true,
+              options: get(noticeData, 'contactMobileList'),
               onChange: value => {
                 formApi.setField({ name: 'attention', value });
-              },
-              api: {
-                loader: async () => {
-                  return {
-                    pageData: get(noticeData, 'contactMobileList')
-                  };
-                }
               },
               label: 'Contract',
               labelHidden: true

@@ -1,5 +1,5 @@
 import { CONTRACT_STATE_ENUM } from '@components/ContractSelect';
-import { BILL_STATE_ENUM } from '@components/CandidateBill';
+import { BILL_STATE_ENUM, BILL_EVENT_ENUM } from '@components/CandidateBill';
 import { getPublicPath } from '@kne/remote-loader';
 import flow from './flow.json';
 import range from 'lodash/range';
@@ -72,6 +72,7 @@ const preset = {
   permissions: ['bill:apply:edit', 'bill:apply:export_notice', 'jd:job:look', 'cv:cv:look'],
   enums: {
     BILL_STATE_ENUM,
+    BILL_EVENT_ENUM,
     CONTRACT_STATE_ENUM,
     invoiceProjectType: [
       { value: 1, description: 'onsite' },

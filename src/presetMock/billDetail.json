@@ -4,7 +4,7 @@
     "serialNumber": "RSZD0000150",
     "feeType": 2,
     "type": 1,
-    "state": 5,
+    "state": 3,
     "clientId": 150,
     "clientName": "Hands-off合同1",
     "contractId": 247,
@@ -70,30 +70,30 @@
   ],
   "billCheckRecords": [
     {
-      "id": 6,
-      "billId": 178,
-      "state": 2,
-      "flowInstanceId": "202411111428183428",
-      "remark": "",
+      "id": 10,
+      "billId": 175,
+      "state": 3,
+      "flowInstanceId": "202411111444552337",
+      "remark": "哈哈哈哈哈哈哈哈",
       "coId": 1,
       "appId": 1,
       "orgId": 1,
       "uid": 2,
       "name": "胡金赟",
-      "createdAt": "2024-11-11T14:28:19.000+08:00"
+      "createdAt": "2024-11-11T15:31:47.000+08:00"
     },
     {
-      "id": 5,
-      "billId": 178,
-      "state": 1,
-      "flowInstanceId": "202411111405469137",
+      "id": 9,
+      "billId": 175,
+      "state": 2,
+      "flowInstanceId": "202411111444552337",
       "remark": "",
       "coId": 1,
       "appId": 1,
       "orgId": 1,
       "uid": 2,
       "name": "胡金赟",
-      "createdAt": "2024-11-11T14:05:47.000+08:00"
+      "createdAt": "2024-11-11T14:44:56.000+08:00"
     }
   ],
   "userInfos": [
