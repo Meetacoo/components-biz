@@ -1,0 +1,632 @@
+{
+  "msg": "",
+  "data": {
+    "id": 173,
+    "serialNumber": "RSZD0000173",
+    "feeType": 1,
+    "type": 1,
+    "state": null,
+    "clientId": 165,
+    "clientName": null,
+    "contractId": 313,
+    "contractSubjectCode": null,
+    "contractName": null,
+    "contractStatus": null,
+    "projectId": 2,
+    "projectName": null,
+    "projectSerialNum": null,
+    "paymentId": 117,
+    "invoiceType": null,
+    "invoiceTitle": null,
+    "taxpayerIdNumber": null,
+    "taxRegistrationAddress": null,
+    "taxRegistrationPhone": null,
+    "openingBankName": null,
+    "openingBackAccount": null,
+    "standardAmount": null,
+    "amountDiffReason": null,
+    "amount": 3100000,
+    "remark": "带候选人的项目账单",
+    "attachments": null,
+    "flowRequest": null,
+    "flowInstanceId": null,
+    "pdfAttachment": null,
+    "coId": null,
+    "appId": null,
+    "orgId": null,
+    "termId": null,
+    "uid": null,
+    "name": null,
+    "createdAt": null,
+    "updatedAt": null,
+    "passAt": null,
+    "notice": {
+      "billNotice": {
+        "id": 5,
+        "billId": 173,
+        "createdAt": "2024-11-06T14:05:52.000+08:00",
+        "updatedAt": "2024-11-06T14:05:52.000+08:00",
+        "subjectCode": null,
+        "companyName": null,
+        "companyEnName": null,
+        "address": null,
+        "enAddress": null,
+        "contactPhone": null,
+        "website": null,
+        "logo": null,
+        "clientName": "DigiPlus Interactive Corp",
+        "clientNum": null,
+        "clientEnName": "DigiPlus",
+        "clientAddress": null,
+        "attention": null,
+        "contactMobile": null,
+        "noticeDate": null,
+        "bankInfo": null,
+        "consultant": null,
+        "team": null,
+        "phone": null,
+        "email": "a@a.com",
+        "remark": "",
+        "deleteFields": ["clientAddress", "contactMobile"]
+      },
+      "itemList": [
+        {
+          "billItem": {
+            "id": 48,
+            "billId": 173,
+            "typeId": 4,
+            "typeName": "项目启动金",
+            "amount": 1000000,
+            "num": null,
+            "attachments": null,
+            "month": null
+          },
+          "trackingList": null
+        },
+        {
+          "billItem": {
+            "id": 49,
+            "billId": 173,
+            "typeId": 7,
+            "typeName": "入职到岗",
+            "amount": 2100000,
+            "num": null,
+            "attachments": null,
+            "month": null
+          },
+          "trackingList": [
+            {
+              "id": 48,
+              "billId": 173,
+              "billItemId": 49,
+              "billItemTypeId": 7,
+              "projectId": 2,
+              "projectSerialNum": "P.RS20241011.038",
+              "projectName": "测试百度开发公司的合同",
+              "projectPrice": {
+                "id": 153,
+                "rsfwlx": "Search",
+                "serviceType": "Headhunter",
+                "rsxffw": "B. 基本工资月薪12k-30k/月",
+                "rstj": "有Onsite收费",
+                "rsdjms": "固定金额",
+                "rsdw": "人",
+                "rsjzjgfl": 28000,
+                "rsgwzn": "中级测试工程师",
+                "rsxzms": "【年薪】",
+                "rsyx": null,
+                "rsnx": 100000,
+                "rsjg": 100000,
+                "rsfl": null,
+                "rsmarkuprate": null,
+                "rsygsf": 8000,
+                "bzq": 20,
+                "rsywdl": null,
+                "rsywzl": "56",
+                "rsckcb": null,
+                "cwshpdfrpo": null,
+                "cwshpdrpo": null
+              },
+              "standardAmount": 10000000,
+              "trackingId": 248948,
+              "trackingSerialNumber": "RPN000248948",
+              "clientId": 165,
+              "jdId": 310848811805175800,
+              "jdName": "Java Developer-1",
+              "pinyinOfJdName": "",
+              "cvId": 191,
+              "cvName": "张亚军",
+              "pinyinOfCvName": "zhangyajun",
+              "gender": "M",
+              "age": 31,
+              "workExperience": 6,
+              "expectedJoinDate": "2024-10-31T18:33:18.000+08:00",
+              "joinedTime": null,
+              "serviceType": null,
+              "coId": 1,
+              "appId": 1,
+              "orgId": 1,
+              "uid": 2
+            }
+          ]
+        }
+      ],
+      "userInfos": null,
+      "totalFee": 3100000,
+      "invoiceType": null,
+      "subjectName": null,
+      "progressiveAmount": null,
+      "subjectList": [
+        {
+          "name": "FAT_SH",
+          "code": "fat_sh",
+          "citable": true,
+          "companyName": "北京仕邦达人力资源服务有限公司上海分公司",
+          "companyEnName": "FA Talent Human Resources Service Co., Ltd. Shanghai Branch",
+          "address": "中国上海市黄浦区中山南路589号外企德科大厦5F",
+          "enAddress": "5th Floor, Block F, Xin Jing Jin Rong, No.589 South Zhongshan Road, Huangpu District, Shanghai",
+          "contactPhone": "+86 021-23124788",
+          "website": "www.lhhfesco.com",
+          "logo": "https://fat-static.oss-cn-shanghai.aliyuncs.com/LHH-RS-logo.png"
+        },
+        {
+          "name": "FAT_BJ",
+          "code": "fat_bj",
+          "citable": true,
+          "companyName": "北京仕邦达人力资源服务有限公司",
+          "companyEnName": "FA Talent Human Resources Service Co., Ltd.",
+          "address": "北京市朝阳区东三环北路嘉铭中心B座15层",
+          "enAddress": "F15, Building B, No 27, East 3rd Ring Road (N) Chaoyang District, Beijing",
+          "contactPhone": "+86 010-57759861",
+          "website": "www.lhhfesco.com",
+          "logo": "https://fat-static.oss-cn-shanghai.aliyuncs.com/LHH-RS-logo.png"
+        },
+        {
+          "name": "Spring_SH",
+          "code": "spring_sh",
+          "citable": true,
+          "companyName": "上海跃科人才服务有限公司",
+          "companyEnName": "Spring Professional Shanghai Limited",
+          "address": "中国上海市黄浦区中山南路589号外企德科大厦6F",
+          "enAddress": "6th Floor, Block F, Xin Jing Jin Rong, No.589 South Zhongshan Road, Huangpu District, Shanghai",
+          "contactPhone": "+86 021-23124788",
+          "website": "www.lhhfesco.com",
+          "logo": "https://fat-static.oss-cn-shanghai.aliyuncs.com/LHH-RS-logo.png"
+        },
+        {
+          "name": "Spring_BJ",
+          "code": "spring_bj",
+          "citable": true,
+          "companyName": "北京跃科人才服务有限公司",
+          "companyEnName": "Spring Professional Beijing Limited",
+          "address": "北京市朝阳区东三环北路嘉铭中心B座15层",
+          "enAddress": "15/F, Tower B, Jiaming Center, No.27 North Dongsanhuan Road, Chaoyang District, Beijing, PRC",
+          "contactPhone": "+86 010-57759861",
+          "website": "www.lhhfesco.com",
+          "logo": "https://fat-static.oss-cn-shanghai.aliyuncs.com/LHH-RS-logo.png"
+        },
+        {
+          "name": "LHH_SH",
+          "code": "lhh_sh",
+          "citable": true,
+          "companyName": "领德管理咨询（上海）有限公司",
+          "companyEnName": "LHH DBM Management Consulting (Shanghai) Co., Ltd.",
+          "address": "上海市黄浦区中山南路589号鑫景金融F栋6层",
+          "enAddress": "6th Floor, Block F, Xin Jing Jin Rong, No.589 South Zhongshan Road, Huangpu District, Shanghai",
+          "contactPhone": "+86 021-23124788",
+          "website": "www.lhhfesco.com",
+          "logo": "https://fat-static.oss-cn-shanghai.aliyuncs.com/LHH-RS-logo.png"
+        },
+        {
+          "name": "LHH_BJ",
+          "code": "lhh_bj",
+          "citable": false,
+          "companyName": "领禾管理咨询（北京）有限公司",
+          "companyEnName": "LHH DBM Management Consulting (Beijing) Co. Ltd.",
+          "address": "北京市朝阳区东三环北路嘉铭中心B座15层",
+          "enAddress": "15/F, Tower B, Jiaming Center, No.27 North Dongsanhuan Road, Chaoyang District, Beijing, PRC",
+          "contactPhone": "+86 010-57759861",
+          "website": "www.lhhfesco.com",
+          "logo": "https://fat-static.oss-cn-shanghai.aliyuncs.com/LHH-RS-logo.png"
+        },
+        {
+          "name": "FAT_CD",
+          "code": "fat_cd",
+          "citable": false,
+          "companyName": null,
+          "companyEnName": null,
+          "address": null,
+          "enAddress": null,
+          "contactPhone": null,
+          "website": null,
+          "logo": null
+        },
+        {
+          "name": "FA_SH",
+          "code": "fa_sh",
+          "citable": false,
+          "companyName": null,
+          "companyEnName": null,
+          "address": null,
+          "enAddress": null,
+          "contactPhone": null,
+          "website": null,
+          "logo": null
+        },
+        {
+          "name": "FA",
+          "code": "fa",
+          "citable": false,
+          "companyName": null,
+          "companyEnName": null,
+          "address": null,
+          "enAddress": null,
+          "contactPhone": null,
+          "website": null,
+          "logo": null
+        }
+      ],
+      "contactList": [
+        {
+          "avatar": null,
+          "name": "李擎勇",
+          "gender": "M",
+          "birth": null,
+          "phoneOfPerson": {
+            "regionCode": "CN",
+            "number": "18811111111"
+          },
+          "phoneOfWork": null,
+          "phoneOfBack": null,
+          "emailOfPerson": null,
+          "emailOfWork": null,
+          "industry": [
+            {
+              "code": "001001",
+              "name": "互联网/移动互联网/电子商务"
+            }
+          ],
+          "function": [
+            {
+              "code": "001001001",
+              "name": "首席执行官CEO/总裁/总经理"
+            }
+          ],
+          "currentLocation": {
+            "code": "020",
+            "name": "上海"
+          },
+          "phoneOfLandline": null,
+          "id": 478,
+          "serialNumber": "CC00002468",
+          "adder": {
+            "coId": 1,
+            "appId": 1,
+            "orgId": 538,
+            "uid": 107,
+            "termId": 192411202,
+            "operationTime": "2024-05-31T16:43:58",
+            "name": "李白",
+            "enName": "My Haires goods"
+          },
+          "contactClients": [
+            {
+              "contactId": 478,
+              "clientId": 1634,
+              "workId": 494,
+              "onJob": true,
+              "cooperateStatus": 3
+            }
+          ],
+          "cvIds": ["319516365037764608"],
+          "contactWorks": [
+            {
+              "groupContact": false,
+              "clientId": 1634,
+              "clientIdStr": "sys-1634",
+              "position": "测试职位",
+              "department": null,
+              "startDate": null,
+              "endDate": null,
+              "onJob": true,
+              "id": 494,
+              "contactId": 478,
+              "clientName": "测试退票公司",
+              "createdAt": "2024-05-31T16:43:58",
+              "clientOrgName": "测试退票公司",
+              "clientCreatedAt": "2022-12-26T02:12:12.000+08:00"
+            }
+          ],
+          "contactEducations": [],
+          "state": "On",
+          "stateOfContacts": "On",
+          "age": null
+        },
+        {
+          "avatar": null,
+          "name": "小李",
+          "gender": "F",
+          "birth": "2019-01-06",
+          "phoneOfPerson": {
+            "regionCode": "CN",
+            "number": "19911111111"
+          },
+          "phoneOfWork": {
+            "regionCode": "CN",
+            "number": "19911111112"
+          },
+          "phoneOfBack": null,
+          "emailOfPerson": "66@147.com",
+          "emailOfWork": "66@152.com",
+          "industry": [
+            {
+              "code": "001002",
+              "name": "游戏产业"
+            },
+            {
+              "code": "001005",
+              "name": "电子技术/半导体/集成电路"
+            }
+          ],
+          "function": [
+            {
+              "code": "003010080",
+              "name": "自动化测试"
+            },
+            {
+              "code": "003010085",
+              "name": "游戏测试"
+            }
+          ],
+          "currentLocation": {
+            "code": "280020",
+            "name": "成都"
+          },
+          "phoneOfLandline": "021-85748548",
+          "id": 465,
+          "serialNumber": "CC00002457",
+          "adder": {
+            "coId": 1,
+            "appId": 1,
+            "orgId": 550,
+            "uid": 107,
+            "termId": 192410944,
+            "operationTime": "2024-05-07T14:04:15",
+            "name": "李白",
+            "enName": "My Haires goods"
+          },
+          "contactClients": [
+            {
+              "contactId": 465,
+              "clientId": 1634,
+              "workId": 483,
+              "onJob": true,
+              "cooperateStatus": 3
+            }
+          ],
+          "cvIds": ["310778863456092160"],
+          "contactWorks": [
+            {
+              "groupContact": false,
+              "clientId": 1634,
+              "clientIdStr": "sys-1634",
+              "position": "测试公司",
+              "department": "公司测试",
+              "startDate": "2024-01-07",
+              "endDate": "2024-11-07",
+              "onJob": true,
+              "id": 483,
+              "contactId": 465,
+              "clientName": "测试退票公司",
+              "createdAt": "2024-05-07T14:04:15",
+              "clientOrgName": "测试退票公司",
+              "clientCreatedAt": "2022-12-26T02:12:12.000+08:00"
+            }
+          ],
+          "contactEducations": [
+            {
+              "school": "小学生",
+              "degree": 30,
+              "subject": "测试公司",
+              "startDate": "2024-01-07",
+              "endDate": "2024-12-07",
+              "id": 14,
+              "contactId": 465,
+              "createdAt": "2024-05-07T14:04:15"
+            }
+          ],
+          "state": "On",
+          "stateOfContacts": "On",
+          "age": 5
+        },
+        {
+          "avatar": null,
+          "name": "李表",
+          "gender": "M",
+          "birth": "2023-01-07",
+          "phoneOfPerson": {
+            "regionCode": "CN",
+            "number": "16611111111"
+          },
+          "phoneOfWork": {
+            "regionCode": "CN",
+            "number": "16611111112"
+          },
+          "phoneOfBack": null,
+          "emailOfPerson": null,
+          "emailOfWork": null,
+          "industry": [
+            {
+              "code": "014023",
+              "name": "汽车/摩托车"
+            },
+            {
+              "code": "004011",
+              "name": "银行"
+            }
+          ],
+          "function": [
+            {
+              "code": "011064532",
+              "name": "二手车评估师"
+            },
+            {
+              "code": "011064525",
+              "name": "汽车维修/保养"
+            }
+          ],
+          "currentLocation": {
+            "code": "060080",
+            "name": "苏州"
+          },
+          "phoneOfLandline": "16611111113",
+          "id": 203,
+          "serialNumber": "CC00002200",
+          "adder": {
+            "coId": 1,
+            "appId": 1,
+            "orgId": 81,
+            "uid": 107,
+            "termId": 100107,
+            "operationTime": "2023-07-06T00:29:23",
+            "name": "李白",
+            "enName": "My Haires goods"
+          },
+          "contactClients": [
+            {
+              "contactId": 203,
+              "clientId": 1634,
+              "workId": 203,
+              "onJob": true,
+              "cooperateStatus": 3
+            }
+          ],
+          "cvIds": [],
+          "contactWorks": [
+            {
+              "groupContact": false,
+              "clientId": 1634,
+              "clientIdStr": "sys-1634",
+              "position": "HR",
+              "department": "测试",
+              "startDate": "2024-01-07",
+              "endDate": "2024-12-07",
+              "onJob": true,
+              "id": 203,
+              "contactId": 203,
+              "clientName": "测试退票公司",
+              "createdAt": "2023-07-06T00:29:23",
+              "clientOrgName": "测试退票公司",
+              "clientCreatedAt": "2022-12-26T02:12:12.000+08:00"
+            },
+            {
+              "groupContact": false,
+              "clientId": 0,
+              "clientIdStr": "manual-5rWL6K+V5YWs5Y+4MQ==",
+              "position": "1541",
+              "department": "侧首",
+              "startDate": "2024-01-07",
+              "endDate": "2024-11-07",
+              "onJob": false,
+              "id": 482,
+              "contactId": 203,
+              "clientName": "测试公司1",
+              "createdAt": "2024-05-07T14:02:20",
+              "clientOrgName": null,
+              "clientCreatedAt": null
+            }
+          ],
+          "contactEducations": [
+            {
+              "school": "侧睡",
+              "degree": 50,
+              "subject": "12211",
+              "startDate": "2024-01-07",
+              "endDate": "2024-12-07",
+              "id": 13,
+              "contactId": 203,
+              "createdAt": "2024-05-07T14:01:56"
+            },
+            {
+              "school": "测试学校",
+              "degree": 30,
+              "subject": "侧睡",
+              "startDate": "2024-01-07",
+              "endDate": "2024-12-07",
+              "id": 12,
+              "contactId": 203,
+              "createdAt": "2024-05-07T13:59:47"
+            }
+          ],
+          "state": "On",
+          "stateOfContacts": "On",
+          "age": 1
+        }
+      ],
+      "bankInfoList": [
+        {
+          "openingAccountName": "北京仕邦达人力资源服务有限公司上海分公司",
+          "openingAccountEnName": "FA Talent Human Resources Service Co., Ltd. Shanghai Branch",
+          "bankName": "招商银行股份有限公司上海南西支行",
+          "bankEnName": "China Merchants Bank Shanghai Nan Xi Sub-Branch",
+          "swiftCode": "CMBCCNBS051",
+          "bankNo": "121923503510701"
+        },
+        {
+          "openingAccountName": "北京仕邦达人力资源服务有限公司",
+          "openingAccountEnName": "FA Talent Human Resources  Service Co., Ltd.",
+          "bankName": "中国银行北京丰联广场大厦支行",
+          "bankEnName": "Bank of China Beijing Fenglian Plaza Building Sub-Branch",
+          "swiftCode": "BKCHCNBJ110",
+          "bankNo": "342856020172"
+        },
+        {
+          "openingAccountName": "上海跃科人才服务有限公司",
+          "openingAccountEnName": "Spring Professional (Shanghai) Limited",
+          "bankName": "花旗银行（中国）有限公司上海分行",
+          "bankEnName": "Citibank China Company Ltd.Shanghai branch",
+          "swiftCode": "CITICNSX",
+          "bankNo": "1746689213"
+        },
+        {
+          "openingAccountName": "北京跃科人才服务有限公司",
+          "openingAccountEnName": "Spring Professional(Beijing) Limited",
+          "bankName": "中国银行股份有限公司北京建国门外支行",
+          "bankEnName": "Bank of China Bejing Jianguomen Wai Sub-Branch",
+          "swiftCode": "BKCHCNBJ110",
+          "bankNo": "340256011867"
+        },
+        {
+          "openingAccountName": "领德管理咨询（上海）有限公司",
+          "openingAccountEnName": "LHH DBM Management Consulting (Shanghai) Co., Ltd.",
+          "bankName": "渣打银行（中国）有限公司上海分行",
+          "bankEnName": "Standard Chartered Bank (China) Limited Shanghai Branch",
+          "swiftCode": "SCBLCNSXSHA",
+          "bankNo": "000000501510055451"
+        },
+        {
+          "openingAccountName": "领德管理咨询（上海）有限公司",
+          "openingAccountEnName": "LHH DBM Management Consulting (Shanghai) Co., Ltd.",
+          "bankName": "招商银行股份有限公司上海南西支行",
+          "bankEnName": "China Merchants Bank Shanghai Nan Xi Sub-Branch",
+          "swiftCode": "CMBCCNBS051",
+          "bankNo": "121955258710009"
+        }
+      ],
+      "addressList": [],
+      "payment": {
+        "invoiceType": 3,
+        "invoiceTitle": "DigiPlus Interactive Corp",
+        "taxpayerIdNumber": "SSDFSF434FFFFSs",
+        "taxRegistrationAddress": "税务登记地址Corp",
+        "taxRegistrationPhone": "12334442",
+        "openingBankName": "开户银行名称Corp",
+        "openingBackAccount": "开户银行账号Corp"
+      },
+      "makeOutFee": null
+    }
+  },
+  "code": 0,
+  "success": true,
+  "failure": false
+}

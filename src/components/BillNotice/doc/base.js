@@ -1,6 +1,6 @@
 const { createWithRemoteLoader } = remoteLoader;
-const { default: BillNotice } = _BillNotice;
-const { default: presetMock, billInfo } = _presetMock;
+const { default: BillNotice, billNoticeTransform } = _BillNotice;
+const { default: presetMock, noticeInfo } = _presetMock;
 const { Button, Flex } = antd;
 const { useRef } = React;
 
@@ -9,9 +9,10 @@ const BaseExample = createWithRemoteLoader({
 })(({ remoteModules }) => {
   const [PureGlobal] = remoteModules;
   const ref = useRef();
+
   return (
     <PureGlobal preset={presetMock}>
-      <BillNotice data={billInfo} ref={ref} />
+      <BillNotice data={noticeInfo} ref={ref} />
       <Flex gap={8} justify="center">
         <Button
           onClick={() => {
@@ -22,7 +23,7 @@ const BaseExample = createWithRemoteLoader({
         </Button>
         <Button
           onClick={() => {
-            console.log(ref.current?.getFormData());
+            console.log(ref.current?.getFormData(), billNoticeTransform.output(ref.current?.getFormData()));
           }}
         >
           获取表单数据

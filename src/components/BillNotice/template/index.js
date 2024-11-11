@@ -15,7 +15,7 @@ export const renderBankInfo = (data, options) => {
 };
 
 export const renderFooter = (data, options) => {
-  return template(footer)({ data: { userInfo: data }, options });
+  return template(footer)({ data, options });
 };
 
 export const renderHeader = (data, options) => {
@@ -31,10 +31,10 @@ export const renderPage = (data, options) => {
     data,
     options,
     content: {
-      company: renderCompany(data.company, options),
+      company: renderCompany(data.subjectCode, options),
       header: renderHeader(data, options),
       table: renderTable(data, options),
-      footer: renderFooter(data.userInfo, options)
+      footer: renderFooter(data, options)
     }
   });
 };

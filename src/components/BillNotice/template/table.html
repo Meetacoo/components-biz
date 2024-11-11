@@ -8,23 +8,29 @@
     <tr style='color: #222222;font-size: 14px;line-height: 20px;'>
       <th rowspan="5" style='text-align: center;font-size: 16px;line-height: 22px;font-weight: 500;'>发票信息</th>
       <td colspan='2' style='height: 32px;'>是否增值税一般纳税人</td>
-      <td colspan='6' style='color: #666666;'></td>
+      <td colspan='6' style='color: #666666;'><%= data.payment?.invoiceType === 1 ? '是' : '否' %></td>
     </tr>
     <tr style='font-size: 14px;line-height: 20px;'>
       <td colspan='2' style='height: 32px;'>发票抬头：</td>
-      <td colspan='6' style='color: #666666;'></td>
+      <td colspan='6' style='color: #666666;'><%= data.payment?.invoiceTitle %></td>
     </tr>
     <tr style='font-size: 14px;line-height: 20px;'>
       <td colspan='2' style='height: 32px;'>纳税人识别号：</td>
-      <td colspan='6' style='color: #666666;'></td>
+      <td colspan='6' style='color: #666666;'><%= data.payment?.taxpayerIdNumber %></td>
     </tr>
     <tr style='font-size: 14px;line-height: 20px;'>
       <td colspan='2' style='height: 32px;'>地址、电话：</td>
-      <td colspan='6' style='color: #666666;'></td>
+      <td colspan='6' style='color: #666666;'>
+        <div><%= data.payment?.taxRegistrationAddress %></div>
+        <div><%= data.payment?.taxRegistrationPhone %></div>
+      </td>
     </tr>
     <tr style='font-size: 14px;line-height: 20px;'>
       <td colspan='2' style='height: 32px;'>开户行及账号：</td>
-      <td colspan='6' style='color: #666666;'></td>
+      <td colspan='6' style='color: #666666;'>
+        <div><%= data.payment?.openingBankName %></div>
+        <div><%= data.payment?.openingBackAccount %></div>
+      </td>
     </tr>
     <tr style='text-align: center;font-size: 14px;line-height: 22px;font-weight: 500;'>
       <td>费用类别<br />Payment for</td>
@@ -34,18 +40,15 @@
       <td>总金额<br />Total Amount<br />(CNY)</td>
       <td>备注<br />Remark</td>
     </tr>
-    <% data.projects.forEach((item, index)=>{ %>
+    <% data.itemList?.forEach((item, index)=>{ %>
     <tr style='text-align: center;font-size: 14px;line-height: 28px;'>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td>
-      <span style='margin-left: 4px;margin-top: 4px;width: 120px;display: inline-block;'
-            class='selected-onboard-date' data-index="<%=index%>"><%=data.onboardDate && data.onboardDate[index]%></span>
-      </td>
-      <td></td>
+      <td><%= item.typeName || '' %></td>
+      <td><%= item.cvName || '' %></td>
+      <td><%= item.jdName || '' %></td>
+      <td><%= item.onboardDate || '' %></td>
+      <td><%= item.amount || '' %></td>
       <% if(index === 0){ %>
-      <td rowspan='<%= (data.projects.length || 1) %>'
+      <td rowspan='<%= (data.itemList.length || 1) %>'
           style='width: 150px;max-width: 150px;line-height: 20px;vertical-align: top'>
         <div style='margin-left: 4px;margin-top: 4px;width: 120px;'
              class='selected-remark'><%= data.remark %>
@@ -57,7 +60,7 @@
     <tr style='height: 40px;font-size: 14px;line-height: 22px;font-weight: 500;'>
       <td></td>
       <td colspan='3'>总费用 / total amount due</td>
-      <td style='text-align: center;font-size: 14px;font-weight: 400;'><%= data.totalAmount || ''%></td>
+      <td style='text-align: center;font-size: 14px;font-weight: 400;'><%= data.totalFee || ''%></td>
       <td></td>
     </tr>
     <tr style='font-size: 16px;line-height: 22px;font-weight: 500;'>
@@ -66,7 +69,6 @@
         <div style='font-size: 16px;line-height: 22px;font-weight: 500;display: inline-block;'
              class="selected-bank-info-operation">我司银行账户信息 / Bank Account Detail
         </div>
-        <span style="opacity: 0;display: inline-block;"><%= data.bankInfoOperation %></span>
         <%= content?.bankInfo||'' %>
       </td>
     </tr>

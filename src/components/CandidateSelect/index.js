@@ -29,10 +29,11 @@ const CandidateSelect = createWithRemoteLoader({
     'components-core:Common@SuperSelectTableListField',
     'components-core:Global@usePreset',
     'components-core:Filter',
-    'components-core:Modal@useModal'
+    'components-core:Modal@useModal',
+    'components-core:InfoPage@formatView'
   ]
 })(({ remoteModules, clientId, phases, ...props }) => {
-  const [BatchSelect, SuperSelectTableListField, usePreset, Filter, useModal] = remoteModules;
+  const [BatchSelect, SuperSelectTableListField, usePreset, Filter, useModal, formatView] = remoteModules;
   const { apis, ajax } = usePreset();
   const { getFilterValue } = Filter;
   const { SuperSelectFilterItem } = Filter.fields;
@@ -92,7 +93,8 @@ const CandidateSelect = createWithRemoteLoader({
           {
             title: '标准账单金额',
             name: 'standardAmount',
-            type: 'otherSmall'
+            type: 'otherSmall',
+            valueOf: ({ standardAmount }) => formatView(standardAmount, 'number--100')
           }
         ]}
         onAdd={(value, callback) => {

@@ -13,7 +13,7 @@ const BillCenterTable = createWithRemoteLoader({
     'components-core:InfoPage@formatView',
     'components-core:Permissions@usePermissionsPass'
   ]
-})(({ remoteModules, otherFilterProps, hiddenColumns, ...props }) => {
+})(({ remoteModules, otherFilterProps, hiddenColumns, userInfo, ...props }) => {
   const [TablePage, Filter, usePreset, formatView, usePermissionsPass] = remoteModules;
   const { apis } = usePreset();
   const { getFilterValue } = Filter;
@@ -26,7 +26,7 @@ const BillCenterTable = createWithRemoteLoader({
       topOptionsChildren={
         hasBillEditAuth
           ? ({ ref }) => (
-              <GenerateProjectBillButton type="primary" {...props} onReload={ref?.current?.reload}>
+              <GenerateProjectBillButton type="primary" {...props} onReload={ref?.current?.reload} userInfo={userInfo}>
                 新建账单
               </GenerateProjectBillButton>
             )

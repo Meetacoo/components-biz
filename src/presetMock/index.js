@@ -13,6 +13,10 @@ import billDetail from './billDetail.json';
 import companyData from './companyData.json';
 import bankData from './bankData.json';
 import trackingBillState from './trackingBillState.json';
+import addBill from './addBill.json';
+import accountInfo from './accountInfo.json';
+
+const noticeInfo = addBill.data.notice;
 
 const billInfo = {
   bankInfoOperation: 'xxxx',
@@ -49,9 +53,9 @@ const billInfo = {
   attention: '张三',
   date: '2023-07-21',
   team: 'FAT',
-  userInfo: {
+  accountInfo: {
     email: 'fuling@165.com',
-    phone: '13988882221',
+    phone: '18888888888',
     name: '福玲',
     englishName: '福玲',
     gender: 'M',
@@ -114,12 +118,12 @@ const preset = {
       },
       addBill: {
         loader: () => {
-          return billInfo;
+          return addBill.data;
         }
       },
-      saveBill: {
+      updateBill: {
         loader: () => {
-          return billInfo;
+          return addBill.data;
         }
       },
       saveBillNotice: {
@@ -159,6 +163,11 @@ const preset = {
     client: {},
     project: {
       getList: {
+        loader: () => {
+          return projectList.data;
+        }
+      },
+      getContractProjectList: {
         loader: () => {
           return projectList.data;
         }
@@ -217,9 +226,52 @@ const preset = {
         }
       }
     }
+  },
+  global: {
+    accountInfo
+  },
+  formInfo: {
+    rules: {
+      BILL_ALLOCATIONS_SUMMARY: (value, type, { data: formData }) => {
+        const format = val => {
+          return new Intl.NumberFormat(
+            {},
+            {
+              maximumFractionDigits: 2,
+              useGrouping: false
+            }
+          ).format(val);
+        };
+        const sum = (formData.allocations || []).reduce((prev, item) => +(prev || 0) + +(item.amount || 0), 0);
+        const totalAmount =
+          type === 'project' ? formData.billItems.reduce((prev, cur) => +(prev || 0) + +(cur.amount || 0), 0) : +(formData.amount || 0);
+        if (sum !== totalAmount) {
+          return {
+            result: false,
+            errMsg: sum > totalAmount ? `分配金额合计不可超过${totalAmount}` : `还剩${format(totalAmount - sum)}金额未分配`
+          };
+        }
+        return {
+          result: true
+        };
+      }
+    }
   }
 };
 
-export { projectList, contractDetail, contractList, astUserList, positionList, paymentList, billList, billDetail, companyData, bankData, billInfo };
+export {
+  projectList,
+  contractDetail,
+  contractList,
+  astUserList,
+  positionList,
+  paymentList,
+  billList,
+  billDetail,
+  companyData,
+  bankData,
+  billInfo,
+  noticeInfo
+};
 
 export default preset;

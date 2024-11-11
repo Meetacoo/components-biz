@@ -92,7 +92,7 @@ export const globalInit = async () => {
       'components-field': {
         ...registry,
         remote: 'components-field',
-        defaultVersion: '0.1.5'
+        defaultVersion: '0.1.6'
       },
       'components-iconfont': {
         ...registry,

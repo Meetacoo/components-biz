@@ -53,7 +53,7 @@ const GenerateProjectBill = createWithRemoteLoader({
 
 export const GenerateProjectBillButton = createWithRemoteLoader({
   modules: ['components-core:Global@usePreset']
-})(({ remoteModules, onReload, client, ...props }) => {
+})(({ remoteModules, onReload, client, userInfo, ...props }) => {
   const [usePreset] = remoteModules;
   const { apis, ajax } = usePreset();
   const { message } = App.useApp();
@@ -68,10 +68,16 @@ export const GenerateProjectBillButton = createWithRemoteLoader({
               client,
               formProps: [
                 {
-                  onSubmit: async (data, { stepCacheRef }) => {
+                  data: {
+                    clientId: { label: get(client, 'clientName'), value: get(client, 'clientId') },
+                    billItems: [{ typeId: 1 }],
+                    allocations: [{ uid: { label: billTransform.getUserName({ user: userInfo }), value: get(userInfo, 'uid') } }]
+                  },
+                  onSubmit: async (formData, { stepCacheRef }) => {
+                    const submitData = billTransform.output(formData, 1);
                     const { data: resData } = await ajax(
                       Object.assign({}, apis.candidateBill.addBill, {
-                        data: Object.assign({}, data, { type: 1 })
+                        data: Object.assign({}, submitData, { type: 1 })
                       })
                     );
                     if (resData.code !== 0) {
@@ -112,10 +118,11 @@ export const EditBillProjectButton = createWithRemoteLoader({
               formProps: [
                 {
                   data: billTransform.input(data, formatView),
-                  onSubmit: async (data, { stepCacheRef }) => {
+                  onSubmit: async (formData, { stepCacheRef }) => {
+                    const submitData = billTransform.output(formData, 1, data);
                     const { data: resData } = await ajax(
-                      Object.assign({}, apis.candidateBill.saveBill, {
-                        data: Object.assign({}, data, { type: 1 })
+                      Object.assign({}, apis.candidateBill.updateBill, {
+                        data: Object.assign({}, submitData, { type: 1 })
                       })
                     );
                     if (resData.code !== 0) {
