@@ -7,7 +7,7 @@ export default CandidateBill;
 export { default as BillInfoFormInner } from './BillInfoFormInner';
 export { default as ProjectBillInfoFormInner } from './ProjectBillInfoFormInner';
 export { default as BillCenter, BillCenterPage, BillCenterTable } from './BillCenter';
-export { default as BillCenterDetail } from './BillCenterDetail';
+export { default as BillCenterDetail, BillCenterDetailInner, BillCenterDetailPage } from './BillCenterDetail';
 export { default as GenerateBill, GenerateBillButton, EditBillButton } from './GenerateBill';
 export { default as GenerateBillDetail } from './GenerateBillDetail';
 export { default as GenerateProjectBill, GenerateProjectBillButton, EditBillProjectButton } from './GenerateProjectBill';
