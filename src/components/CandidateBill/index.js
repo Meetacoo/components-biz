@@ -13,4 +13,4 @@ export { default as GenerateBillDetail } from './GenerateBillDetail';
 export { default as GenerateProjectBill, GenerateProjectBillButton, EditBillProjectButton } from './GenerateProjectBill';
 export { default as BILL_STATE_ENUM } from './BILL_STATE_ENUM';
 export { default as billTransform } from './billTransform';
-export { default as ApprovalProcess, FLOW_USER } from './ApprovalProcess';
+export { default as ApprovalProcess, FLOW_USER, BILL_EVENT_ENUM } from './ApprovalProcess';

@@ -1,5 +1,6 @@
 import { CONTRACT_STATE_ENUM } from '@components/ContractSelect';
-import { BILL_STATE_ENUM } from '@components/CandidateBill';
+import { BILL_STATE_ENUM, BILL_EVENT_ENUM } from '@components/CandidateBill';
+import { getPublicPath } from '@kne/remote-loader';
 import flow from './flow.json';
 import range from 'lodash/range';
 import projectList from './projectList.json';
@@ -71,6 +72,7 @@ const preset = {
   permissions: ['bill:apply:edit', 'bill:apply:export_notice', 'jd:job:look', 'cv:cv:look'],
   enums: {
     BILL_STATE_ENUM,
+    BILL_EVENT_ENUM,
     CONTRACT_STATE_ENUM,
     invoiceProjectType: [
       { value: 1, description: 'onsite' },
@@ -90,6 +92,15 @@ const preset = {
     ]
   },
   apis: {
+    oss: {
+      loader: async ({ params }) => {
+        return new Promise(resolve => {
+          setTimeout(() => {
+            resolve(getPublicPath('components-biz') + '/mock/xasdXsdgszxq-Zsdsrw.png');
+          }, 1000);
+        });
+      }
+    },
     flow: {
       getFlowCondition: {
         loader: () => {

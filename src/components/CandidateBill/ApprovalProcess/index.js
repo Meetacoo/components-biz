@@ -129,3 +129,4 @@ ApprovalProcess.Field = ApprovalProcessField;
 
 export default ApprovalProcess;
 export { default as FLOW_USER } from './FLOW_USER';
+export { default as BILL_EVENT_ENUM } from './BILL_EVENT_ENUM';

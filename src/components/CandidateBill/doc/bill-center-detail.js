@@ -1,4 +1,4 @@
-const { BillCenterDetail } = _CandidateBill;
+const { BillCenterDetailPage } = _CandidateBill;
 const { createWithRemoteLoader } = remoteLoader;
 const { default: presetMock } = _presetMock;
 
@@ -9,7 +9,7 @@ const BaseExample = createWithRemoteLoader({
   return (
     <PureGlobal preset={presetMock}>
       <Layout navigation={{ isFixed: false }}>
-        <BillCenterDetail optionFixed={false} />
+        <BillCenterDetailPage optionFixed={false} />
       </Layout>
     </PureGlobal>
   );

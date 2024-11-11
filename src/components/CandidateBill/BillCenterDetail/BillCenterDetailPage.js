@@ -6,12 +6,16 @@ const BillCenterDetailPage = createWithRemoteLoader({
   modules: ['components-core:Layout@Page']
 })(({ remoteModules, ...props }) => {
   const [Page] = remoteModules;
-
   return (
     <BillCenterDetail>
       {({ data, reload, content }) => {
         return (
-          <Page {...props} option={<RightOptions data={data} onSuccess={reload} />}>
+          <Page
+            {...props}
+            option={
+              [2, 3, 4, 5].indexOf(data.bill?.state) > -1 && <RightOptions data={data.bill} records={data.billCheckRecords} onReload={reload} />
+            }
+          >
             {content}
           </Page>
         );
