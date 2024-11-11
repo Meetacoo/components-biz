@@ -12,73 +12,67 @@ const RightOptions = createWithRemoteLoader({
 })(({ remoteModules, data, records }) => {
   const [InfoPage, Flow, Content, Enum, useModal] = remoteModules;
   const modal = useModal();
-  const billState = data.state;
-  //可以展示流转记录
-  if ([2, 3, 4, 5].indexOf(billState) > -1) {
-    return (
-      <InfoPage>
-        <InfoPage.Part title="流转记录">
-          <Flow
-            dataSource={records}
-            progressDot
-            columns={[
-              {
-                type: 'title',
-                name: 'state',
-                render: value => {
-                  return <Enum moduleName="BILL_EVENT_ENUM" name={value} />;
-                }
-              },
-              {
-                name: 'status',
-                getValueOf: () => 'finish'
-              },
-              { type: 'subTitle', name: 'createdAt', format: 'datetime' },
-              {
-                type: 'description',
-                name: 'name',
-                render: (value, { target }) => {
-                  return (
-                    <Content
-                      list={[
-                        { label: '操作人', content: value },
-                        {
-                          label: '审批流程',
-                          content: (
-                            <Button
-                              type="link"
-                              size="small"
-                              className="btn-no-padding"
-                              onClick={() => {
-                                modal({
-                                  size: 'small',
-                                  footer: null,
-                                  children: '审批流程详情'
-                                });
-                              }}
-                            >
-                              查看详情
-                            </Button>
-                          )
-                        },
-                        {
-                          label: '备注',
-                          display: !!target.remark,
-                          content: target.remark
-                        }
-                      ]}
-                    />
-                  );
-                }
+  return (
+    <InfoPage>
+      <InfoPage.Part title="流转记录">
+        <Flow
+          dataSource={records}
+          progressDot
+          columns={[
+            {
+              type: 'title',
+              name: 'state',
+              render: value => {
+                return <Enum moduleName="BILL_EVENT_ENUM" name={value} />;
               }
-            ]}
-          />
-        </InfoPage.Part>
-      </InfoPage>
-    );
-  }
-
-  return null;
+            },
+            {
+              name: 'status',
+              getValueOf: () => 'finish'
+            },
+            { type: 'subTitle', name: 'createdAt', format: 'datetime' },
+            {
+              type: 'description',
+              name: 'name',
+              render: (value, { target }) => {
+                return (
+                  <Content
+                    list={[
+                      { label: '操作人', content: value },
+                      {
+                        label: '审批流程',
+                        content: (
+                          <Button
+                            type="link"
+                            size="small"
+                            className="btn-no-padding"
+                            onClick={() => {
+                              modal({
+                                size: 'small',
+                                footer: null,
+                                children: '审批流程详情'
+                              });
+                            }}
+                          >
+                            查看详情
+                          </Button>
+                        )
+                      },
+                      {
+                        label: '备注',
+                        display: !!target.remark,
+                        content: target.remark
+                      }
+                    ]}
+                  />
+                );
+              }
+            }
+          ]}
+        />
+      </InfoPage.Part>
+    </InfoPage>
+  );
 });
 
 export default RightOptions;
