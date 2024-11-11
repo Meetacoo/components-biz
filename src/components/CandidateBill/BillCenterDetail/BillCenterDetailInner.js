@@ -5,19 +5,33 @@ import dayjs from 'dayjs';
 import TrackingListContent from './TrackingListContent';
 import Allocations from './Allocation';
 
+const AttachmentsContent = createWithRemoteLoader({
+  modules: ['components-core:File@FileLink']
+})(({ remoteModules, billItem }) => {
+  const [FileLink] = remoteModules;
+  return get(billItem, 'attachments.length')
+    ? (get(billItem, 'attachments') || []).map((item, index) => {
+        return (
+          <Space key={index} direction="vertical">
+            <FileLink originName={item.originalName} id={item.id} />
+          </Space>
+        );
+      })
+    : '-';
+});
+
 const BillCenterDetailInner = createWithRemoteLoader({
   modules: [
     'components-core:InfoPage',
     'components-core:InfoPage@CentralContent',
     'components-core:Content',
-    'components-core:FilePreview',
     'components-core:StateTag',
     'components-core:Enum',
     'components-core:InfoPage@formatView'
   ]
 })(({ remoteModules, data }) => {
   const { bill, billItems, allocations, userInfos } = data;
-  const [InfoPage, CentralContent, Content, FilePreview, StateTag, Enum, formatView] = remoteModules;
+  const [InfoPage, CentralContent, Content, StateTag, Enum, formatView] = remoteModules;
   const calcList = (billItem, trackingList) => {
     const typeId = get(billItem, `typeId`);
 
@@ -25,14 +39,6 @@ const BillCenterDetailInner = createWithRemoteLoader({
       label: '账单金额',
       content: `${get(billItem, `amount`) ? formatView(get(billItem, `amount`), 'number--100') : 0}元`
     };
-
-    const attachmentsContent = (get(billItem, 'attachments') || []).map((item, index) => {
-      return (
-        <Space key={index} direction="vertical">
-          <FilePreview originName={item.originalName} value={item.id} />
-        </Space>
-      );
-    });
 
     let list = [];
     switch (typeId) {
@@ -45,12 +51,12 @@ const BillCenterDetailInner = createWithRemoteLoader({
             content: get(billItem, 'month') ? dayjs(get(billItem, 'month')).format('YYYY.MM') : '-'
           },
           { label: '开票人数', content: `${get(billItem, 'num')}人` },
-          { label: 'onsite人员', content: attachmentsContent }
+          { label: 'onsite人员', content: <AttachmentsContent billItem={billItem} />, block: true }
         ];
         break;
       // Mapping
       case 2:
-        list = [billAmount, { label: 'mapping报告', content: attachmentsContent }];
+        list = [billAmount, { label: 'mapping报告', content: <AttachmentsContent billItem={billItem} />, block: true }];
         break;
       // 项目管理、项目启动金、其他
       case 3:
@@ -60,7 +66,11 @@ const BillCenterDetailInner = createWithRemoteLoader({
         break;
       // 内推
       case 5:
-        list = [billAmount, { label: '内推人数', content: `${get(billItem, `num`) || '-'}人` }, { label: '内推名单', content: attachmentsContent }];
+        list = [
+          billAmount,
+          { label: '内推人数', content: `${get(billItem, `num`) || '-'}人` },
+          { label: '内推名单', content: <AttachmentsContent billItem={billItem} />, block: true }
+        ];
         break;
       case 6:
       case 7:
@@ -79,7 +89,7 @@ const BillCenterDetailInner = createWithRemoteLoader({
     const _list = [
       {
         label: '项目类型',
-        content: billItem.typeId ? billItem.typeName || '其他' : ''
+        content: billItem.typeName || '其他' || ''
       },
       ...list
     ];
@@ -128,7 +138,12 @@ const BillCenterDetailInner = createWithRemoteLoader({
                 ),
                 display: !!get(bill, 'contractId')
               },
-              { name: 'projectName', title: '项目', display: !!get(bill, 'projectId') },
+              {
+                name: 'projectName',
+                title: '项目',
+                render: projectName => `${get(bill, 'projectSerialNum')} ${projectName}`,
+                display: !!get(bill, 'projectId')
+              },
               {
                 name: 'feeType',
                 title: '费用类别',
@@ -138,7 +153,7 @@ const BillCenterDetailInner = createWithRemoteLoader({
           />
         </InfoPage.Part>
         <InfoPage.Part title="账单费用信息">
-          {bill.type === 1 && (
+          {bill.type === 1 ? (
             <>
               <InfoPage.Collapse defaultActiveKey={(billItems || []).map(({ billItem }) => billItem.id)}>
                 {(billItems || []).map(({ billItem, trackingList }, index) => {
@@ -150,50 +165,42 @@ const BillCenterDetailInner = createWithRemoteLoader({
                 })}
               </InfoPage.Collapse>
             </>
+          ) : (
+            <InfoPage.Part>
+              <CentralContent
+                dataSource={bill}
+                col={1}
+                columns={[
+                  {
+                    valueIsEmpty: () => false,
+                    name: 'tracking',
+                    title: '账单候选人',
+                    render: () => <TrackingListContent trackingList={billItems[0].trackingList} />
+                  },
+                  {
+                    valueIsEmpty: () => false,
+                    name: 'typeId',
+                    title: '账单类目',
+                    render: () => (billItems[0].billItem.typeId ? billItems[0].billItem.typeName : '')
+                  },
+                  {
+                    name: 'standardAmount',
+                    title: '标准账单总金额',
+                    render: value => `${value ? formatView(value, 'number--100') : 0}元`
+                  },
+                  { name: 'amount', title: '账单总金额', render: value => `${value ? formatView(value, 'number--100') : 0}元` },
+                  { name: 'remark', title: '备注' },
+                  { name: 'amountDiffReason', title: '标准账单总金额与自填账单总金额不一致的原因' },
+                  {
+                    name: 'attachments',
+                    title: '附件',
+                    render: attachments => <AttachmentsContent billItem={{ attachments }} />,
+                    block: true
+                  }
+                ]}
+              />
+            </InfoPage.Part>
           )}
-          <InfoPage.Part>
-            <CentralContent
-              dataSource={bill}
-              col={1}
-              columns={[
-                {
-                  valueIsEmpty: () => false,
-                  name: 'tracking',
-                  title: '账单候选人',
-                  render: () => <TrackingListContent trackingList={billItems[0].trackingList} />,
-                  display: get(bill, 'type') !== 1
-                },
-                {
-                  valueIsEmpty: () => false,
-                  name: 'typeId',
-                  title: '账单类目',
-                  render: () => (billItems[0].billItem.typeId ? billItems[0].billItem.typeName : ''),
-                  display: get(bill, 'type') !== 1
-                },
-                {
-                  name: 'standardAmount',
-                  title: '标准账单总金额',
-                  render: value => `${value ? formatView(value, 'number--100') : 0}元`,
-                  display: get(bill, 'type') !== 1
-                },
-                { name: 'amount', title: '账单总金额', render: value => `${value ? formatView(value, 'number--100') : 0}元` },
-                { name: 'remark', title: '备注' },
-                { name: 'amountDiffReason', title: '标准账单总金额与自填账单总金额不一致的原因', display: get(bill, 'type') !== 1 },
-                {
-                  name: 'attachments',
-                  title: '附件',
-                  render: attachments =>
-                    (attachments || []).map((item, index) => {
-                      return (
-                        <Space key={index} direction="vertical">
-                          <FilePreview originName={item.originalName} value={item.id} />
-                        </Space>
-                      );
-                    })
-                }
-              ]}
-            />
-          </InfoPage.Part>
         </InfoPage.Part>
         <InfoPage.Part title="付款信息">
           <CentralContent
