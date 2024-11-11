@@ -1,5 +1,6 @@
 import { CONTRACT_STATE_ENUM } from '@components/ContractSelect';
 import { BILL_STATE_ENUM } from '@components/CandidateBill';
+import { getPublicPath } from '@kne/remote-loader';
 import flow from './flow.json';
 import range from 'lodash/range';
 import projectList from './projectList.json';
@@ -90,6 +91,15 @@ const preset = {
     ]
   },
   apis: {
+    oss: {
+      loader: async ({ params }) => {
+        return new Promise(resolve => {
+          setTimeout(() => {
+            resolve(getPublicPath('components-biz') + '/mock/xasdXsdgszxq-Zsdsrw.png');
+          }, 1000);
+        });
+      }
+    },
     flow: {
       getFlowCondition: {
         loader: () => {
