@@ -7,11 +7,13 @@ import merge from 'lodash/merge';
 import GenerateBillDetail, { BillNoticeSave } from '../GenerateBillDetail';
 
 const GenerateProjectBill = createWithRemoteLoader({
-  modules: ['components-core:FormInfo']
+  modules: ['components-core:FormInfo', 'components-core:FormInfo@formModule']
 })(({ remoteModules, children }) => {
-  const [FormInfo] = remoteModules;
+  const [FormInfo, formModule] = remoteModules;
   const { useFormStepModal } = FormInfo;
   const formStepModal = useFormStepModal();
+  const { SubmitButton } = formModule;
+
   return (
     <BillNoticeSave>
       {({ save }) => {
@@ -26,11 +28,23 @@ const GenerateProjectBill = createWithRemoteLoader({
             );
             return formStepModal({
               ...others,
-              autoClose: true,
+              autoClose: false,
               items: [
                 {
                   title: '填写账单信息',
                   formProps: get(formProps, '[0]'),
+                  footerButtons: [
+                    {
+                      ButtonComponent: SubmitButton,
+                      children: '下一步',
+                      autoClose: true,
+                      onClick: async (e, { currentIndex, setCurrentIndex }) => {
+                        setTimeout(() => {
+                          setCurrentIndex(currentIndex + 1);
+                        }, 1000);
+                      }
+                    }
+                  ],
                   children: <ProjectBillInfoFormInner client={client} />
                 },
                 {
@@ -38,6 +52,33 @@ const GenerateProjectBill = createWithRemoteLoader({
                   formProps: merge({}, get(formProps, '[1]'), {
                     onSubmit: save
                   }),
+                  footerButtons: [
+                    {
+                      ButtonComponent: Button,
+                      children: '上一步',
+                      autoClose: false,
+                      onClick: (e, { currentIndex, setCurrentIndex }) => {
+                        setCurrentIndex(currentIndex - 1);
+                      }
+                    },
+                    {
+                      ButtonComponent: SubmitButton,
+                      type: 'default',
+                      autoClose: false,
+                      children: '仅保存',
+                      onSubmit: (data, prop) => {
+                        console.log(data, prop);
+                      }
+                    },
+                    {
+                      ButtonComponent: SubmitButton,
+                      autoClose: false,
+                      children: '保存并提交',
+                      onClick: (data, prop) => {
+                        console.log(data, prop);
+                      }
+                    }
+                  ],
                   children: ({ stepCacheRef, childrenRef }) => {
                     return <GenerateBillDetail billDetail={stepCacheRef.current.billInfo} ref={childrenRef} />;
                   }
