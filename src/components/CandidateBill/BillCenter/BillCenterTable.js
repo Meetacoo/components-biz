@@ -26,7 +26,7 @@ const BillCenterTable = createWithRemoteLoader({
       topOptionsChildren={
         hasBillEditAuth
           ? ({ ref }) => (
-              <GenerateProjectBillButton type="primary" {...props} onReload={ref?.current?.reload} userInfo={userInfo}>
+              <GenerateProjectBillButton type="primary" {...props} onSuccess={ref?.current?.reload} userInfo={userInfo}>
                 新建账单
               </GenerateProjectBillButton>
             )

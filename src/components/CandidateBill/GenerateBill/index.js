@@ -8,12 +8,12 @@ import merge from 'lodash/merge';
 
 const GenerateBill = createWithRemoteLoader({
   modules: ['components-core:FormInfo']
-})(({ remoteModules, children }) => {
+})(({ remoteModules, onSuccess, children }) => {
   const [FormInfo] = remoteModules;
   const { useFormStepModal } = FormInfo;
   const formStepModal = useFormStepModal();
   return (
-    <BillNoticeSave>
+    <BillNoticeSave onSuccess={onSuccess}>
       {({ save }) => {
         return children({
           modal: props => {
@@ -53,7 +53,7 @@ const GenerateBill = createWithRemoteLoader({
 
 export const GenerateBillButton = createWithRemoteLoader({
   modules: ['components-core:Global@usePreset', 'components-core:InfoPage@formatView']
-})(({ remoteModules, ...p }) => {
+})(({ remoteModules, onSuccess, ...p }) => {
   const [usePreset, formatView] = remoteModules;
   const { client, trackingList, billType, onClick, typeId, phases, projectInfo, userInfo, ...props } = Object.assign(
     {},
@@ -65,7 +65,7 @@ export const GenerateBillButton = createWithRemoteLoader({
   const { message } = App.useApp();
   const { ajax, apis } = usePreset();
   return (
-    <GenerateBill>
+    <GenerateBill onSuccess={onSuccess}>
       {({ modal }) => (
         <Button
           {...props}
@@ -104,6 +104,7 @@ export const GenerateBillButton = createWithRemoteLoader({
                     }
                     message.success('生成账单成功');
                     stepCacheRef.current.billInfo = resData.data;
+                    onSuccess && onSuccess();
                   }
                 }
               ]
@@ -117,12 +118,12 @@ export const GenerateBillButton = createWithRemoteLoader({
 
 export const EditBillButton = createWithRemoteLoader({
   modules: ['components-core:Global@usePreset', 'components-core:FetchButton', 'components-core:InfoPage@formatView']
-})(({ remoteModules, id, onReload, billType, phases, ...props }) => {
+})(({ remoteModules, id, onSuccess, billType, phases, ...props }) => {
   const [usePreset, FetchButton, formatView] = remoteModules;
   const { apis, ajax } = usePreset();
   const { message } = App.useApp();
   return (
-    <GenerateBill>
+    <GenerateBill onSuccess={onSuccess}>
       {({ modal }) => (
         <FetchButton
           {...props}
@@ -151,7 +152,7 @@ export const EditBillButton = createWithRemoteLoader({
                     }
                     message.success('编辑账单成功');
                     stepCacheRef.current.billInfo = resData.data;
-                    onReload && onReload();
+                    onSuccess && onSuccess();
                   }
                 }
               ]

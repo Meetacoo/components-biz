@@ -126,7 +126,7 @@ const BillCenter = createWithRemoteLoader({
                       buttonComponent: type === 1 ? EditBillProjectButton : EditBillButton,
                       children: '编辑账单',
                       id,
-                      onReload: ref.current.reload,
+                      onSuccess: ref.current.reload,
                       hidden: !hasBillEditAuth
                     },
                     {
