@@ -111,26 +111,27 @@ const billNoticeTransform = {
     });
   },
   output: data => {
-    const deleteFields = get(data, 'deleteFields.length');
+    const deleteFields = get(data, 'deleteFields');
+    const deleteFieldsLength = get(deleteFields, 'length');
     return Object.assign({}, data, {
       noticeDate: get(data, 'noticeDate'),
       subjectCode: get(data, 'subjectCode.code'),
-      clientNum: deleteFields && deleteFields.indexOf('clientNum') > -1 ? null : get(data, 'clientNum'),
-      clientEnName: deleteFields && deleteFields.indexOf('clientEnName') > -1 ? null : get(data, 'clientEnName'),
-      clientAddress: deleteFields && deleteFields.indexOf('clientAddress') > -1 ? null : get(data, 'clientAddress'),
+      clientNum: deleteFieldsLength && deleteFields.indexOf('clientNum') > -1 ? null : get(data, 'clientNum'),
+      clientEnName: deleteFieldsLength && deleteFields.indexOf('clientEnName') > -1 ? null : get(data, 'clientEnName'),
+      clientAddress: deleteFieldsLength && deleteFields.indexOf('clientAddress') > -1 ? null : get(data, 'clientAddress'),
       attention:
-        deleteFields && deleteFields.indexOf('attention') > -1
+        deleteFieldsLength && deleteFields.indexOf('attention') > -1
           ? null
           : typeof billNoticeTransform.getJsonValue(get(data, 'attention')) === 'object'
             ? billNoticeTransform.getJsonValue(get(data, 'attention')).name
             : '',
       contactMobile:
-        deleteFields && deleteFields.indexOf('contactMobile') > -1
+        deleteFieldsLength && deleteFields.indexOf('contactMobile') > -1
           ? null
           : typeof billNoticeTransform.getJsonValue(get(data, 'contactMobile')) === 'object'
             ? billNoticeTransform.getJsonValue(get(data, 'contactMobile')).phone
             : '',
-      team: deleteFields && deleteFields.indexOf('team') > -1 ? null : get(data, 'team')
+      team: deleteFieldsLength && deleteFields.indexOf('team') > -1 ? null : get(data, 'team')
     });
   },
   nodeListTransform,

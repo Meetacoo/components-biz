@@ -8,14 +8,14 @@ import GenerateBillDetail, { BillNoticeSave } from '../GenerateBillDetail';
 
 const GenerateProjectBill = createWithRemoteLoader({
   modules: ['components-core:FormInfo', 'components-core:FormInfo@formModule']
-})(({ remoteModules, children }) => {
+})(({ remoteModules, onSuccess, children }) => {
   const [FormInfo, formModule] = remoteModules;
   const { useFormStepModal } = FormInfo;
   const formStepModal = useFormStepModal();
   const { SubmitButton } = formModule;
 
   return (
-    <BillNoticeSave>
+    <BillNoticeSave onSuccess={onSuccess}>
       {({ save }) => {
         return children({
           modal: props => {
@@ -28,7 +28,7 @@ const GenerateProjectBill = createWithRemoteLoader({
             );
             return formStepModal({
               ...others,
-              autoClose: false,
+              autoClose: true,
               items: [
                 {
                   title: '填写账单信息',
@@ -37,12 +37,7 @@ const GenerateProjectBill = createWithRemoteLoader({
                     {
                       ButtonComponent: SubmitButton,
                       children: '下一步',
-                      autoClose: true,
-                      onClick: async (e, { currentIndex, setCurrentIndex }) => {
-                        setTimeout(() => {
-                          setCurrentIndex(currentIndex + 1);
-                        }, 1000);
-                      }
+                      autoClose: false
                     }
                   ],
                   children: <ProjectBillInfoFormInner client={client} />
@@ -65,17 +60,14 @@ const GenerateProjectBill = createWithRemoteLoader({
                       ButtonComponent: SubmitButton,
                       type: 'default',
                       autoClose: false,
-                      children: '仅保存',
-                      onSubmit: (data, prop) => {
-                        console.log(data, prop);
-                      }
+                      children: '仅保存'
                     },
                     {
                       ButtonComponent: SubmitButton,
                       autoClose: false,
                       children: '保存并提交',
-                      onClick: (data, prop) => {
-                        console.log(data, prop);
+                      onClick: () => {
+                        return { doSubmit: true };
                       }
                     }
                   ],
@@ -94,13 +86,13 @@ const GenerateProjectBill = createWithRemoteLoader({
 
 export const GenerateProjectBillButton = createWithRemoteLoader({
   modules: ['components-core:Global@usePreset']
-})(({ remoteModules, onReload, client, userInfo, ...props }) => {
+})(({ remoteModules, onSuccess, client, userInfo, ...props }) => {
   const [usePreset] = remoteModules;
   const { apis, ajax } = usePreset();
   const { message } = App.useApp();
 
   return (
-    <GenerateProjectBill>
+    <GenerateProjectBill onSuccess={onSuccess}>
       {({ modal }) => (
         <Button
           {...props}
@@ -126,7 +118,7 @@ export const GenerateProjectBillButton = createWithRemoteLoader({
                     }
                     message.success('生成账单成功');
                     stepCacheRef.current.billInfo = resData.data;
-                    onReload && onReload();
+                    onSuccess && onSuccess();
                   }
                 }
               ]
@@ -140,12 +132,12 @@ export const GenerateProjectBillButton = createWithRemoteLoader({
 
 export const EditBillProjectButton = createWithRemoteLoader({
   modules: ['components-core:Global@usePreset', 'components-core:FetchButton', 'components-core:InfoPage@formatView']
-})(({ remoteModules, id, onReload, ...props }) => {
+})(({ remoteModules, id, onSuccess, ...props }) => {
   const [usePreset, FetchButton, formatView] = remoteModules;
   const { apis, ajax } = usePreset();
   const { message } = App.useApp();
   return (
-    <GenerateProjectBill>
+    <GenerateProjectBill onSuccess={onSuccess}>
       {({ modal }) => (
         <FetchButton
           {...props}
@@ -171,7 +163,7 @@ export const EditBillProjectButton = createWithRemoteLoader({
                     }
                     message.success('编辑账单成功');
                     stepCacheRef.current.billInfo = resData.data;
-                    onReload && onReload();
+                    onSuccess && onSuccess();
                   }
                 }
               ]

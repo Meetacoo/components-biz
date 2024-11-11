@@ -120,7 +120,12 @@ const ListOptions = createWithRemoteLoader({
                   id,
                   // 无账单编辑权限、账单状态为审核中、已通过时，不能编辑账单
                   disabled: !hasBillEditAuth || [2, 5].indexOf(state) > -1,
-                  onReload: ref.current.reload
+                  onSuccess: ref.current.reload
+                },
+                {
+                  children: '撤销审核',
+                  // 无账单编辑权限、账单状态不为审核中时不能编辑账单
+                  disabled: !hasBillEditAuth || state !== 2
                 },
                 {
                   children: '前往结算中心'

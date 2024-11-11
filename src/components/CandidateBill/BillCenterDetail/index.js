@@ -151,7 +151,8 @@ const BillCenterDetail = createWithRemoteLoader({
                               </Typography.Link>
                             </Col>
                           </Row>
-                        )
+                        ),
+                        display: !!get(bill, 'contractId')
                       },
                       { name: 'projectName', title: '项目', display: !!get(bill, 'projectId') },
                       {
