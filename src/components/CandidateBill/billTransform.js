@@ -78,6 +78,7 @@ const billTransform = {
     let inputData = Object.assign({}, bill, {
       clientId: { label: get(bill, 'clientName'), value: get(bill, 'clientId') },
       contractId: { label: get(bill, 'contractName'), value: get(bill, 'contractId') },
+      standardAmount: getAmount(formatView, get(bill, 'standardAmount')),
       amount: getAmount(formatView, get(bill, 'amount')),
       allocations: (get(data, 'allocations') || []).map(item => allocationFormat({ userMap, item, formatView, billAmount: get(bill, 'amount') })),
       paymentId: { label: get(bill, 'invoiceTitle'), value: get(bill, 'paymentId') },
@@ -137,7 +138,7 @@ const billTransform = {
       }));
     } else {
       billData = Object.assign({}, billData, {
-        standardAmount: get(data, 'standardAmount') || null,
+        standardAmount: get(data, 'standardAmount') || get(data, 'standardAmount') === 0 ? (get(data, 'standardAmount') || 0) * 100 : null,
         amountDiffReason: get(data, 'amountDiffReason') || null,
         billItems: [
           {
