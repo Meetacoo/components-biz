@@ -20,7 +20,7 @@ const ProjectBillInfoFormInner = createWithRemoteLoader({
   const onsiteFields = index => [
       <BillAmount index={index} />,
       <DatePicker picker="month" name="month" label="费用所属月份" rule="REQ" />,
-      <InputNumber name="num" label="开票人数" rule="REQ" addonAfter="人" precision={1} />,
+      <InputNumber name="num" label="开票人数" rule="REQ" addonAfter="人" precision={0} />,
       <Upload block name="attachments" label="onsite人员" rule="REQ" />
     ],
     mappingFields = index => [<BillAmount index={index} />, <Upload block name="attachments" label="mapping报告" />],
@@ -28,7 +28,7 @@ const ProjectBillInfoFormInner = createWithRemoteLoader({
     projectStartFeeFields = index => [<BillAmount index={index} />],
     referralFields = index => [
       <BillAmount index={index} />,
-      <InputNumber name="num" label="内推人数" rule="REQ" addonAfter="人" precision={1} />,
+      <InputNumber name="num" label="内推人数" rule="REQ" addonAfter="人" precision={0} />,
       <Upload block name="attachments" label="内推名单" rule="REQ" />
     ],
     interviewFields = index => [

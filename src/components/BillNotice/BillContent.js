@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useMemo } from 'react';
+import { forwardRef, useMemo } from 'react';
 import RemoteLoader, { createWithRemoteLoader } from '@kne/remote-loader';
 import FormatDocumentBuilder from '@kne/format-document-builder';
 import '@kne/format-document-builder/dist/index.css';
@@ -10,7 +10,6 @@ import billNoticeTransform from './billNoticeTransform';
 
 const BillContent = createWithRemoteLoader({
   modules: [
-    'components-core:Global@usePreset',
     'components-core:FormInfo@fields',
     'components-core:FormInfo@Form',
     'components-core:Global@useGlobalContext',
@@ -18,8 +17,7 @@ const BillContent = createWithRemoteLoader({
   ]
 })(
   forwardRef(({ remoteModules, data: initData, ...others }, ref) => {
-    const [usePreset, fields, Form, useGlobalContext, formatView] = remoteModules;
-    const { apis, ajax } = usePreset();
+    const [fields, Form, useGlobalContext, formatView] = remoteModules;
     const { SuperSelect } = fields;
     const { global } = useGlobalContext('accountInfo');
     const { userInfo, organization } = global;
@@ -34,7 +32,7 @@ const BillContent = createWithRemoteLoader({
               formatView
             })
           : null,
-      [initData, userInfo, organization]
+      [initData, userInfo, organization, formatView]
     );
 
     return (
@@ -188,16 +186,27 @@ const BillContent = createWithRemoteLoader({
           },
           clientAddress: {
             className: 'selected-address',
-            default: get(noticeData, 'billNotice.clientAddress'),
-            type: 'Select',
+            default: get(noticeData, 'billNotice.clientAddress') || null,
+            type: 'SuperSelect',
             width: '100px',
             options: get(noticeData, 'addressList'),
             canDelete: true,
-            render: value => value || '请选择地址'
+            render: value => value || '请选择地址',
+            typeProps: ({ isActive, blur }) => ({
+              interceptor: 'object-output-value',
+              open: isActive,
+              showSelectedTag: false,
+              onOpenChange: () => {
+                blur();
+              },
+              single: true,
+              label: 'clientAddress',
+              labelHidden: true
+            })
           },
           attention: {
             className: 'selected-attention',
-            default: (get(noticeData, 'contactList') || []).find(item => item.value === get(noticeData, 'billNotice.attention')),
+            default: get(noticeData, 'billNotice.attention'),
             type: 'SuperSelect',
             width: '100px',
             render: value =>
@@ -226,13 +235,13 @@ const BillContent = createWithRemoteLoader({
           },
           contactMobile: {
             className: 'selected-contact',
-            default: (get(noticeData, 'contactMobileList') || []).find(item => item.value === get(noticeData, 'billNotice.contactMobile')),
+            default: get(noticeData, 'billNotice.contactMobile'),
             type: 'SuperSelect',
             width: '130px',
             render: value =>
               value
                 ? `${typeof billNoticeTransform.getJsonValue(value) === 'object' ? billNoticeTransform.getJsonValue(value).phone : value}`
-                : '请选择Attention',
+                : '请选择Contract',
             canDelete: true,
             typeProps: ({ formApi, isActive, blur }) => ({
               interceptor: 'object-output-value',
@@ -244,7 +253,10 @@ const BillContent = createWithRemoteLoader({
               single: true,
               options: get(noticeData, 'contactMobileList'),
               onChange: value => {
-                formApi.setField({ name: 'attention', value });
+                formApi.setField({
+                  name: 'attention',
+                  value: value ? Object.assign({}, value, { label: billNoticeTransform.getJsonValue(value?.value)?.name }) : null
+                });
               },
               label: 'Contract',
               labelHidden: true

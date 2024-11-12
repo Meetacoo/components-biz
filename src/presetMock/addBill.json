@@ -67,7 +67,7 @@
         "phone": null,
         "email": "a@a.com",
         "remark": "",
-        "deleteFields": ["clientAddress"]
+        "deleteFields": []
       },
       "itemList": [
         {
@@ -613,7 +613,7 @@
           "bankNo": "121955258710009"
         }
       ],
-      "addressList": [],
+      "addressList": ["上海", "北京"],
       "payment": {
         "invoiceType": 3,
         "invoiceTitle": "DigiPlus Interactive Corp",
