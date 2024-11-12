@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useMemo } from 'react';
+import { forwardRef, useMemo } from 'react';
 import RemoteLoader, { createWithRemoteLoader } from '@kne/remote-loader';
 import FormatDocumentBuilder from '@kne/format-document-builder';
 import '@kne/format-document-builder/dist/index.css';
@@ -10,7 +10,6 @@ import billNoticeTransform from './billNoticeTransform';
 
 const BillContent = createWithRemoteLoader({
   modules: [
-    'components-core:Global@usePreset',
     'components-core:FormInfo@fields',
     'components-core:FormInfo@Form',
     'components-core:Global@useGlobalContext',
@@ -18,8 +17,7 @@ const BillContent = createWithRemoteLoader({
   ]
 })(
   forwardRef(({ remoteModules, data: initData, ...others }, ref) => {
-    const [usePreset, fields, Form, useGlobalContext, formatView] = remoteModules;
-    const { apis, ajax } = usePreset();
+    const [fields, Form, useGlobalContext, formatView] = remoteModules;
     const { SuperSelect } = fields;
     const { global } = useGlobalContext('accountInfo');
     const { userInfo, organization } = global;
@@ -34,7 +32,7 @@ const BillContent = createWithRemoteLoader({
               formatView
             })
           : null,
-      [initData, userInfo, organization]
+      [initData, userInfo, organization, formatView]
     );
 
     return (
