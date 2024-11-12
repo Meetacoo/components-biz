@@ -4,6 +4,7 @@ import { App, Flex, Space } from 'antd';
 import get from 'lodash/get';
 import { EditBillProjectButton } from '../GenerateProjectBill';
 import { EditBillButton } from '../GenerateBill';
+import merge from 'lodash/merge';
 
 const ListOptions = createWithRemoteLoader({
   modules: [
@@ -16,7 +17,8 @@ const ListOptions = createWithRemoteLoader({
 })(({ remoteModules, topOptionsChildren, children }) => {
   const [Filter, usePreset, StateBar, Enum, usePermissionsPass] = remoteModules;
   const ref = useRef(null);
-  const { apis } = usePreset();
+  const { apis, ajax } = usePreset();
+  const { message } = App.useApp();
   const { SearchInput, getFilterValue, fields: filterFields } = Filter;
   const { AdvancedSelectFilterItem, UserFilterItem } = filterFields;
 
@@ -112,7 +114,7 @@ const ListOptions = createWithRemoteLoader({
             title: '操作',
             type: 'options',
             fixed: 'right',
-            valueOf: ({ id, type, state }) => {
+            valueOf: ({ id, type, state, flowInstanceId }) => {
               return [
                 {
                   buttonComponent: type === 1 ? EditBillProjectButton : EditBillButton,
@@ -124,9 +126,19 @@ const ListOptions = createWithRemoteLoader({
                 },
                 {
                   children: '撤销审核',
+                  confirm: true,
+                  isDelete: false,
+                  message: '您确定要撤销审核吗？',
                   // 无账单编辑权限、账单状态不为审核中时不能编辑账单
                   disabled: !hasBillEditAuth || state !== 2,
-                  onSuccess: ref.current.reload
+                  onClick: async () => {
+                    const { data: resData } = await ajax(merge({}, apis.flow.approvalAudit, { data: { processId: flowInstanceId, result: 4 } }));
+                    if (resData.code !== 0) {
+                      return false;
+                    }
+                    message.success('撤销审核成功');
+                    ref.current?.reload();
+                  }
                 },
                 {
                   children: '前往结算中心'
