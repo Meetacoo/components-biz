@@ -27,11 +27,12 @@ const BillCenterDetailInner = createWithRemoteLoader({
     'components-core:Content',
     'components-core:StateTag',
     'components-core:Enum',
-    'components-core:InfoPage@formatView'
+    'components-core:InfoPage@formatView',
+    'components-core:Common@isNotEmpty'
   ]
 })(({ remoteModules, data }) => {
   const { bill, billItems, allocations, userInfos } = data;
-  const [InfoPage, CentralContent, Content, StateTag, Enum, formatView] = remoteModules;
+  const [InfoPage, CentralContent, Content, StateTag, Enum, formatView, isNotEmpty] = remoteModules;
   const calcList = (billItem, trackingList) => {
     const typeId = get(billItem, `typeId`);
 
@@ -186,11 +187,16 @@ const BillCenterDetailInner = createWithRemoteLoader({
                   {
                     name: 'standardAmount',
                     title: '标准账单总金额',
-                    render: value => `${value ? formatView(value, 'number--100') : 0}元`
+                    render: value => `${value ? formatView(value, 'number--100') : 0}元`,
+                    display: isNotEmpty(get(bill, 'standardAmount'))
                   },
                   { name: 'amount', title: '账单总金额', render: value => `${value ? formatView(value, 'number--100') : 0}元` },
                   { name: 'remark', title: '备注' },
-                  { name: 'amountDiffReason', title: '标准账单总金额与自填账单总金额不一致的原因' },
+                  {
+                    name: 'amountDiffReason',
+                    title: '标准账单总金额与自填账单总金额不一致的原因',
+                    display: isNotEmpty(get(bill, 'amountDiffReason'))
+                  },
                   {
                     name: 'attachments',
                     title: '附件',
