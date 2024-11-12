@@ -99,6 +99,11 @@ export const globalInit = async () => {
         remote: 'components-iconfont',
         defaultVersion: '0.1.8'
       },
+      'components-view': {
+        ...registry,
+        remote: 'components-view',
+        defaultVersion: '0.1.40'
+      },
       'components-function': {
         remote: 'components-function',
         url: window.STATIC_BASE_URL,
