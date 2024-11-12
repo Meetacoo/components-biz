@@ -81,19 +81,26 @@ const billNoticeTransform = {
         );
       }
     });
-    const contractList = (contactList || []).map(item => ({ label: item.name, value: getContactItem(item) }));
+    const attentionList = (contactList || []).map(item => ({ label: item.name, value: getContactItem(item) }));
     const contactMobileList = (contactList || []).map(item => ({
       label: item?.phoneOfPerson?.number || item?.phoneOfWork?.number || item.phoneOfLandline,
       value: getContactItem(item)
     }));
     const deleteFields = get(billNotice, 'deleteFields');
+    const clientAddress = get(billNotice, 'address') || get(addressList, '[0]');
+    const attention = get(billNotice, 'attention')
+      ? attentionList.find(item => item.label === get(billNotice, 'attention'))
+      : get(attentionList, '[0]');
+    const contactMobile = get(billNotice, 'contactMobile')
+      ? contactMobileList.find(item => item.label === get(billNotice, 'contactMobile'))
+      : get(contactMobileList, '[0]');
     return Object.assign({}, initData, {
       billNotice: Object.assign({}, billNotice, {
         clientNum: deleteFields && deleteFields.indexOf('clientNum') > -1 ? null : get(billNotice, 'clientNum') || '',
         clientEnName: deleteFields && deleteFields.indexOf('clientEnName') > -1 ? null : get(billNotice, 'clientEnName') || '',
-        clientAddress: deleteFields && deleteFields.indexOf('clientAddress') > -1 ? null : get(addressList, '[0]') || '',
-        attention: deleteFields && deleteFields.indexOf('attention') > -1 ? null : get(contractList, '[0].value') || '',
-        contactMobile: deleteFields && deleteFields.indexOf('contactMobile') > -1 ? null : get(contractList, '[0].value') || '',
+        clientAddress: deleteFields && deleteFields.indexOf('clientAddress') > -1 ? null : { label: clientAddress, value: clientAddress } || null,
+        attention: deleteFields && deleteFields.indexOf('attention') > -1 ? null : attention || '',
+        contactMobile: deleteFields && deleteFields.indexOf('contactMobile') > -1 ? null : contactMobile || '',
         team: deleteFields && deleteFields.indexOf('team') > -1 ? null : billNotice?.team || organization?.name || '',
         noticeDate: get(billNotice, 'noticeDate') || '',
         consultant: get(billNotice, 'consultant') || `${userInfo.englishName || ''} ${userInfo.name || ''}`,
@@ -106,7 +113,7 @@ const billNoticeTransform = {
       itemList: projectsTemp,
       addressList: addressList?.length ? addressList.map(item => ({ label: item, value: item })) : null,
       subjectList: get(initData, 'subjectList').filter(item => item.citable),
-      contactList: contractList,
+      contactList: attentionList,
       contactMobileList: contactMobileList
     });
   },

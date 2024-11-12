@@ -186,16 +186,27 @@ const BillContent = createWithRemoteLoader({
           },
           clientAddress: {
             className: 'selected-address',
-            default: get(noticeData, 'billNotice.clientAddress'),
-            type: 'Select',
+            default: get(noticeData, 'billNotice.clientAddress') || null,
+            type: 'SuperSelect',
             width: '100px',
             options: get(noticeData, 'addressList'),
             canDelete: true,
-            render: value => value || '请选择地址'
+            render: value => value || '请选择地址',
+            typeProps: ({ isActive, blur }) => ({
+              interceptor: 'object-output-value',
+              open: isActive,
+              showSelectedTag: false,
+              onOpenChange: () => {
+                blur();
+              },
+              single: true,
+              label: 'clientAddress',
+              labelHidden: true
+            })
           },
           attention: {
             className: 'selected-attention',
-            default: (get(noticeData, 'contactList') || []).find(item => item.value === get(noticeData, 'billNotice.attention')),
+            default: get(noticeData, 'billNotice.attention'),
             type: 'SuperSelect',
             width: '100px',
             render: value =>
@@ -224,13 +235,13 @@ const BillContent = createWithRemoteLoader({
           },
           contactMobile: {
             className: 'selected-contact',
-            default: (get(noticeData, 'contactMobileList') || []).find(item => item.value === get(noticeData, 'billNotice.contactMobile')),
+            default: get(noticeData, 'billNotice.contactMobile'),
             type: 'SuperSelect',
             width: '130px',
             render: value =>
               value
                 ? `${typeof billNoticeTransform.getJsonValue(value) === 'object' ? billNoticeTransform.getJsonValue(value).phone : value}`
-                : '请选择Attention',
+                : '请选择Contract',
             canDelete: true,
             typeProps: ({ formApi, isActive, blur }) => ({
               interceptor: 'object-output-value',
@@ -242,7 +253,10 @@ const BillContent = createWithRemoteLoader({
               single: true,
               options: get(noticeData, 'contactMobileList'),
               onChange: value => {
-                formApi.setField({ name: 'attention', value });
+                formApi.setField({
+                  name: 'attention',
+                  value: value ? Object.assign({}, value, { label: billNoticeTransform.getJsonValue(value?.value)?.name }) : null
+                });
               },
               label: 'Contract',
               labelHidden: true
