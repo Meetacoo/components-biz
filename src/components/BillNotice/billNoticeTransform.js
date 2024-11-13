@@ -140,7 +140,8 @@ const billNoticeTransform = {
             ? billNoticeTransform.getJsonValue(get(data, 'contactMobile')).phone
             : '',
       team: deleteFieldsLength && deleteFields.indexOf('team') > -1 ? null : get(data, 'team'),
-      fileName: get(data, 'doSubmit') ? uniqueId(`Bill Notice ${new Date().getTime()}`) : null
+      fileName: get(data, 'doSubmit') ? uniqueId(`Bill Notice ${new Date().getTime()}`) : null,
+      pdfData: `<html lang='zh-cn'><body>${get(data, 'pdfData')}</body></html>`
     });
   },
   nodeListTransform,
