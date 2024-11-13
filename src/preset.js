@@ -79,10 +79,10 @@ export const globalInit = async () => {
 
   const componentsCoreRemote = {
     ...registry,
-    //url: 'http://localhost:3001',
-    //tpl: '{{url}}',
+    // url: 'http://localhost:3001',
+    // tpl: '{{url}}',
     remote: 'components-core',
-    defaultVersion: '0.2.65'
+    defaultVersion: '0.2.66'
   };
 
   remoteLoaderPreset({
@@ -98,6 +98,11 @@ export const globalInit = async () => {
         ...registry,
         remote: 'components-iconfont',
         defaultVersion: '0.1.8'
+      },
+      'components-view': {
+        ...registry,
+        remote: 'components-view',
+        defaultVersion: '0.1.33'
       },
       'components-function': {
         remote: 'components-function',

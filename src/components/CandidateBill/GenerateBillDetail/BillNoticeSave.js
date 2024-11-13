@@ -23,7 +23,7 @@ const BillNoticeSave = createWithRemoteLoader({
             id,
             flowRequest: get(stepCacheRef, 'current.billInfo.flowRequest'),
             pdfData: childrenRef.current.getRenderHtml(),
-            deleteFields: get(childrenRef.current, 'deleteFields')
+            deleteFields: get(childrenRef, 'current.deleteFields')
           },
           data,
           otherProps

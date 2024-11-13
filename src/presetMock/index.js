@@ -118,6 +118,14 @@ const preset = {
         loader: () => {
           return flow.data;
         }
+      },
+      // 撤销审批
+      approvalRepeal: {
+        loader: () => {}
+      },
+      // 审批操作
+      approvalAudit: {
+        loader: () => {}
       }
     },
     candidateBill: {
