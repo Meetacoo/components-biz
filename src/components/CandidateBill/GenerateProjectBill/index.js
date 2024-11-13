@@ -60,7 +60,10 @@ const GenerateProjectBill = createWithRemoteLoader({
                       ButtonComponent: SubmitButton,
                       type: 'default',
                       autoClose: false,
-                      children: '仅保存'
+                      children: '仅保存',
+                      onClick: () => {
+                        return { doSubmit: false };
+                      }
                     },
                     {
                       ButtonComponent: SubmitButton,
