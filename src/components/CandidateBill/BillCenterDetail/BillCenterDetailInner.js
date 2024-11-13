@@ -4,6 +4,7 @@ import { Col, Row, Space, Typography } from 'antd';
 import dayjs from 'dayjs';
 import TrackingListContent from './TrackingListContent';
 import Allocations from './Allocation';
+import { PaymentPreview } from '../../PaymentSelect';
 
 const AttachmentsContent = createWithRemoteLoader({
   modules: ['components-core:File@FileLink']
@@ -28,11 +29,14 @@ const BillCenterDetailInner = createWithRemoteLoader({
     'components-core:StateTag',
     'components-core:Enum',
     'components-core:InfoPage@formatView',
-    'components-core:Common@isNotEmpty'
+    'components-core:Common@isNotEmpty',
+    'components-core:Modal@useModal'
   ]
 })(({ remoteModules, data }) => {
   const { bill, billItems, allocations, userInfos } = data;
-  const [InfoPage, CentralContent, Content, StateTag, Enum, formatView, isNotEmpty] = remoteModules;
+  const [InfoPage, CentralContent, Content, StateTag, Enum, formatView, isNotEmpty, useModal] = remoteModules;
+  const modal = useModal();
+
   const calcList = (billItem, trackingList) => {
     const typeId = get(billItem, `typeId`);
 
@@ -222,8 +226,11 @@ const BillCenterDetailInner = createWithRemoteLoader({
                     <Col>
                       <Typography.Link
                         onClick={() => {
-                          // TODO 预览 payment 详情
-                          console.log('paymentId:', paymentId);
+                          // 预览 payment 详情
+                          modal({
+                            title: '付款信息预览',
+                            children: <PaymentPreview id={paymentId} />
+                          });
                         }}
                       >
                         预览
