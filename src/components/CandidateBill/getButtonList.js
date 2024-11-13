@@ -2,6 +2,7 @@ import { EditBillProjectButton } from './GenerateProjectBill';
 import { EditBillButton } from './GenerateBill';
 import merge from 'lodash/merge';
 import get from 'lodash/get';
+import downloadBlobFile from '@hkyhy/customize-file-retrieval/downloadBlobFile';
 
 const getButtonList = ({ bill, hasBillEditAuth, hasBillExportAuth, ajax, apis, onSuccess, message }) => {
   return [
@@ -36,7 +37,13 @@ const getButtonList = ({ bill, hasBillEditAuth, hasBillExportAuth, ajax, apis, o
     {
       children: '下载账单',
       // 无账单下载权限、账单状态为除审核通过外的其他状态时，不能下载账单
-      disabled: !hasBillExportAuth || get(bill, 'state') !== 5
+      disabled: !hasBillExportAuth || get(bill, 'state') !== 5,
+      onClick: async () => {
+        if (get(bill, 'pdfAttachment.id')) {
+          const { data: urlData } = await ajax(merge({}, apis.oss, { params: { id: get(bill, 'pdfAttachment.id') } }));
+          downloadBlobFile(urlData?.data, `${get(bill, 'pdfAttachment.originalName')}`);
+        }
+      }
     }
   ];
 };

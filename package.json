@@ -66,6 +66,7 @@
   },
   "devDependencies": {
     "@craco/craco": "^7.1.0",
+    "@hkyhy/customize-file-retrieval": "^0.0.4",
     "@kne/modules-dev": "^2.1.2",
     "@kne/react-fetch": "^1.4.3",
     "@kne/react-form-antd": "^3.1.6",
