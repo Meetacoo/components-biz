@@ -102,7 +102,7 @@ export const globalInit = async () => {
       'components-view': {
         ...registry,
         remote: 'components-view',
-        defaultVersion: '0.1.40'
+        defaultVersion: '0.1.33'
       },
       'components-function': {
         remote: 'components-function',

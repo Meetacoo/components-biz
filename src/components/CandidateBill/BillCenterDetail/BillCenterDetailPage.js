@@ -1,13 +1,27 @@
 import { createWithRemoteLoader } from '@kne/remote-loader';
 import BillCenterDetail from './BillCenterDetail';
 import RightOptions from './RightOptions';
-import { Space } from 'antd';
+import { App, Space } from 'antd';
 import get from 'lodash/get';
+import getButtonList from '../getButtonList';
 
 const BillCenterDetailPage = createWithRemoteLoader({
-  modules: ['components-core:Layout@Page', 'components-core:Enum', 'components-core:StateTag', 'components-view:PageHeader']
+  modules: [
+    'components-core:Layout@Page',
+    'components-core:Global@usePreset',
+    'components-core:Enum',
+    'components-core:StateTag',
+    'components-view:PageHeader',
+    'components-core:Permissions@usePermissionsPass'
+  ]
 })(({ remoteModules, ...props }) => {
-  const [Page, Enum, StateTag, PageHeader] = remoteModules;
+  const [Page, usePreset, Enum, StateTag, PageHeader, usePermissionsPass] = remoteModules;
+  const { apis, ajax } = usePreset();
+  const { message } = App.useApp();
+
+  const hasBillEditAuth = usePermissionsPass({ request: ['bill:apply:edit'] });
+  const hasBillExportAuth = usePermissionsPass({ request: ['bill:apply:export_notice'] });
+
   return (
     <BillCenterDetail>
       {({ data, reload, content }) => {
@@ -24,7 +38,15 @@ const BillCenterDetailPage = createWithRemoteLoader({
                 }
                 buttonOptionsMaxWidth="220px"
                 buttonOptions={{
-                  list: []
+                  list: getButtonList({
+                    bill: get(data, 'bill'),
+                    hasBillEditAuth,
+                    hasBillExportAuth,
+                    ajax,
+                    apis,
+                    onSuccess: reload,
+                    message
+                  })
                 }}
                 tags={[
                   <Enum moduleName="BILL_STATE_ENUM" name={get(data, 'bill.state')}>
@@ -34,7 +56,8 @@ const BillCenterDetailPage = createWithRemoteLoader({
               />
             }
             option={
-              [2, 3, 4, 5].indexOf(get(data, 'bill.state')) > -1 && (
+              [2, 3, 4, 5].indexOf(get(data, 'bill.state')) > -1 &&
+              get(data, 'bill.billCheckRecords.length') && (
                 <RightOptions data={get(data, 'bill')} records={get(data, 'bill.billCheckRecords')} onReload={reload} />
               )
             }
