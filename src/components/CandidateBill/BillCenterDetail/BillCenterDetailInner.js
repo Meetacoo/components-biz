@@ -5,6 +5,7 @@ import dayjs from 'dayjs';
 import TrackingListContent from './TrackingListContent';
 import Allocations from './Allocation';
 import { PaymentPreview } from '../../PaymentSelect';
+import { ContractPreview } from '../../ContractSelect';
 
 const AttachmentsContent = createWithRemoteLoader({
   modules: ['components-core:File@FileLink']
@@ -132,8 +133,11 @@ const BillCenterDetailInner = createWithRemoteLoader({
                     <Col>
                       <Typography.Link
                         onClick={() => {
-                          // TODO 预览合同详情
-                          console.log('contractId:', contractId);
+                          // 预览合同详情
+                          modal({
+                            title: '合同信息',
+                            children: <ContractPreview id={contractId} />
+                          });
                         }}
                       >
                         预览
@@ -228,7 +232,7 @@ const BillCenterDetailInner = createWithRemoteLoader({
                         onClick={() => {
                           // 预览 payment 详情
                           modal({
-                            title: '付款信息预览',
+                            title: '付款信息',
                             children: <PaymentPreview id={paymentId} />
                           });
                         }}
