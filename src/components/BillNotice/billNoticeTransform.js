@@ -1,6 +1,7 @@
 import get from 'lodash/get';
 import dayjs from 'dayjs';
 import transform from 'lodash/transform';
+import { uniqueId } from 'lodash';
 
 const getContactItem = item => {
   return JSON.stringify({
@@ -138,7 +139,8 @@ const billNoticeTransform = {
           : typeof billNoticeTransform.getJsonValue(get(data, 'contactMobile')) === 'object'
             ? billNoticeTransform.getJsonValue(get(data, 'contactMobile')).phone
             : '',
-      team: deleteFieldsLength && deleteFields.indexOf('team') > -1 ? null : get(data, 'team')
+      team: deleteFieldsLength && deleteFields.indexOf('team') > -1 ? null : get(data, 'team'),
+      fileName: get(data, 'doSubmit') ? uniqueId(`Bill Notice ${new Date().getTime()}`) : null
     });
   },
   nodeListTransform,
