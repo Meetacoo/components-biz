@@ -1,5 +1,5 @@
 import { CONTRACT_STATE_ENUM } from '@components/ContractSelect';
-import { BILL_STATE_ENUM, BILL_EVENT_ENUM } from '@components/CandidateBill';
+import { BILL_STATE_ENUM, BILL_EVENT_ENUM, INVOICE_STATE_ENUM } from '@components/CandidateBill';
 import { getPublicPath } from '@kne/remote-loader';
 import flow from './flow.json';
 import range from 'lodash/range';
@@ -16,7 +16,6 @@ import bankData from './bankData.json';
 import trackingBillState from './trackingBillState.json';
 import addBill from './addBill.json';
 import accountInfo from './accountInfo.json';
-import { INVOICE_STATE_ENUM } from './enum';
 
 const noticeInfo = addBill.data.notice;
 

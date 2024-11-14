@@ -1,4 +1,4 @@
-export const INVOICE_STATE_ENUM = [
+const INVOICE_STATE_ENUM = [
   { value: 1, description: '待提交开票', type: 'info' },
   { value: 2, description: '开票审核中', type: 'progress' },
   { value: 3, description: '撤销开票审核', type: 'default' },
@@ -15,3 +15,5 @@ export const INVOICE_STATE_ENUM = [
   { value: 18, description: '停止开票审核中', type: 'danger' },
   { value: 19, description: '存在部分退票', type: 'danger' }
 ];
+
+export default INVOICE_STATE_ENUM;
