@@ -1,6 +1,7 @@
 import get from 'lodash/get';
 import { billTransform } from '../index';
 import CandidatesTooltip from './CandidatesTooltip';
+import InvoicedAmountTooltip from './InvoiceAmountTooltip';
 
 const getColumns = ({ formatView, hasPositionAuth, hasTalentAuth }) => {
   return [
@@ -62,7 +63,7 @@ const getColumns = ({ formatView, hasPositionAuth, hasTalentAuth }) => {
       title: '已开票金额',
       type: 'serialNumberShort',
       // TODO 等结算中心
-      valueOf: ({ invoicedAmount }) => formatView(invoicedAmount, 'number--100')
+      valueOf: ({ invoicedAmount, invoiceList }) => <InvoicedAmountTooltip invoicedAmount={invoicedAmount} dataSource={invoiceList} />
     },
     {
       name: 'paidAmount',

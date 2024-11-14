@@ -43,7 +43,21 @@
       "typeNames": ["项目管理"],
       "billItem": null,
       "preInvoiceAmount": null,
-      "invoicedAmount": null,
+      "invoicedAmount": 100000,
+      "invoiceList": [
+        {
+          "id": 114,
+          "state": 15,
+          "totalAmount": 10000,
+          "serialNumber": "IN0000021401"
+        },
+        {
+          "id": 115,
+          "state": 7,
+          "totalAmount": 90000,
+          "serialNumber": "IN0000021402"
+        }
+      ],
       "paidAmount": null,
       "candidates": null,
       "allocations": [
@@ -103,7 +117,21 @@
       "typeNames": ["项目管理"],
       "billItem": null,
       "preInvoiceAmount": null,
-      "invoicedAmount": null,
+      "invoicedAmount": 100000,
+      "invoiceList": [
+        {
+          "id": 114,
+          "state": 15,
+          "totalAmount": 10000,
+          "serialNumber": "IN0000021401"
+        },
+        {
+          "id": 115,
+          "state": 7,
+          "totalAmount": 90000,
+          "serialNumber": "IN0000021402"
+        }
+      ],
       "paidAmount": null,
       "candidates": null,
       "allocations": [
@@ -163,7 +191,21 @@
       "typeNames": ["入职到岗"],
       "billItem": null,
       "preInvoiceAmount": null,
-      "invoicedAmount": null,
+      "invoicedAmount": 100000,
+      "invoiceList": [
+        {
+          "id": 114,
+          "state": 15,
+          "totalAmount": 10000,
+          "serialNumber": "IN0000021401"
+        },
+        {
+          "id": 115,
+          "state": 7,
+          "totalAmount": 90000,
+          "serialNumber": "IN0000021402"
+        }
+      ],
       "paidAmount": null,
       "candidates": [
         {
@@ -216,9 +258,264 @@
           "name": "福玲"
         }
       ]
+    },
+    {
+      "id": 139,
+      "serialNumber": "RSZD0000139",
+      "feeType": 1,
+      "type": 2,
+      "state": 4,
+      "clientId": 150,
+      "clientName": "Hands-off合同1",
+      "contractId": null,
+      "contractSubjectCode": null,
+      "contractName": "",
+      "contractStatus": 5,
+      "projectId": null,
+      "projectName": "",
+      "paymentId": 115,
+      "invoiceType": 3,
+      "invoiceTitle": "Hands-off合同1",
+      "taxpayerIdNumber": null,
+      "taxRegistrationAddress": null,
+      "taxRegistrationPhone": null,
+      "openingBankName": null,
+      "openingBackAccount": null,
+      "standardAmount": null,
+      "amountDiffReason": null,
+      "amount": 1000000,
+      "remark": "",
+      "attachments": [],
+      "flowRequest": null,
+      "flowInstanceId": "202309061736357900",
+      "pdfAttachment": null,
+      "coId": 950,
+      "appId": 1096,
+      "orgId": 140,
+      "termId": 117500398,
+      "uid": 140,
+      "name": "福玲",
+      "createdAt": "2023-09-05T17:05:27.000+08:00",
+      "updatedAt": "2024-06-12T09:53:29.000+08:00",
+      "passAt": null,
+      "typeNames": ["入职到岗"],
+      "billItem": null,
+      "preInvoiceAmount": null,
+      "paidAmount": null,
+      "candidates": [
+        {
+          "cvId": "212581536178896896",
+          "jdId": "211892249909264384",
+          "cvName": "候选人17",
+          "jdName": "高级测试开发工程师",
+          "joinedTime": "2023-08-10",
+          "expectJoinedTime": null,
+          "trackingSerialNumber": "RPN000248929",
+          "trackingId": "248929",
+          "serviceType": "Headhunter"
+        }
+      ],
+      "allocations": [
+        {
+          "id": 37,
+          "clientId": 150,
+          "billId": 140,
+          "amount": 5000,
+          "coId": 950,
+          "appId": 1096,
+          "orgId": 137,
+          "termId": 117500400,
+          "uid": 141,
+          "name": "user1-王福玲"
+        },
+        {
+          "id": 38,
+          "clientId": 150,
+          "billId": 140,
+          "amount": -5000,
+          "coId": 950,
+          "appId": 1096,
+          "orgId": 140,
+          "termId": 117500398,
+          "uid": 140,
+          "name": "福玲"
+        },
+        {
+          "id": 39,
+          "clientId": 150,
+          "billId": 140,
+          "amount": 1000000,
+          "coId": 950,
+          "appId": 1096,
+          "orgId": 140,
+          "termId": 117500398,
+          "uid": 140,
+          "name": "福玲"
+        }
+      ]
+    },
+    {
+      "id": 179,
+      "serialNumber": "RSZD0000179",
+      "feeType": 2,
+      "type": 2,
+      "state": 5,
+      "clientId": 114,
+      "clientName": "aaa",
+      "contractId": 182,
+      "contractSubjectCode": "fat_sh",
+      "contractName": "SpicyTest",
+      "contractStatus": 5,
+      "projectId": null,
+      "projectName": "",
+      "projectSerialNum": null,
+      "paymentId": 57,
+      "invoiceType": 1,
+      "invoiceTitle": "SPP0000012",
+      "taxpayerIdNumber": "SPP000000011",
+      "taxRegistrationAddress": "上海市",
+      "taxRegistrationPhone": "021-101001020",
+      "openingBankName": "中国银行",
+      "openingBackAccount": "1010101010101012",
+      "standardAmount": null,
+      "amountDiffReason": null,
+      "amount": 2000000,
+      "remark": "",
+      "attachments": null,
+      "flowRequest": {
+        "flowNo": "1004",
+        "businessNo": "179",
+        "content": "{\"amount\":\"2000000\",\"clientName\":\"aaa\"}",
+        "userId": 2,
+        "businessType": "BILL",
+        "title": "胡金赟提交的账单审批",
+        "metaData": null,
+        "applicant": "胡金赟",
+        "coId": null,
+        "nodeList": [
+          {
+            "level": 1,
+            "userId": [2],
+            "order": null,
+            "nodeId": 190,
+            "actionType": 1,
+            "userName": null,
+            "auditType": "OR"
+          }
+        ],
+        "fatUser": {
+          "uid": 2,
+          "name": "胡金赟",
+          "email": "a@a.com",
+          "coId": 1,
+          "appId": 1,
+          "orgId": 1,
+          "termId": 100002,
+          "dataRangeType": 4,
+          "haveUserDefined": false,
+          "openModular": [
+            "system",
+            "profits",
+            "bill",
+            "jd",
+            "applets",
+            "contract",
+            "approval",
+            "provision",
+            "home",
+            "client",
+            "target",
+            "ats",
+            "cv",
+            "dataBoard",
+            "invoicing",
+            "stats",
+            "invoice",
+            "payment"
+          ],
+          "atsConfig": 2,
+          "resumeAuthorization": 0,
+          "offerState": 0,
+          "phoneBlacklist": 1,
+          "zone": null,
+          "allCompany": true,
+          "onlySelf": false,
+          "needLoadSharingGroup": false,
+          "needLoadUserTerm": false
+        },
+        "extraInfo": null
+      },
+      "flowInstanceId": "202411131158591184",
+      "pdfAttachment": {
+        "id": "WLisI5MBO12XLYojr2IT",
+        "originalName": "Bill Notice 17314703387992.pdf"
+      },
+      "coId": 1,
+      "appId": 1,
+      "orgId": 1,
+      "termId": 100002,
+      "uid": 2,
+      "name": "胡金赟",
+      "createdAt": "2024-11-13T11:58:47.000+08:00",
+      "updatedAt": "2024-11-13T11:58:47.000+08:00",
+      "passAt": "2024-11-13T11:59:11.000+08:00",
+      "typeNames": ["入职到岗"],
+      "preInvoiceAmount": null,
+      "invoicedAmount": null,
+      "paidAmount": null,
+      "candidates": [
+        {
+          "cvId": "148855716780703744",
+          "jdId": "197037759582437376",
+          "cvName": "Ken Zhan",
+          "jdName": "产品经理（复制）（复制）（复制）（复制）（复制）",
+          "joinedTime": "",
+          "expectJoinedTime": null,
+          "trackingSerialNumber": "RPN000248918",
+          "trackingId": "248918",
+          "serviceType": null
+        }
+      ],
+      "allocations": [
+        {
+          "id": 274,
+          "clientId": 114,
+          "billId": 179,
+          "amount": 2000000,
+          "coId": 1,
+          "appId": 1,
+          "orgId": 1,
+          "termId": 100002,
+          "uid": 2,
+          "name": "胡金赟"
+        }
+      ]
     }
   ],
   "userInfos": [
+    {
+      "id": 2,
+      "uid": 2,
+      "email": "a@a.com",
+      "phone": "13774418888",
+      "name": "胡金赟",
+      "englishName": "sss",
+      "avatar": "",
+      "gender": "M",
+      "state": 0,
+      "createdAt": "2022-04-15T16:53:25.000+08:00",
+      "isAdmin": 1,
+      "updatedAt": "2023-05-05T18:28:22.000+08:00",
+      "coId": 1,
+      "orgId": 1,
+      "orgName": "1222",
+      "orgEnName": "",
+      "zone": null,
+      "isLeader": 0,
+      "termId": null,
+      "appState": null,
+      "opLeader": 4
+    },
     {
       "id": 140,
       "uid": 140,

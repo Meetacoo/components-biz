@@ -8,8 +8,9 @@ const InvoicedAmountTooltipContent = createWithRemoteLoader({
 
   const defaultColumns = [
     {
-      name: 'id',
-      title: '发票ID'
+      name: 'serialNumber',
+      title: '发票ID',
+      span: 10
     },
     {
       name: 'state',
@@ -17,16 +18,17 @@ const InvoicedAmountTooltipContent = createWithRemoteLoader({
       render: value => {
         const invoiceState = invoiceStateEnum.find(item => item.value === value);
         return <StateTag type={get(invoiceState, 'type')} text={get(invoiceState, 'description')} />;
-      }
+      },
+      span: 10
     },
     {
-      name: 'amount',
+      name: 'totalAmount',
       title: '发票金额',
       render: value => formatView(value || 0, 'number--100')
     }
   ];
   return dataSource?.length ? (
-    <div style={{ minWidth: '280px' }}>
+    <div style={{ minWidth: '320px' }}>
       <TableView dataSource={dataSource} columns={defaultColumns.filter(x => columns.some(it => it === x.name))} />
     </div>
   ) : (
@@ -36,7 +38,7 @@ const InvoicedAmountTooltipContent = createWithRemoteLoader({
 
 const InvoicedAmountTooltip = createWithRemoteLoader({
   modules: ['components-core:Tooltip', 'components-core:Enum', 'components-core:InfoPage@formatView']
-})(({ remoteModules, columns = ['id', 'state', 'amount'], rowKey = 'cvName', invoicedAmount, ...props }) => {
+})(({ remoteModules, columns = ['serialNumber', 'state', 'totalAmount'], rowKey = 'id', invoicedAmount, ...props }) => {
   const [Tooltip, Enum, formatView] = remoteModules;
   return (
     <Tooltip

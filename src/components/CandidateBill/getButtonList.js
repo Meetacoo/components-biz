@@ -4,12 +4,19 @@ import merge from 'lodash/merge';
 import get from 'lodash/get';
 import downloadBlobFile from '@hkyhy/customize-file-retrieval/downloadBlobFile';
 
+const cantEditInvoiceState = [2, 5, 7, 8, 9, 10, 14, 18];
+
 const getButtonList = ({ bill, hasBillEditAuth, hasBillExportAuth, ajax, apis, onSuccess, message }) => {
-  const notEditState = [2, 5].indexOf(get(bill, 'state')) > -1;
-  const editDisabled = !hasBillEditAuth || notEditState;
+  // 账单未开票时，账单状态为<待提交审核>、<审核拒绝>、<撤销审核>时，可【编辑账单】
+  const notEditState = !(!get(bill, 'invoiceList.length') && [2, 5].indexOf(get(bill, 'state')) < 0);
+  // 当账单审核通过时，开票状态为<开票审核中>、<待财务开票>、<已开票待发出>、<已发出待收款>、<部分到款>、<全部到款>、<停止开票审核中>、<退票审核中>时不可编辑账单
+  const notEditInvoiceState =
+    get(bill, 'state') === 5 && (get(bill, 'invoiceList') || []).some(({ state }) => cantEditInvoiceState.indexOf(state) > -1);
+  const editDisabled = !hasBillEditAuth || notEditState || notEditInvoiceState;
   const isInReviewState = get(bill, 'state') === 2;
   const notDownloadState = get(bill, 'state') !== 5;
   const downloadDisabled = !hasBillEditAuth || notDownloadState;
+
   return [
     {
       type: 'primary',
@@ -28,7 +35,7 @@ const getButtonList = ({ bill, hasBillEditAuth, hasBillExportAuth, ajax, apis, o
       disabled: editDisabled,
       tooltipProps: editDisabled
         ? {
-            title: !hasBillExportAuth ? '没有编辑账单权限' : notEditState ? '账单已开票，不可编辑' : null
+            title: !hasBillExportAuth ? '没有编辑账单权限' : notEditInvoiceState ? '账单已开票，不可编辑' : '账单状态不可编辑'
           }
         : null,
       onSuccess,
