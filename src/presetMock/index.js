@@ -16,6 +16,7 @@ import bankData from './bankData.json';
 import trackingBillState from './trackingBillState.json';
 import addBill from './addBill.json';
 import accountInfo from './accountInfo.json';
+import { INVOICE_STATE_ENUM } from './enum';
 
 const noticeInfo = addBill.data.notice;
 
@@ -74,6 +75,7 @@ const preset = {
     BILL_STATE_ENUM,
     BILL_EVENT_ENUM,
     CONTRACT_STATE_ENUM,
+    INVOICE_STATE_ENUM,
     invoiceProjectType: [
       { value: 1, description: 'onsite' },
       { value: 2, description: 'mapping' },

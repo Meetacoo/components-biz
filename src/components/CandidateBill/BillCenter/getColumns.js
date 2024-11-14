@@ -61,6 +61,7 @@ const getColumns = ({ formatView, hasPositionAuth, hasTalentAuth }) => {
       name: 'invoicedAmount',
       title: '已开票金额',
       type: 'serialNumberShort',
+      // TODO 等结算中心
       valueOf: ({ invoicedAmount }) => formatView(invoicedAmount, 'number--100')
     },
     {
