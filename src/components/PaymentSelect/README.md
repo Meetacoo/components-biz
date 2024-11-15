@@ -39,6 +39,7 @@ const BaseExample = createWithRemoteLoader({
       >
         <PaymentSelect name="payment" label="付款信息" />
         <PaymentSelect name="payment2" label="付款信息(有默认值)" />
+        <PaymentSelect name="payment2" label="付款信息(有默认值并禁止修改)" disabled />
       </Form>
     </PureGlobal>
   );
@@ -53,7 +54,7 @@ render(<BaseExample />);
 - _PaymentSelect(@components/PaymentSelect),remoteLoader(@kne/remote-loader),_presetMock(@root/presetMock)
 
 ```jsx
-const { Preview } = _PaymentSelect;
+const { PaymentPreviewInner } = _PaymentSelect;
 const { createWithRemoteLoader } = remoteLoader;
 const { default: presetMock } = _presetMock;
 
@@ -63,7 +64,7 @@ const BaseExample = createWithRemoteLoader({
   const [PureGlobal] = remoteModules;
   return (
     <PureGlobal preset={presetMock}>
-      <Preview id={0} />
+      <PaymentPreviewInner id={0} />
     </PureGlobal>
   );
 });

@@ -1,5 +1,5 @@
 import { CONTRACT_STATE_ENUM } from '@components/ContractSelect';
-import { BILL_STATE_ENUM, BILL_EVENT_ENUM } from '@components/CandidateBill';
+import { BILL_STATE_ENUM, BILL_EVENT_ENUM, INVOICE_STATE_ENUM } from '@components/CandidateBill';
 import { getPublicPath } from '@kne/remote-loader';
 import flow from './flow.json';
 import range from 'lodash/range';
@@ -16,6 +16,7 @@ import bankData from './bankData.json';
 import trackingBillState from './trackingBillState.json';
 import addBill from './addBill.json';
 import accountInfo from './accountInfo.json';
+import projectDetailInfo from './projectDetailInfo.json';
 
 const noticeInfo = addBill.data.notice;
 
@@ -74,6 +75,7 @@ const preset = {
     BILL_STATE_ENUM,
     BILL_EVENT_ENUM,
     CONTRACT_STATE_ENUM,
+    INVOICE_STATE_ENUM,
     invoiceProjectType: [
       { value: 1, description: 'onsite' },
       { value: 2, description: 'mapping' },
@@ -191,7 +193,7 @@ const preset = {
           return projectList.data;
         }
       },
-      getDetail: {
+      getContractProjectDetail: {
         loader: () => {
           return projectList.data.projectList[0];
         }
@@ -290,7 +292,8 @@ export {
   companyData,
   bankData,
   billInfo,
-  noticeInfo
+  noticeInfo,
+  projectDetailInfo
 };
 
 export default preset;

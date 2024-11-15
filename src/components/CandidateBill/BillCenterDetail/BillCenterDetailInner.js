@@ -6,6 +6,8 @@ import TrackingListContent from './TrackingListContent';
 import Allocations from './Allocation';
 import { PaymentPreview } from '../../PaymentSelect';
 import { ContractPreview } from '../../ContractSelect';
+import { ProjectPreview } from '../../ProjectSelect';
+import Preview from '../../PaymentSelect/Preview';
 
 const AttachmentsContent = createWithRemoteLoader({
   modules: ['components-core:File@FileLink']
@@ -131,17 +133,7 @@ const BillCenterDetailInner = createWithRemoteLoader({
                       </Space>
                     </Col>
                     <Col>
-                      <Typography.Link
-                        onClick={() => {
-                          // 预览合同详情
-                          modal({
-                            title: '合同信息',
-                            children: <ContractPreview id={contractId} />
-                          });
-                        }}
-                      >
-                        预览
-                      </Typography.Link>
+                      <ContractPreview className="btn-no-padding" type="link" id={contractId} />
                     </Col>
                   </Row>
                 ),
@@ -150,7 +142,14 @@ const BillCenterDetailInner = createWithRemoteLoader({
               {
                 name: 'projectName',
                 title: '项目',
-                render: projectName => `${get(bill, 'projectSerialNum')} ${projectName}`,
+                render: projectName => (
+                  <Row justify="space-between" align="middle">
+                    <Col>{`${get(bill, 'projectSerialNum')} ${projectName}`}</Col>
+                    <Col>
+                      <ProjectPreview className="btn-no-padding" type="link" id={get(bill, 'projectId')} />
+                    </Col>
+                  </Row>
+                ),
                 display: !!get(bill, 'projectId')
               },
               {
@@ -228,17 +227,7 @@ const BillCenterDetailInner = createWithRemoteLoader({
                   <Row justify="space-between" align="middle">
                     <Col>{get(bill, 'invoiceTitle') || '-'}</Col>
                     <Col>
-                      <Typography.Link
-                        onClick={() => {
-                          // 预览 payment 详情
-                          modal({
-                            title: '付款信息',
-                            children: <PaymentPreview id={paymentId} />
-                          });
-                        }}
-                      >
-                        预览
-                      </Typography.Link>
+                      <PaymentPreview className="btn-no-padding" type="link" id={paymentId} />
                     </Col>
                   </Row>
                 )

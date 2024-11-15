@@ -49,7 +49,7 @@ render(<BaseExample />);
 - _ContractSelect(@components/ContractSelect),remoteLoader(@kne/remote-loader),_presetMock(@root/presetMock)
 
 ```jsx
-const { Preview } = _ContractSelect;
+const { ContractPreviewInner } = _ContractSelect;
 const { createWithRemoteLoader } = remoteLoader;
 const { default: presetMock } = _presetMock;
 
@@ -59,7 +59,7 @@ const BaseExample = createWithRemoteLoader({
   const [PureGlobal] = remoteModules;
   return (
     <PureGlobal preset={presetMock}>
-      <Preview />
+      <ContractPreviewInner />
     </PureGlobal>
   );
 });

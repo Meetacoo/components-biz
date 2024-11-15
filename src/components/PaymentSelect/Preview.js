@@ -1,5 +1,5 @@
 import { createWithRemoteLoader } from '@kne/remote-loader';
-import { Flex } from 'antd';
+import { Button, Flex } from 'antd';
 import Fetch from '@kne/react-fetch';
 
 export const Detail = createWithRemoteLoader({
@@ -91,7 +91,7 @@ export const Detail = createWithRemoteLoader({
   );
 });
 
-const Preview = createWithRemoteLoader({
+export const PaymentPreviewInner = createWithRemoteLoader({
   modules: ['components-core:Global@usePreset']
 })(({ remoteModules, id }) => {
   const [usePreset] = remoteModules;
@@ -103,6 +103,27 @@ const Preview = createWithRemoteLoader({
       })}
       render={({ data }) => <Detail data={data} />}
     />
+  );
+});
+
+const Preview = createWithRemoteLoader({
+  modules: ['components-core:Modal@useModal']
+})(({ remoteModules, id, ...props }) => {
+  const [useModal] = remoteModules;
+  const modal = useModal();
+  return (
+    <Button
+      {...props}
+      onClick={() => {
+        modal({
+          title: '付款信息',
+          footer: null,
+          children: <PaymentPreviewInner id={id} />
+        });
+      }}
+    >
+      预览
+    </Button>
   );
 });
 

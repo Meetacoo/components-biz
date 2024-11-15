@@ -21,6 +21,7 @@ const BaseExample = createWithRemoteLoader({
       >
         <PaymentSelect name="payment" label="付款信息" />
         <PaymentSelect name="payment2" label="付款信息(有默认值)" />
+        <PaymentSelect name="payment2" label="付款信息(有默认值并禁止修改)" disabled />
       </Form>
     </PureGlobal>
   );

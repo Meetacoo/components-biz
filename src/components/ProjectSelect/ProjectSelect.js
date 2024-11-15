@@ -1,18 +1,21 @@
-import { useMemo } from 'react';
 import { createWithRemoteLoader } from '@kne/remote-loader';
-import { Flex, Row, Col, Radio, Checkbox, Typography } from 'antd';
-import useRefCallback from '@kne/use-ref-callback';
-import getColumns from './getColumns';
-import classnames from 'classnames';
-import get from 'lodash/get';
 import merge from 'lodash/merge';
-import style from './style.module.scss';
+import { Checkbox, Col, Flex, Radio, Row, Typography } from 'antd';
+import classnames from 'classnames';
+import useRefCallback from '@kne/use-ref-callback';
+import get from 'lodash/get';
 
-const ProjectSelectField = createWithRemoteLoader({
-  modules: ['components-core:Common@createListField', 'components-core:Table', 'components-core:Global@usePreset']
+import style from './style.module.scss';
+import getColumns from './getColumns';
+import { ProjectPreview } from './index';
+
+const ProjectSelect = createWithRemoteLoader({
+  modules: ['components-core:FormInfo@fields', 'components-core:Global@usePreset', 'components-core:Table']
 })(({ remoteModules, data, api: propsApi, fieldNames = { serialNum: 'serialNum', name: 'name', id: 'id' }, ...others }) => {
-  const [createListField, Table, usePreset] = remoteModules;
+  const [fields, usePreset, Table] = remoteModules;
+  const { SuperSelect } = fields;
   const { apis, ajax } = usePreset();
+
   const formatValue = item => {
     if (!item) {
       return;
@@ -25,6 +28,8 @@ const ProjectSelectField = createWithRemoteLoader({
   const props = Object.assign(
     {},
     {
+      single: true,
+      valueKey: fieldNames.id,
       valueType: 'all',
       api: merge({}, Object.assign({}, apis.project.getList, { data }), propsApi),
       dataFormat: data => {
@@ -51,82 +56,78 @@ const ProjectSelectField = createWithRemoteLoader({
       window.open(data?.data?.url);
     }
   });
-  const Components = useMemo(
-    () =>
-      createListField({
-        defaultProps: {
-          single: true,
-          showSelectedTag: false
-        },
-        renderList: ({ props, list, value, onSelect }) => {
-          const { single } = props;
-          const CheckedComponent = single ? Radio : Checkbox;
-          return (
-            <Flex vertical gap={24}>
-              {list.map(item => {
-                const checked = value.indexOf(item[fieldNames.id]) > -1;
-                return (
-                  <Flex
-                    key={item[fieldNames.id]}
-                    className={classnames(style['project-item'], {
-                      [style['is-selected']]: checked
-                    })}
-                    vertical
-                    gap={12}
-                    onClick={() => {
-                      onSelect(item);
-                    }}
-                  >
-                    <Row justify="space-between">
-                      <Col>
-                        <CheckedComponent checked={checked}>{item.label}</CheckedComponent>
-                      </Col>
-                      <Col>
-                        {props.showContract && get(item, 'contractId') ? (
-                          <div className={style['project-contract']}>
-                            所属合同{`《${item.contractName}》`}
-                            <Typography.Link
-                              onClick={async e => {
-                                e.stopPropagation();
-                                e.preventDefault();
-                                gotoContract(item);
-                              }}
-                            >
-                              查看
-                            </Typography.Link>
-                          </div>
-                        ) : null}
-                      </Col>
-                    </Row>
-                    <Table
-                      controllerOpen={false}
-                      dataSource={item.projectPriceList || []}
-                      pagination={false}
-                      rowKey={'id'}
-                      columns={[...getColumns()]}
-                    />
-                  </Flex>
-                );
-              })}
-            </Flex>
-          );
-        }
-      }),
-    [createListField, gotoContract]
+  return (
+    <SuperSelect
+      {...props}
+      isPopup={false}
+      suffix={({ value }) => {
+        return props.disabled && value.length > 0 && <ProjectPreview id={get(value[0], `value.${fieldNames.id}`)} />;
+      }}
+      renderItem={contextProps => {
+        const { item, props, isSelectedAll, value, onSelect, setValue, onOpenChange } = contextProps;
+        const { single, isPopup, valueKey } = props;
+        const CheckedComponent = single ? Radio : Checkbox;
+        const isChecked = value.some(target => target.value[valueKey] === item[valueKey]);
+        return (
+          <Flex
+            key={item[fieldNames.id]}
+            className={classnames(style['project-item'], {
+              [style['is-selected']]: isChecked
+            })}
+            vertical
+            gap={12}
+            onClick={() => {
+              if (item.disabled) {
+                return;
+              }
+              if (isSelectedAll) {
+                return;
+              }
+              if (single) {
+                setValue([item]);
+              } else {
+                onSelect(item);
+              }
+              if (isPopup && single) {
+                onOpenChange(false);
+              }
+            }}
+          >
+            <Row justify="space-between">
+              <Col>
+                <CheckedComponent checked={isChecked}>{item.label}</CheckedComponent>
+              </Col>
+              <Col>
+                {props.showContract && get(item, 'contractId') ? (
+                  <div className={style['project-contract']}>
+                    所属合同{`《${item.contractName}》`}
+                    <Typography.Link
+                      onClick={async e => {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        gotoContract(item);
+                      }}
+                    >
+                      查看
+                    </Typography.Link>
+                  </div>
+                ) : null}
+              </Col>
+            </Row>
+            <Table
+              controllerOpen={false}
+              dataSource={item.projectPriceList || []}
+              pagination={false}
+              rowKey={fieldNames.id}
+              columns={[...getColumns()]}
+            />
+          </Flex>
+        );
+      }}
+    />
   );
-
-  return <Components {...props} isPopup={false} />;
 });
 
-const ProjectSelect = createWithRemoteLoader({
-  modules: ['FormInfo@hooks']
-})(({ remoteModules, ...props }) => {
-  const [hooks] = remoteModules;
-  const { useOnChange } = hooks;
-  const render = useOnChange(Object.assign({}, { placeholder: '请选择' + props.label }, props));
-  return render(ProjectSelectField);
-});
-
-ProjectSelect.Field = ProjectSelectField;
+ProjectSelect.Field = ProjectSelect;
 
 export default ProjectSelect;

@@ -121,7 +121,7 @@ export const GenerateBillButton = createWithRemoteLoader({
                     clientId: { label: get(client, 'clientName'), value: get(client, 'clientId') },
                     trackingList,
                     typeId,
-                    projectId: projectInfo,
+                    projectId: { label: `${get(projectInfo, 'projectSerialNum')} ${get(projectInfo, 'projectName')}`, value: projectInfo },
                     standardAmount: billTransform.getAmount(
                       formatView,
                       (trackingList || []).reduce((prev, cur) => prev + cur.standardAmount, 0)

@@ -1,9 +1,9 @@
 import { createWithRemoteLoader } from '@kne/remote-loader';
 import merge from 'lodash/merge';
 import get from 'lodash/get';
-import { Row, Col, Flex, Alert, Button } from 'antd';
+import { Alert, Col, Flex, Row } from 'antd';
 import classnames from 'classnames';
-import Preview from './Preview';
+import Preview, { PaymentPreviewInner } from './Preview';
 import style from './style.module.scss';
 
 const PaymentSelect = createWithRemoteLoader({
@@ -35,21 +35,7 @@ const PaymentSelect = createWithRemoteLoader({
         };
       }}
       suffix={({ value }) => {
-        return (
-          props.disabled &&
-          value.length > 0 && (
-            <Button
-              onClick={() => {
-                modal({
-                  title: '付款信息预览',
-                  children: <Preview id={get(value[0], 'value')} />
-                });
-              }}
-            >
-              预览
-            </Button>
-          )
-        );
+        return props.disabled && value.length > 0 && <Preview id={get(value[0], 'value')} />;
       }}
       renderItemContent={({ item }) => {
         return (
@@ -83,7 +69,7 @@ const PaymentSelect = createWithRemoteLoader({
                 >
                   <Flex vertical gap={24}>
                     <div>预览</div>
-                    {value[0] && <Preview id={get(value[0], 'value')} />}
+                    {value[0] && <PaymentPreviewInner id={get(value[0], 'value')} />}
                   </Flex>
                 </SimpleBar>
               </Col>

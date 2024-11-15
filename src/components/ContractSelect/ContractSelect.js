@@ -1,8 +1,8 @@
 import { createWithRemoteLoader } from '@kne/remote-loader';
 import merge from 'lodash/merge';
-import { Row, Col, Flex, Alert, Button } from 'antd';
+import { Alert, Col, Flex, Row } from 'antd';
 import classnames from 'classnames';
-import Preview from './Preview';
+import Preview, { ContractPreviewInner } from './Preview';
 import style from './style.module.scss';
 
 const ContractSelect = createWithRemoteLoader({
@@ -31,21 +31,7 @@ const ContractSelect = createWithRemoteLoader({
         };
       }}
       suffix={({ value }) => {
-        return (
-          props.disabled &&
-          value.length > 0 && (
-            <Button
-              onClick={() => {
-                modal({
-                  title: '合同预览',
-                  children: <Preview id={value[0].value} />
-                });
-              }}
-            >
-              预览
-            </Button>
-          )
-        );
+        return props.disabled && value.length > 0 && <Preview id={value[0].value} />;
       }}
       renderItemContent={({ item }) => {
         return (
@@ -88,7 +74,7 @@ const ContractSelect = createWithRemoteLoader({
                 >
                   <Flex vertical gap={24}>
                     <div>预览</div>
-                    {value[0] && <Preview id={value[0].value} />}
+                    {value[0] && <ContractPreviewInner id={value[0].value} />}
                   </Flex>
                 </SimpleBar>
               </Col>
