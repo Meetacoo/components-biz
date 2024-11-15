@@ -2,8 +2,9 @@ import { createWithRemoteLoader } from '@kne/remote-loader';
 import Fetch from '@kne/react-fetch';
 import ProjectDetailSelectRenderList from './ProjectDetailSelectRenderList';
 import get from 'lodash/get';
+import { Button } from 'antd';
 
-const Preview = createWithRemoteLoader({
+const PreviewInner = createWithRemoteLoader({
   modules: ['components-core:Global@usePreset']
 })(({ remoteModules, id }) => {
   const [usePreset] = remoteModules;
@@ -17,6 +18,28 @@ const Preview = createWithRemoteLoader({
         return <ProjectDetailSelectRenderList data={data} dataSource={get(data, 'projectPriceList')} />;
       }}
     />
+  );
+});
+
+const Preview = createWithRemoteLoader({
+  modules: ['components-core:Modal@useModal']
+})(({ remoteModules, id, ...props }) => {
+  const [useModal] = remoteModules;
+  const modal = useModal();
+
+  return (
+    <Button
+      {...props}
+      onClick={() => {
+        modal({
+          title: '项目',
+          footer: null,
+          children: <PreviewInner id={id} />
+        });
+      }}
+    >
+      预览
+    </Button>
   );
 });
 

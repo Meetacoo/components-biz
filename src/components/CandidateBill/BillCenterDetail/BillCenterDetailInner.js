@@ -156,18 +156,7 @@ const BillCenterDetailInner = createWithRemoteLoader({
                   <Row justify="space-between" align="middle">
                     <Col>{`${get(bill, 'projectSerialNum')} ${projectName}`}</Col>
                     <Col>
-                      <Typography.Link
-                        onClick={() => {
-                          // 预览项目详情
-                          modal({
-                            title: '项目',
-                            footer: null,
-                            children: <ProjectPreview id={get(bill, 'projectId')} />
-                          });
-                        }}
-                      >
-                        预览
-                      </Typography.Link>
+                      <ProjectPreview className="btn-no-padding" type={'link'} id={get(bill, 'projectId')} />
                     </Col>
                   </Row>
                 ),

@@ -61,22 +61,7 @@ const ProjectSelect = createWithRemoteLoader({
       {...props}
       isPopup={false}
       suffix={({ value }) => {
-        return (
-          props.disabled &&
-          value.length > 0 && (
-            <Button
-              onClick={() => {
-                modal({
-                  title: '项目预览',
-                  footer: null,
-                  children: <ProjectPreview id={get(value[0], `value.${fieldNames.id}`)} />
-                });
-              }}
-            >
-              预览
-            </Button>
-          )
-        );
+        return props.disabled && value.length > 0 && <ProjectPreview id={get(value[0], `value.${fieldNames.id}`)} />;
       }}
       renderItem={contextProps => {
         const { item, props, isSelectedAll, value, onSelect, setValue, onOpenChange } = contextProps;
