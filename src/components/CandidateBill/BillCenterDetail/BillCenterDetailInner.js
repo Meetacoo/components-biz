@@ -6,6 +6,7 @@ import TrackingListContent from './TrackingListContent';
 import Allocations from './Allocation';
 import { PaymentPreview } from '../../PaymentSelect';
 import { ContractPreview } from '../../ContractSelect';
+import { ProjectPreview } from '../../ProjectSelect';
 
 const AttachmentsContent = createWithRemoteLoader({
   modules: ['components-core:File@FileLink']
@@ -136,6 +137,7 @@ const BillCenterDetailInner = createWithRemoteLoader({
                           // 预览合同详情
                           modal({
                             title: '合同信息',
+                            footer: null,
                             children: <ContractPreview id={contractId} />
                           });
                         }}
@@ -150,7 +152,25 @@ const BillCenterDetailInner = createWithRemoteLoader({
               {
                 name: 'projectName',
                 title: '项目',
-                render: projectName => `${get(bill, 'projectSerialNum')} ${projectName}`,
+                render: projectName => (
+                  <Row justify="space-between" align="middle">
+                    <Col>{`${get(bill, 'projectSerialNum')} ${projectName}`}</Col>
+                    <Col>
+                      <Typography.Link
+                        onClick={() => {
+                          // 预览项目详情
+                          modal({
+                            title: '项目',
+                            footer: null,
+                            children: <ProjectPreview id={get(bill, 'projectId')} />
+                          });
+                        }}
+                      >
+                        预览
+                      </Typography.Link>
+                    </Col>
+                  </Row>
+                ),
                 display: !!get(bill, 'projectId')
               },
               {
@@ -233,6 +253,7 @@ const BillCenterDetailInner = createWithRemoteLoader({
                           // 预览 payment 详情
                           modal({
                             title: '付款信息',
+                            footer: null,
                             children: <PaymentPreview id={paymentId} />
                           });
                         }}
