@@ -16,6 +16,7 @@ import bankData from './bankData.json';
 import trackingBillState from './trackingBillState.json';
 import addBill from './addBill.json';
 import accountInfo from './accountInfo.json';
+import projectDetailInfo from './projectDetailInfo.json';
 
 const noticeInfo = addBill.data.notice;
 
@@ -291,7 +292,8 @@ export {
   companyData,
   bankData,
   billInfo,
-  noticeInfo
+  noticeInfo,
+  projectDetailInfo
 };
 
 export default preset;

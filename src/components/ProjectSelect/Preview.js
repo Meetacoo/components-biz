@@ -4,7 +4,7 @@ import ProjectDetailSelectRenderList from './ProjectDetailSelectRenderList';
 import get from 'lodash/get';
 import { Button } from 'antd';
 
-export const PaymentPreviewInner = createWithRemoteLoader({
+export const ProjectPreviewInner = createWithRemoteLoader({
   modules: ['components-core:Global@usePreset']
 })(({ remoteModules, id }) => {
   const [usePreset] = remoteModules;
@@ -34,7 +34,7 @@ const Preview = createWithRemoteLoader({
         modal({
           title: '项目',
           footer: null,
-          children: <PaymentPreviewInner id={id} />
+          children: <ProjectPreviewInner id={id} />
         });
       }}
     >

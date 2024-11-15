@@ -1,113 +1,105 @@
 import { createWithRemoteLoader } from '@kne/remote-loader';
-import { Flex } from 'antd';
-import { useMemo } from 'react';
 import ProjectDetailSelectRenderList from './ProjectDetailSelectRenderList';
-import getColumns from './getColumns';
+import merge from 'lodash/merge';
+import get from 'lodash/get';
+import { useMemo } from 'react';
+import ProjectDetailPreview from './ProjectDetailPreview';
 
-const ProjectDetailSelectField = createWithRemoteLoader({
-  modules: ['components-core:Common@createListField', 'components-core:Table', 'components-core:Global@usePreset']
-})(({ remoteModules, ...others }) => {
-  const [createListField, Table, usePreset] = remoteModules;
+const ProjectDetailSelect = createWithRemoteLoader({
+  modules: ['components-core:FormInfo@fields', 'components-core:Global@usePreset']
+})(({ remoteModules, api: propsApi, ...others }) => {
+  const [fields, usePreset] = remoteModules;
+  const { SuperSelect } = fields;
   const { apis } = usePreset();
+
+  const fieldNames = useMemo(() => merge({}, { serialNum: 'serialNum', name: 'name' }, get(others, 'fieldNames')), [others]);
+
+  const formatValue = (item, data) => {
+    if (!item) {
+      return;
+    }
+    return Object.assign({}, item, data, {
+      value: item,
+      label: `${item.rsfwlx} ${item.rsxffw} ${item.rstj}`
+    });
+  };
+
   const props = Object.assign(
     {},
     {
-      api: apis.project.getDetail,
+      single: true,
+      valueType: 'all',
+      valueKey: 'id',
+      api: merge({}, apis.project.getDetail, propsApi),
       dataFormat: data => {
         return Object.assign({}, data, {
-          list: (data.projectPriceList || []).map(item => {
-            return Object.assign({}, item, {
-              value: item.id,
-              label: `${item.rsfwlx} ${item.rsxffw} ${item.rstj}`
-            });
-          })
+          list: (data.projectPriceList || []).map(item => formatValue(item, data))
         });
       }
     },
-    others
-  );
-
-  const Components = useMemo(
-    () =>
-      createListField({
-        defaultProps: {
-          single: true,
-          showSelectedTag: false
-        },
-        renderList: ({ props, data, list, value, onSelect }) => {
-          const { single, fieldNames = { serialNum: 'serialNum', name: 'name' } } = props;
-
-          return (
-            <Flex vertical gap={12}>
-              <div>
-                {data[fieldNames.serialNum]} {data[fieldNames?.name]}
-              </div>
-              <Table
-                controllerOpen={false}
-                rowSelection={{
-                  type: single ? 'radio' : 'checkbox',
-                  hideSelectAll: true,
-                  selectedRowKeys: value,
-                  onSelect: item => {
-                    onSelect(item);
-                  }
-                }}
-                onRow={item => {
-                  return {
-                    onClick: () => onSelect(item)
-                  };
-                }}
-                dataSource={list || []}
-                pagination={false}
-                rowKey={'id'}
-                columns={[...getColumns()]}
-              />
-            </Flex>
-          );
-          return (
-            <ProjectDetailSelectRenderList
-              data={data}
-              dataSource={list || []}
-              rowSelection={{
-                type: single ? 'radio' : 'checkbox',
-                hideSelectAll: true,
-                selectedRowKeys: value,
-                onSelect: item => {
-                  onSelect(item);
-                }
-              }}
-              onRow={item => {
-                return {
-                  onClick: () => onSelect(item)
-                };
-              }}
-              fieldNames={fieldNames}
-            />
-          );
+    others,
+    others.hasOwnProperty('value')
+      ? {
+          value: Array.isArray(others.value) ? others.value.map(formatValue) : formatValue(others.value, others)
         }
-      }),
-    [createListField]
+      : {},
+    others.hasOwnProperty('defaultValue')
+      ? {
+          defaultValue: Array.isArray(others.defaultValue) ? others.defaultValue.map(formatValue) : formatValue(others.defaultValue, others)
+        }
+      : {}
   );
 
   return (
-    <Components
+    <SuperSelect
       {...props}
       isPopup={false}
-      right={({ value, mapping }) => {
-        return <Flex></Flex>;
+      suffix={({ value }) => {
+        return props.disabled && value.length > 0 && <ProjectDetailPreview data={value[0]} dataSource={[value[0].value]} fieldNames={fieldNames} />;
+      }}
+      renderList={contextProps => {
+        const { isSelectedAll, list, data, onSelect, value, setValue, onOpenChange } = contextProps;
+        const { single, isPopup, valueKey } = props;
+        return (
+          <ProjectDetailSelectRenderList
+            data={data}
+            dataSource={list || []}
+            rowSelection={{
+              type: single ? 'radio' : 'checkbox',
+              hideSelectAll: true,
+              selectedRowKeys: value.map(({ value }) => value[valueKey]),
+              onSelect: item => {
+                onSelect(item);
+              }
+            }}
+            onRow={item => {
+              return {
+                onClick: () => {
+                  if (item.disabled) {
+                    return;
+                  }
+                  if (isSelectedAll) {
+                    return;
+                  }
+                  if (single) {
+                    setValue([item]);
+                  } else {
+                    onSelect(item);
+                  }
+                  if (isPopup && single) {
+                    onOpenChange(false);
+                  }
+                }
+              };
+            }}
+            fieldNames={fieldNames}
+          />
+        );
       }}
     />
   );
 });
 
-const ProjectDetailSelect = createWithRemoteLoader({
-  modules: ['FormInfo@hooks']
-})(({ remoteModules, ...props }) => {
-  const [hooks] = remoteModules;
-  const { useOnChange } = hooks;
-  const render = useOnChange(Object.assign({}, { placeholder: '请选择' + props.label }, props));
-  return render(ProjectDetailSelectField);
-});
+ProjectDetailSelect.Field = ProjectDetailSelect;
 
-ProjectDetailSelect.Field = ProjectDetailSelectField;
 export default ProjectDetailSelect;

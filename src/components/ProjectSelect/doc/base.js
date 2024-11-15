@@ -1,6 +1,6 @@
 const { createWithRemoteLoader } = remoteLoader;
 const { default: ProjectSelect, ProjectDetailSelect } = _ProjectSelect;
-const { default: presetMock, projectList } = _presetMock;
+const { default: presetMock, projectList, projectDetailInfo } = _presetMock;
 
 const BaseExample = createWithRemoteLoader({
   modules: ['components-core:FormInfo', 'components-core:Global@PureGlobal']
@@ -17,6 +17,14 @@ const BaseExample = createWithRemoteLoader({
               value: value,
               label: `${value.serialNum} ${value.name}`
             };
+          })(),
+          projectDetail: (() => {
+            const value = projectDetailInfo.projectPriceList[0];
+            return {
+              ...projectDetailInfo,
+              value: value,
+              label: `${value.rsfwlx} ${value.rsxffw} ${value.rstj}`
+            };
           })()
         }}
       >
@@ -24,7 +32,31 @@ const BaseExample = createWithRemoteLoader({
           list={[
             <ProjectSelect name="project" label="项目" rule="REQ" showContract />,
             <ProjectSelect name="project" label="项目" rule="REQ" showContract disabled />,
-            <ProjectDetailSelect name="projectDetail" label="项目细分服务" rule="REQ" />
+            <ProjectDetailSelect
+              name="projectDetail"
+              label="项目细分服务"
+              rule="REQ"
+              api={{
+                loader: () => projectDetailInfo
+              }}
+              fieldNames={{
+                serialNum: 'projectSerialNum',
+                name: 'projectName'
+              }}
+            />,
+            <ProjectDetailSelect
+              name="projectDetail"
+              label="项目细分服务"
+              rule="REQ"
+              api={{
+                loader: () => projectDetailInfo
+              }}
+              disabled
+              fieldNames={{
+                serialNum: 'projectSerialNum',
+                name: 'projectName'
+              }}
+            />
           ]}
         />
       </Form>
