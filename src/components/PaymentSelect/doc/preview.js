@@ -1,4 +1,4 @@
-const { Preview } = _PaymentSelect;
+const { PaymentPreview } = _PaymentSelect;
 const { createWithRemoteLoader } = remoteLoader;
 const { default: presetMock } = _presetMock;
 
@@ -8,7 +8,7 @@ const BaseExample = createWithRemoteLoader({
   const [PureGlobal] = remoteModules;
   return (
     <PureGlobal preset={presetMock}>
-      <Preview id={0} />
+      <PaymentPreview id={0} />
     </PureGlobal>
   );
 });

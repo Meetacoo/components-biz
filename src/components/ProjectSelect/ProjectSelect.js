@@ -1,6 +1,6 @@
 import { createWithRemoteLoader } from '@kne/remote-loader';
 import merge from 'lodash/merge';
-import { Button, Checkbox, Col, Flex, Radio, Row, Typography } from 'antd';
+import { Checkbox, Col, Flex, Radio, Row, Typography } from 'antd';
 import classnames from 'classnames';
 import useRefCallback from '@kne/use-ref-callback';
 import get from 'lodash/get';
@@ -10,12 +10,12 @@ import getColumns from './getColumns';
 import { ProjectPreview } from './index';
 
 const ProjectSelect = createWithRemoteLoader({
-  modules: ['components-core:FormInfo@fields', 'components-core:Global@usePreset', 'components-core:Modal@useModal', 'components-core:Table']
+  modules: ['components-core:FormInfo@fields', 'components-core:Global@usePreset', 'components-core:Table']
 })(({ remoteModules, data, api: propsApi, fieldNames = { serialNum: 'serialNum', name: 'name', id: 'id' }, ...others }) => {
-  const [fields, usePreset, useModal, Table] = remoteModules;
+  const [fields, usePreset, Table] = remoteModules;
   const { SuperSelect } = fields;
   const { apis, ajax } = usePreset();
-  const modal = useModal();
+
   const formatValue = item => {
     if (!item) {
       return;

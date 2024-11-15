@@ -1,6 +1,8 @@
 import { createWithRemoteLoader } from '@kne/remote-loader';
-import RenewalInfo from './RenewalInfo';
 import Fetch from '@kne/react-fetch';
+import { Button } from 'antd';
+
+import RenewalInfo from './RenewalInfo';
 import MainInfo from './MainInfo';
 
 export const Detail = createWithRemoteLoader({
@@ -21,7 +23,7 @@ export const Detail = createWithRemoteLoader({
   );
 });
 
-const DetailWithData = createWithRemoteLoader({
+export const ContractPreviewInner = createWithRemoteLoader({
   modules: ['components-core:Global@usePreset']
 })(({ remoteModules, id }) => {
   const [usePreset] = remoteModules;
@@ -29,4 +31,26 @@ const DetailWithData = createWithRemoteLoader({
   return <Fetch {...Object.assign({}, apis.contract.getContractById, { params: { id } })} render={({ data }) => <Detail data={data} />} />;
 });
 
-export default DetailWithData;
+const Preview = createWithRemoteLoader({
+  modules: ['components-core:Modal@useModal']
+})(({ remoteModules, id, ...props }) => {
+  const [useModal] = remoteModules;
+  const modal = useModal();
+
+  return (
+    <Button
+      {...props}
+      onClick={() => {
+        modal({
+          title: '合同信息',
+          footer: null,
+          children: <ContractPreviewInner id={id} />
+        });
+      }}
+    >
+      预览
+    </Button>
+  );
+});
+
+export default Preview;

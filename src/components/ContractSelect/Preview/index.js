@@ -1,1 +1,1 @@
-export { default, Detail } from './Detail';
+export { default, Detail, ContractPreviewInner } from './Detail';

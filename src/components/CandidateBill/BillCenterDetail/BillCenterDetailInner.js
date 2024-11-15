@@ -132,18 +132,7 @@ const BillCenterDetailInner = createWithRemoteLoader({
                       </Space>
                     </Col>
                     <Col>
-                      <Typography.Link
-                        onClick={() => {
-                          // 预览合同详情
-                          modal({
-                            title: '合同信息',
-                            footer: null,
-                            children: <ContractPreview id={contractId} />
-                          });
-                        }}
-                      >
-                        预览
-                      </Typography.Link>
+                      <ContractPreview className="btn-no-padding" type="link" id={contractId} />
                     </Col>
                   </Row>
                 ),
@@ -156,7 +145,7 @@ const BillCenterDetailInner = createWithRemoteLoader({
                   <Row justify="space-between" align="middle">
                     <Col>{`${get(bill, 'projectSerialNum')} ${projectName}`}</Col>
                     <Col>
-                      <ProjectPreview className="btn-no-padding" type={'link'} id={get(bill, 'projectId')} />
+                      <ProjectPreview className="btn-no-padding" type="link" id={get(bill, 'projectId')} />
                     </Col>
                   </Row>
                 ),
