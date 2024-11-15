@@ -69,7 +69,8 @@ const CandidateSelect = createWithRemoteLoader({
                 <span
                   onClick={() => {
                     modal({
-                      title: '付款信息预览',
+                      title: '项目细分服务',
+                      footer: null,
                       children: (
                         <ProjectDetailSelectRenderList
                           data={projectInfo}

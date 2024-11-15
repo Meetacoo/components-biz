@@ -192,7 +192,7 @@ const preset = {
           return projectList.data;
         }
       },
-      getDetail: {
+      getContractProjectDetail: {
         loader: () => {
           return projectList.data.projectList[0];
         }

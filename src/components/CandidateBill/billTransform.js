@@ -84,12 +84,15 @@ const billTransform = {
       paymentId: { label: get(bill, 'invoiceTitle'), value: get(bill, 'paymentId') },
       projectId: get(bill, 'projectId')
         ? {
-            projectName: get(bill, 'projectName'),
-            name: get(bill, 'projectName'),
-            projectId: get(bill, 'projectId'),
-            id: get(bill, 'projectId'),
-            projectSerialNum: get(bill, 'projectSerialNum'),
-            serialNum: get(bill, 'projectSerialNum')
+            label: `${get(bill, 'projectSerialNum')} ${get(bill, 'projectName')}`,
+            value: {
+              projectName: get(bill, 'projectName'),
+              name: get(bill, 'projectName'),
+              projectId: get(bill, 'projectId'),
+              id: get(bill, 'projectId'),
+              projectSerialNum: get(bill, 'projectSerialNum'),
+              serialNum: get(bill, 'projectSerialNum')
+            }
           }
         : null
     });
@@ -118,7 +121,7 @@ const billTransform = {
       id: bill ? get(bill, 'bill.id') : null,
       clientId: get(data, 'clientId.value') || null,
       contractId: get(data, 'contractId.value') || null,
-      projectId: get(data, 'projectId.projectId') || get(data, 'projectId.value') || null,
+      projectId: get(data, 'projectId.projectId') || get(data, 'projectId.value.projectId') || null,
       feeType: get(data, 'feeType'),
       amount: (get(data, 'amount') || 0) * 100,
       remark: get(data, 'remark') || null,
