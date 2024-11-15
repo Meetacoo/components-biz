@@ -7,6 +7,7 @@ import Allocations from './Allocation';
 import { PaymentPreview } from '../../PaymentSelect';
 import { ContractPreview } from '../../ContractSelect';
 import { ProjectPreview } from '../../ProjectSelect';
+import Preview from '../../PaymentSelect/Preview';
 
 const AttachmentsContent = createWithRemoteLoader({
   modules: ['components-core:File@FileLink']
@@ -226,18 +227,7 @@ const BillCenterDetailInner = createWithRemoteLoader({
                   <Row justify="space-between" align="middle">
                     <Col>{get(bill, 'invoiceTitle') || '-'}</Col>
                     <Col>
-                      <Typography.Link
-                        onClick={() => {
-                          // 预览 payment 详情
-                          modal({
-                            title: '付款信息',
-                            footer: null,
-                            children: <PaymentPreview id={paymentId} />
-                          });
-                        }}
-                      >
-                        预览
-                      </Typography.Link>
+                      <PaymentPreview className="btn-no-padding" type="link" id={paymentId} />
                     </Col>
                   </Row>
                 )
